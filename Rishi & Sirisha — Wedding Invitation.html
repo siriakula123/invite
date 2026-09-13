@@ -26,7 +26,9 @@
     }
     * { box-sizing:border-box; }
     html { scroll-behavior:smooth; background:var(--sand); -webkit-text-size-adjust:100%; }
-    body { margin:0; color:var(--ink); background:var(--sand); font-family:var(--body); font-weight:400; overflow-x:hidden; }
+    /* overflow-x:clip, not hidden — `hidden` makes body a scroll container and
+       silently breaks position:sticky, which the transitions depend on. */
+    body { margin:0; color:var(--ink); background:var(--sand); font-family:var(--body); font-weight:400; overflow-x:clip; }
     body.locked { overflow:hidden; }
     img { display:block; max-width:100%; }
     h1,h2,h3 { margin:0; font-family:var(--display); font-weight:400; }
@@ -45,18 +47,54 @@
     :where(a,button,input,select,textarea):focus-visible { outline:2px solid var(--zari); outline-offset:3px; }
 
     /* ── Cover / gate ──────────────────────────────────────────────────────── */
-    .cover { position:fixed; z-index:60; inset:0; display:grid; place-items:center; overflow:hidden; padding:1.5rem;
-      background:linear-gradient(180deg,#0e3d47 0%,#17636b 46%,#3f97929e 66%,#e9d3a8 67%,#f2e4c9 100%);
-      transition:clip-path 1.05s cubic-bezier(.76,0,.24,1),opacity .25s ease 1s,visibility .25s ease 1s; }
-    .cover::before { content:""; position:absolute; inset:0; opacity:.72;
-      background:linear-gradient(90deg,transparent 0 48.8%,#b0833a 48.8% 49.5%,#f4dfa8 49.5% 50.1%,#b0833a 50.1% 50.8%,transparent 50.8%);
-      transition:transform 1.05s cubic-bezier(.76,0,.24,1),opacity .7s ease; }
-    .cover.open { visibility:hidden; clip-path:inset(0 50% 0 50%); opacity:0; pointer-events:none; }
-    .cover.open::before { opacity:0; transform:scaleX(1.5); }
-    .cover-card { position:relative; width:min(100%,960px); padding:clamp(4.5rem,8vw,7rem) 2rem 3.2rem; border:1px solid var(--line); outline:1px solid var(--line); outline-offset:-17px;
+    /* The gate is a pair of doors. They start closed (covering 102% between them),
+       and tapping slides them apart to reveal the photograph behind, which is
+       held blurred until that moment and resolves as the doors open. */
+    .cover { position:fixed; z-index:60; inset:0; display:grid; place-items:center; overflow:hidden; padding:1.5rem; background:var(--sea-deep); }
+    .cover-plate { position:absolute; z-index:0; inset:-4%; pointer-events:none; will-change:transform,filter;
+      background:linear-gradient(rgb(9 38 45 / .42),rgb(9 38 45 / .58)),url('assets/chennai-env-01-heritage-entrance.webp') 50% 46%/cover no-repeat;
+      transform:scale(1.1); filter:blur(9px) saturate(.82) brightness(.66); }
+    .cover-seam { position:absolute; z-index:1; top:0; bottom:0; left:50%; width:5rem; margin-left:-2.5rem; opacity:.55;
+      pointer-events:none; filter:blur(12px); will-change:transform,opacity;
+      background:linear-gradient(90deg,transparent,rgb(255 232 176 / .85),transparent); }
+    .cover-panel { position:absolute; z-index:2; top:0; bottom:0; width:51%; pointer-events:none; will-change:transform;
+      background-color:var(--sand-deep);
+      background-image:linear-gradient(90deg,rgb(120 74 33 / .2),transparent 14%,rgb(255 253 244 / .7) 30%,transparent 46%,rgb(120 74 33 / .16) 62%,rgb(255 253 244 / .55) 78%,rgb(120 74 33 / .22)),
+        repeating-linear-gradient(90deg,rgb(140 92 44 / .13) 0 .6rem,rgb(255 252 240 / .4) 1.5rem,rgb(140 92 44 / .11) 2.7rem,transparent 4.2rem),
+        linear-gradient(rgb(255 250 235 / .5),transparent 22%,rgb(14 61 71 / .14)); }
+    .cover-left { left:0; border-right:3px solid var(--zari); box-shadow:inset -40px 0 60px rgb(96 53 20 / .3),14px 0 42px rgb(9 38 45 / .42); }
+    .cover-right { right:0; border-left:3px solid var(--zari); box-shadow:inset 40px 0 60px rgb(96 53 20 / .3),-14px 0 42px rgb(9 38 45 / .42); }
+    .cover-left::after,.cover-right::after { content:""; position:absolute; top:0; bottom:0; width:1.1rem; opacity:.55;
+      background:repeating-linear-gradient(rgb(192 139 62 / .85) 0 3px,rgb(255 240 197 / .75) 3px 7px); }
+    .cover-left::after { right:0; }
+    .cover-right::after { left:0; }
+    .cover-toran { position:absolute; z-index:5; top:0; left:0; right:0; height:clamp(3.2rem,7vh,5rem); pointer-events:none;
+      filter:drop-shadow(0 6px 10px rgb(9 38 45 / .45));
+      background:radial-gradient(circle at 50% 0,rgb(255 240 197 / .9) 22%,rgb(192 139 62 / .85) 23% 34%,transparent 35%) 0 .75rem/2.4rem 2.6rem repeat-x,
+        linear-gradient(var(--sea) 0 .5rem,rgb(27 106 114 / .55) .5rem .78rem,transparent .78rem); }
+
+    /* The open sequence is driven entirely by CSS. Doing it with JS animations
+       meant each one released its end state on finish and the element snapped
+       back — the card reappeared and the doors slammed shut. A class-driven end
+       state cannot revert, and it works even if the motion library never loads. */
+    .cover-panel { transition:transform 1.5s cubic-bezier(.22,1,.36,1); }
+    .cover.opening .cover-left { transform:translateX(-101%); }
+    .cover.opening .cover-right { transform:translateX(101%); }
+    .cover.opening .cover-plate { transform:scale(1); filter:blur(0) saturate(1) brightness(1);
+      transition:transform 1.9s cubic-bezier(.22,1,.36,1),filter 1.9s cubic-bezier(.22,1,.36,1); }
+    .cover.opening .cover-card { opacity:0; transform:translateY(-18px) scale(.97); animation:none;
+      transition:opacity .55s cubic-bezier(.22,1,.36,1),transform .55s cubic-bezier(.22,1,.36,1); }
+    .cover.opening .cover-seam { animation:seam-flare 1.5s cubic-bezier(.22,1,.36,1) forwards; }
+    .cover.opening .cover-toran { opacity:0; transition:opacity .55s cubic-bezier(.22,1,.36,1); }
+    .cover.opening { opacity:0; transition:opacity .5s cubic-bezier(.22,1,.36,1) 1.5s; }
+    @keyframes seam-flare {
+      0% { opacity:.55; transform:scaleX(1); }
+      55% { opacity:.95; transform:scaleX(4); }
+      100% { opacity:0; transform:scaleX(9); }
+    }
+    .cover-card { position:relative; z-index:6; width:min(100%,960px); padding:clamp(4.5rem,8vw,7rem) 2rem 3.2rem; border:1px solid var(--line); outline:1px solid var(--line); outline-offset:-17px;
       background:linear-gradient(160deg,#fffaf0,#f7ecd8); text-align:center; box-shadow:0 20px 45px rgb(9 38 45 / .3);
-      animation:cover-arrive 1.15s cubic-bezier(.22,1,.36,1) both; transition:opacity .45s ease,transform .85s cubic-bezier(.76,0,.24,1); }
-    .cover.open .cover-card { opacity:0; transform:scale(.94) translateY(-1.5rem); }
+      animation:cover-arrive 1.15s cubic-bezier(.22,1,.36,1) both; will-change:transform,opacity; }
     .seal { position:absolute; top:-78px; left:50%; display:grid; place-items:center; width:150px; aspect-ratio:1; border:2px solid #b98a3b; border-radius:50%;
       outline:1px solid #d7b776; outline-offset:-10px; background:radial-gradient(circle at 36% 26%,#fffaea,#f0dcb6); transform:translateX(-50%);
       box-shadow:0 5px 18px rgb(9 38 45 / .26); font:2.8rem var(--display); color:var(--ink); white-space:nowrap; }
@@ -84,22 +122,33 @@
     .nav-links a { color:#fdf6e9; font-size:.6rem; font-weight:700; letter-spacing:.15em; text-decoration:none; text-transform:uppercase; opacity:.85; transition:color .2s ease,opacity .2s ease; }
     .nav-links a:hover { color:var(--zari-lit); opacity:1; }
 
-    /* ── Scenes: scroll-revealed, image-backed ─────────────────────────────── */
-    .scene { position:relative; min-height:100svh; display:grid; place-items:center; padding:6rem 1.5rem; overflow:hidden; isolation:isolate; }
-    .scene::before { content:""; position:absolute; z-index:-2; inset:0; background:var(--bg) center/cover no-repeat;
-      transform:scale(1.06); filter:blur(9px) saturate(.82) brightness(.66);
-      transition:transform 1.5s cubic-bezier(.22,1,.36,1),filter 1.3s cubic-bezier(.22,1,.36,1); }
-    .scene.in::before { transform:scale(1.01); filter:blur(0) saturate(1.02) brightness(1); }
-    .scene::after { content:""; position:absolute; z-index:-1; inset:0; background:var(--veil-ink); }
-    .scene.light::after { background:var(--veil-sand); }
-    .scene > * { opacity:0; transform:translateY(2.2rem); transition:opacity .95s ease .18s,transform 1.05s cubic-bezier(.22,1,.36,1) .18s; }
-    .scene.in > * { opacity:1; transform:none; }
+    /* ── The plate: ONE fixed backdrop shared by the whole page. Scenes claim a
+       plate as they reach mid-viewport and it crossfades; the layer drifts with
+       page scroll. This is what makes the page feel like one continuous space. ─ */
+    .plate { position:fixed; z-index:0; inset:0; overflow:hidden; pointer-events:none; background:var(--sea-deep); }
+    .plateTravel { position:absolute; inset:-4% -3%; will-change:transform; }
+    .plateImage { position:absolute; inset:0; opacity:0; background-size:cover; background-repeat:no-repeat;
+      background-position:var(--plate-focus,50% 50%); transition:opacity 1.15s cubic-bezier(.22,1,.36,1); }
+    .plateOn { opacity:1; }
+    .plateAir { position:absolute; inset:0;
+      background:linear-gradient(rgb(255 246 222 / .16),transparent 26% 72%,rgb(9 38 45 / .22)),
+                 radial-gradient(transparent 52%,rgb(9 38 45 / .18) 100%); }
 
-    .paper-section { position:relative; padding:clamp(4.5rem,9vw,8rem) 1.5rem; background:var(--sand); overflow:hidden; }
+    /* ── Scenes: content riding over the plate ─────────────────────────────── */
+    main { position:relative; z-index:1; }
+    .scene { position:relative; z-index:1; min-height:100svh; display:grid; place-items:center; padding:6rem 1.5rem; }
+    .scene::after { content:""; position:absolute; z-index:0; inset:0; background:var(--veil-ink); pointer-events:none; }
+    .scene.light::after { background:var(--veil-sand); }
+    .scene > * { position:relative; z-index:1; }
+
+    .paper-section { position:relative; z-index:1; padding:clamp(4.5rem,9vw,8rem) 1.5rem; background:var(--sand); overflow:hidden; }
     .paper-section::before { content:""; position:absolute; inset:0; opacity:.22; pointer-events:none;
       background:repeating-linear-gradient(0deg,transparent 0 4px,rgb(27 106 114 / .1) 5px); }
-    .paper-section > .inner { opacity:0; transform:translateY(2rem); transition:opacity .9s ease,transform 1s cubic-bezier(.22,1,.36,1); }
-    .paper-section.in > .inner { opacity:1; transform:none; }
+
+    /* Entrance states apply ONLY once the motion library has loaded, so a CDN
+       failure leaves a fully readable page. */
+    html.motion .scene > *:not(.scroll-note):not(.foam):not(.sun-glow),
+    html.motion .paper-section > .inner { opacity:0; }
 
     /* ── Beach motifs: waves, sun glow, drifting foam, palm silhouette ─────── */
     .wave-divider { display:block; width:100%; height:clamp(42px,6vw,80px); color:var(--sand); }
@@ -128,25 +177,27 @@
     .scroll-note::after { content:""; display:block; width:1px; height:30px; margin:.7rem auto 0; background:linear-gradient(180deg,var(--zari-lit),transparent); animation:cue 1.9s ease-in-out infinite; }
     @keyframes cue { 50% { transform:scaleY(.42); transform-origin:top; } }
 
-    /* ── Full-bleed sticky transitions (the 4 wipes from the reference) ────── */
-    .transition { position:relative; height:190svh; background:var(--sea-deep); }
-    .transition-sticky { position:sticky; top:0; height:100svh; overflow:hidden; display:grid; place-items:center; isolation:isolate; }
-    /* Un-wiped area shows the same frame, dark and out of focus, so the wipe reads
-       as the image developing rather than sliding over an empty block. */
-    .transition-sticky::before { content:""; position:absolute; z-index:-3; inset:0; background:var(--img) center/cover no-repeat;
-      transform:scale(1.14); filter:blur(20px) saturate(.45) brightness(.32); }
-    .transition-wash { position:absolute; z-index:-2; inset:0; background:var(--img) center/cover no-repeat;
-      clip-path:inset(calc((1 - var(--p,0)) * 100%) 0 0 0);
-      transform:scale(calc(1.1 - (var(--p,0) * .1)));
-      filter:blur(calc((1 - var(--p,0)) * 7px)) saturate(calc(.82 + (var(--p,0) * .2))) brightness(calc(.68 + (var(--p,0) * .32))); }
-    .transition-sticky::after { content:""; position:absolute; z-index:-1; inset:0; background:var(--veil-ink); opacity:calc(.35 + (1 - var(--p,0)) * .5); }
-    .transition-caption { max-width:22ch; margin:0; padding:0 1.5rem; color:#fff8ea; font:clamp(1.5rem,3.6vw,2.6rem)/1.3 var(--display); text-align:center;
-      text-shadow:0 3px 22px rgb(0 0 0 / .5);
-      opacity:clamp(0,calc((var(--p,0) - .22) * 3.6),1);
-      transform:translateY(calc((1 - var(--p,0)) * 1.6rem)); }
-    .transition-caption small { display:block; margin-top:1rem; color:var(--zari-lit); font:700 .6rem var(--body); letter-spacing:.28em; text-transform:uppercase; }
-    .transition-line { position:absolute; bottom:2.6rem; left:50%; width:1px; height:52px; transform:translateX(-50%) scaleY(var(--p,0)); transform-origin:top;
-      background:linear-gradient(180deg,var(--zari-lit),transparent); }
+    /* ── The four scroll-scrubbed transitions. Each is a sticky full-bleed frame
+       pushed through a different camera move: iris, crane, pan, focus-pull. The
+       oversized picture boxes give the crane/pan their travel room. ─────────── */
+    /* No background: the push variant masks a hole through the frame and the fixed
+       plate behind must show through it. */
+    .transition { position:relative; z-index:2; height:200svh; }
+    .transition.crane { height:190svh; }
+    .transition.pan { height:220svh; }
+    .transition.focus { height:165svh; }
+    .transitionSticky { position:sticky; top:0; height:100svh; overflow:hidden; }
+    .transitionPic { position:absolute; display:block; width:108%; height:112svh; top:-6svh; left:-4%; will-change:transform,filter; }
+    .crane .transitionPic { width:100%; height:135svh; top:0; left:0; }
+    .pan .transitionPic { width:170%; height:110svh; top:-5svh; left:0; }
+    .transitionPic img { display:block; width:100%; height:100%; object-fit:cover; }
+    .transitionWash { position:absolute; inset:0; pointer-events:none; }
+    .push .transitionWash { background:radial-gradient(transparent 30%,rgb(14 61 71 / .42) 100%); }
+    .crane .transitionWash { background:linear-gradient(rgb(255 250 231 / .24),transparent 42%,rgb(14 61 71 / .22)); }
+    .pan .transitionWash { background:linear-gradient(transparent 54%,rgb(9 38 45 / .46)); }
+    .focus .transitionWash { background:radial-gradient(circle at 68% 32%,rgb(255 247 193 / .34),transparent 38%),linear-gradient(transparent 56%,rgb(14 61 71 / .26)); }
+    .transitionTitle { position:absolute; inset:auto 0 13%; margin:0; padding:0 1.5rem; text-align:center; color:#fff8ea;
+      font:clamp(2.6rem,8vw,6.5rem)/1 var(--display); text-shadow:0 2px 26px rgb(9 38 45 / .62); }
 
     /* ── Date reveal ───────────────────────────────────────────────────────── */
     .date-card { width:min(100%,620px); padding:clamp(2rem,5vw,3.5rem) 1.5rem; border:1px solid rgb(255 247 221 / .62);
@@ -159,7 +210,16 @@
     .date-seal::before { content:""; position:absolute; inset:16%; border-radius:50%; border:1px dashed rgb(27 106 114 / .3); animation:seal-turn 24s linear infinite; }
     @keyframes seal-turn { to { transform:rotate(360deg); } }
     .date-seal:hover { transform:scale(1.04); box-shadow:0 12px 30px rgb(9 38 45 / .3); }
-    .date-seal[disabled] { cursor:default; } .date-seal[disabled]:hover { transform:none; }
+    .date-seal[disabled] { cursor:default; }
+    /* The seal shrinks back to make room for the date it was hiding. Class-driven
+       so the end state holds instead of snapping back. */
+    .date-card.revealed .date-seal,
+    .date-card.revealed .date-seal[disabled]:hover { transform:scale(.62); transition:transform 1s cubic-bezier(.22,1,.36,1); }
+    .date-value.show > div { animation:date-reveal .95s cubic-bezier(.22,1,.36,1) .18s both; }
+    @keyframes date-reveal {
+      from { opacity:0; clip-path:inset(100% 0 0 0); transform:translateY(18px); }
+      to { opacity:1; clip-path:inset(0% 0 0 0); transform:none; }
+    }
     .seal-mark { position:relative; font:clamp(2.1rem,6vw,3.3rem) var(--display); }
     .date-seal span { position:relative; font-size:.66rem; font-weight:700; letter-spacing:.17em; text-transform:uppercase; }
     .date-value { display:grid; grid-template-rows:0fr; opacity:0; overflow:hidden; transition:grid-template-rows .75s ease,opacity .45s ease; }
@@ -176,7 +236,6 @@
     .date-card.revealed .date-prompt { display:none; }
 
     /* ── Invitation ────────────────────────────────────────────────────────── */
-    .invitation-section { background:url('assets/chennai-env-02-kolam-threshold.webp') center/cover no-repeat; }
     .invitation { max-width:720px; margin:auto; padding:clamp(2.8rem,7vw,5rem); border:1px solid rgb(255 247 221 / .62); outline:1px solid var(--line); outline-offset:-11px;
       background:linear-gradient(145deg,rgb(255 253 244 / .95),rgb(255 244 224 / .88)); text-align:center; box-shadow:0 16px 42px rgb(9 38 45 / .2); backdrop-filter:blur(3px); }
     .invitation blockquote { max-width:570px; margin:1.8rem auto; font:italic 1.2rem/1.75 var(--quote); }
@@ -214,10 +273,11 @@
     .dress-chip { display:inline-block; margin-top:.7rem; padding:.3rem .7rem; border:1px solid var(--line); border-radius:99px; color:var(--sea); font-size:.6rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
 
     /* ── Gallery ───────────────────────────────────────────────────────────── */
-    .gallery-strip { display:grid; grid-auto-flow:column; grid-auto-columns:min(78%,420px); gap:1rem; margin-top:2.6rem; padding-bottom:1.2rem;
-      overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-color:var(--zari) transparent; }
-    .gallery-strip figure { margin:0; scroll-snap-align:center; }
-    .gallery-strip img { width:100%; aspect-ratio:1.25; object-fit:cover; padding:.9rem; border:1px solid var(--line); background:rgb(255 250 238 / .8); box-shadow:0 10px 26px rgb(9 38 45 / .16); }
+    .gallery-strip { display:flex; gap:1.4rem; margin-top:2.6rem; padding:0 0 2rem; overflow:auto hidden;
+      mask-image:linear-gradient(90deg,transparent,#000 4% 96%,transparent); scrollbar-width:none; }
+    .gallery-strip::-webkit-scrollbar { display:none; }
+    .gallery-strip figure { flex:0 0 min(72vw,24rem); margin:0; padding:.7rem; background:rgb(255 250 237 / .92); box-shadow:0 20px 54px rgb(9 38 45 / .24); }
+    .gallery-strip img { width:100%; aspect-ratio:4/5; object-fit:cover; }
     .gallery-strip figcaption { margin-top:.7rem; color:var(--ink-soft); font-size:.64rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; }
     .swipe-hint { margin:1rem 0 0; color:var(--ink-soft); font:italic .9rem var(--quote); }
 
@@ -301,14 +361,13 @@
     .watch-card p { margin:1rem 0 0; color:var(--ink-soft); font:italic .88rem/1.5 var(--quote); }
 
     /* ── Blessings ─────────────────────────────────────────────────────────── */
-    .blessing { background:url('assets/chennai-env-08-golden-terrace.webp') center/cover no-repeat; }
     .blessing .inner { max-width:1180px; padding:clamp(2rem,6vw,4.5rem); border:1px solid rgb(255 247 221 / .62);
       background:linear-gradient(145deg,rgb(255 253 244 / .9),rgb(255 242 214 / .8)); box-shadow:0 15px 42px rgb(9 38 45 / .2); backdrop-filter:blur(5px); }
     .blessings-layout { display:grid; gap:2.4rem; max-width:1000px; margin:0 auto; text-align:left; }
     .blessing-intro { margin:.8rem 0 2rem; color:var(--ink-soft); font:1rem/1.65 var(--quote); }
     .live-title { display:flex; align-items:center; gap:.5rem; margin:0 0 1rem; color:var(--coral); font-size:.68rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; }
-    .live-title::before { content:""; width:.48rem; height:.48rem; border-radius:50%; background:var(--coral); box-shadow:0 0 0 4px rgb(201 84 58 / .16); animation:live-pulse 2s ease-in-out infinite; }
-    @keyframes live-pulse { 50% { box-shadow:0 0 0 8px rgb(201 84 58 / .04); } }
+    .live-title::before { content:""; width:6px; height:6px; border-radius:50%; background:var(--coral); animation:livePulse 1.4s ease-in-out infinite; }
+    @keyframes livePulse { 50% { opacity:.3; transform:scale(.7); } }
     .blessing-list { display:flex; flex-direction:column; gap:.7rem; max-height:365px; padding:.2rem .2rem .9rem; overflow-y:auto; scrollbar-color:var(--zari) transparent; }
     .blessing-card { display:grid; grid-template-columns:2.35rem 1fr; gap:.75rem; align-items:start; flex:0 0 auto; padding:1rem; border:1px solid rgb(192 139 62 / .35);
       background:linear-gradient(135deg,rgb(255 255 255 / .9),rgb(255 246 224 / .7)); box-shadow:0 6px 15px rgb(9 38 45 / .08); text-align:left;
@@ -379,15 +438,24 @@
       .cover h1 { font-size:2.7rem; }
       .seal { width:118px; top:-60px; font-size:2.1rem; }
       .nav-logo { display:none; }
-      .transition { height:160svh; }
+    }
+    /* Mobile gets shorter scroll tracks and larger oversize factors, so the crane
+       and pan still read as travel on a narrow screen. */
+    @media (max-width:700px) {
+      .transition { height:175svh; }
+      .transition.crane { height:165svh; }
+      .transition.pan { height:195svh; }
+      .transition.focus { height:150svh; }
+      .crane .transitionPic { height:160svh; }
+      .pan .transitionPic { width:245%; }
     }
     @media (prefers-reduced-motion:reduce) {
       *,*::before,*::after { scroll-behavior:auto !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
-      .scene::before { filter:none; transform:none; }
-      .scene > *,.paper-section > .inner { opacity:1; transform:none; }
-      .transition { height:100svh; }
-      .transition-wash { clip-path:none; filter:none; transform:none; }
-      .transition-caption { opacity:1; transform:none; }
+      html.motion .scene > *:not(.scroll-note):not(.foam):not(.sun-glow),
+      html.motion .paper-section > .inner { opacity:1; }
+      .plateImage { transition:none; }
+      .transition,.transition.crane,.transition.pan,.transition.focus { height:100svh; }
+      .transitionPic { width:100%; height:100%; top:0; left:0; }
     }
   </style>
 </head>
@@ -395,7 +463,12 @@
 
   <!-- ══ Cover / gate ══════════════════════════════════════════════════════ -->
   <section class="cover" id="cover" aria-label="Invitation cover">
-    <div class="cover-card">
+    <span class="cover-plate" id="cover-plate" aria-hidden="true"></span>
+    <span class="cover-seam" id="cover-seam" aria-hidden="true"></span>
+    <span class="cover-panel cover-left" id="cover-left" aria-hidden="true"></span>
+    <span class="cover-panel cover-right" id="cover-right" aria-hidden="true"></span>
+    <span class="cover-toran" aria-hidden="true"></span>
+    <div class="cover-card" id="cover-card">
       <span class="seal" aria-hidden="true">R <i>&amp;</i> S</span>
       <p class="kicker">Together with their families</p>
       <h1>Rishi <span class="amp">&amp;</span> Sirisha</h1>
@@ -404,6 +477,22 @@
       <button class="open-button" id="open-invitation" type="button">Tap to open <b>↔</b></button>
     </div>
   </section>
+
+  <!-- ══ The plate: one fixed backdrop the whole page shares ═══════════════ -->
+  <div class="plate" aria-hidden="true">
+    <div class="plateTravel" id="plate-travel">
+      <div class="plateImage plateOn" style="--plate-focus:50% 46%; background-image:url('assets/chennai-env-01-heritage-entrance.webp')"></div>
+      <div class="plateImage" style="--plate-focus:50% 62%" data-src="assets/chennai-env-03-open-courtyard.webp"></div>
+      <div class="plateImage" style="--plate-focus:50% 54%" data-src="assets/chennai-env-04-pillared-verandah.webp"></div>
+      <div class="plateImage" style="--plate-focus:50% 48%" data-src="assets/chennai-env-05-jasmine-courtyard.webp"></div>
+      <div class="plateImage" style="--plate-focus:50% 50%" data-src="assets/chennai-env-04-pillared-verandah.webp"></div>
+      <div class="plateImage" style="--plate-focus:50% 52%" data-src="assets/chennai-env-07-heritage-hall.webp"></div>
+      <div class="plateImage" style="--plate-focus:50% 50%" data-src="assets/chennai-env-01-heritage-entrance.webp"></div>
+      <div class="plateImage" style="--plate-focus:50% 56%" data-src="assets/chennai-env-08-golden-terrace.webp"></div>
+      <div class="plateImage" style="--plate-focus:50% 48%" data-src="assets/chennai-env-06-ceremony-courtyard.webp"></div>
+    </div>
+    <div class="plateAir"></div>
+  </div>
 
   <!-- ══ Nav ══════════════════════════════════════════════════════════════ -->
   <nav id="nav" aria-label="Invitation sections">
@@ -420,7 +509,7 @@
 
   <main>
     <!-- ── Hero ──────────────────────────────────────────────────────────── -->
-    <section class="scene hero" id="home" data-scene style="--bg:url('assets/chennai-env-01-heritage-entrance.webp')">
+    <section class="scene hero" id="home" data-scene data-plate="0" data-amount=".2">
       <div class="sun-glow" aria-hidden="true"></div>
       <div class="foam" aria-hidden="true"></div>
       <div class="inner">
@@ -433,17 +522,16 @@
       <a class="scroll-note" href="#date">Scroll toward the shore</a>
     </section>
 
-    <!-- ── Transition 1 ──────────────────────────────────────────────────── -->
-    <section class="transition" data-transition aria-label="Scene transition" style="--img:url('assets/chennai-trans-01-entrance-to-courtyard.webp')">
-      <div class="transition-sticky">
-        <div class="transition-wash" aria-hidden="true"></div>
-        <p class="transition-caption">Through the doorway, toward the sea<small>Scene one</small></p>
-        <span class="transition-line" aria-hidden="true"></span>
+    <!-- ── Transition 1 · push: the frame opens through an expanding iris ──── -->
+    <section class="transition push" data-transition="push" data-plate="1" aria-label="Through the doorway, toward the sea">
+      <div class="transitionSticky">
+        <picture class="transitionPic"><img src="assets/chennai-trans-01-entrance-to-courtyard.webp" alt="" loading="lazy"></picture>
+        <div class="transitionWash"></div>
       </div>
     </section>
 
     <!-- ── Date reveal ───────────────────────────────────────────────────── -->
-    <section class="scene" id="date" data-scene style="--bg:url('assets/chennai-env-03-open-courtyard.webp')">
+    <section class="scene" id="date" data-scene data-plate="1">
       <div class="foam" aria-hidden="true"></div>
       <div class="date-card" id="date-card">
         <p>A date held between the tides</p>
@@ -482,7 +570,7 @@
     </section>
 
     <!-- ── Couple ────────────────────────────────────────────────────────── -->
-    <section class="scene couple-section" id="couple" data-scene style="--bg:url('assets/chennai-env-04-pillared-verandah.webp')">
+    <section class="scene couple-section" id="couple" data-scene data-plate="2">
       <div class="inner center">
         <p class="section-label">The two of us</p>
         <h2>The Bride &amp; Groom</h2>
@@ -505,17 +593,16 @@
       </div>
     </section>
 
-    <!-- ── Transition 2 ──────────────────────────────────────────────────── -->
-    <section class="transition" data-transition aria-label="Scene transition" style="--img:url('assets/chennai-trans-02-courtyard-to-jasmine.webp')">
-      <div class="transition-sticky">
-        <div class="transition-wash" aria-hidden="true"></div>
-        <p class="transition-caption">A walk along the jasmine shore<small>Scene two</small></p>
-        <span class="transition-line" aria-hidden="true"></span>
+    <!-- ── Transition 2 · crane: the camera lifts vertically ───────────────── -->
+    <section class="transition crane" data-transition="crane" data-plate="3" aria-label="A walk along the jasmine shore">
+      <div class="transitionSticky">
+        <picture class="transitionPic"><img src="assets/chennai-trans-02-courtyard-to-jasmine.webp" alt="" loading="lazy"></picture>
+        <div class="transitionWash"></div>
       </div>
     </section>
 
     <!-- ── Story ─────────────────────────────────────────────────────────── -->
-    <section class="scene story" id="story" data-scene style="--bg:url('assets/chennai-env-05-jasmine-courtyard.webp')">
+    <section class="scene story" id="story" data-scene data-plate="3" data-amount=".35">
       <div class="inner center">
         <p class="section-label">Our story, in bloom</p>
         <h2>The path that brought us here</h2>
@@ -531,7 +618,7 @@
     </section>
 
     <!-- ── Events ────────────────────────────────────────────────────────── -->
-    <section class="paper-section" id="events" data-scene>
+    <section class="paper-section" id="events" data-scene data-amount=".5">
       <div class="inner center">
         <p class="section-label">Come, celebrate with us</p>
         <h2>Across these beautiful days</h2>
@@ -564,7 +651,7 @@
     </section>
 
     <!-- ── Gallery ───────────────────────────────────────────────────────── -->
-    <section class="scene light" id="gallery" data-scene style="--bg:url('assets/chennai-env-04-pillared-verandah.webp')">
+    <section class="scene light" id="gallery" data-scene data-plate="4">
       <div class="inner center">
         <p class="section-label">Moments we carry with us</p>
         <h2>Swipe to wander</h2>
@@ -579,17 +666,17 @@
       </div>
     </section>
 
-    <!-- ── Transition 3 ──────────────────────────────────────────────────── -->
-    <section class="transition" data-transition aria-label="Scene transition" style="--img:url('assets/chennai-trans-03-garden-to-ceremony.webp')">
-      <div class="transition-sticky">
-        <div class="transition-wash" aria-hidden="true"></div>
-        <p class="transition-caption">A garden walk toward the ceremony<small>Scene three</small></p>
-        <span class="transition-line" aria-hidden="true"></span>
+    <!-- ── Transition 3 · pan: the camera tracks sideways. The one titled beat. -->
+    <section class="transition pan" data-transition="pan" data-plate="5" aria-label="A garden walk toward the ceremony">
+      <div class="transitionSticky">
+        <picture class="transitionPic"><img src="assets/chennai-trans-03-garden-to-ceremony.webp" alt="" loading="lazy"></picture>
+        <div class="transitionWash"></div>
+        <p class="transitionTitle" data-transition-title>The celebrations</p>
       </div>
     </section>
 
     <!-- ── Venue ─────────────────────────────────────────────────────────── -->
-    <section class="scene" id="venue" data-scene style="--bg:url('assets/chennai-env-07-heritage-hall.webp')">
+    <section class="scene" id="venue" data-scene data-plate="5">
       <div class="venue-wrap">
         <div class="venue-card">
           <p class="section-label">Where we gather</p>
@@ -606,7 +693,7 @@
     </section>
 
     <!-- ── Travel ────────────────────────────────────────────────────────── -->
-    <section class="scene light" id="travel" data-scene style="--bg:url('assets/chennai-env-01-heritage-entrance.webp')">
+    <section class="scene light" id="travel" data-scene data-plate="6">
       <div class="panel">
         <p class="section-label">Finding your way to us</p>
         <h2>Getting here</h2>
@@ -637,7 +724,7 @@
     </section>
 
     <!-- ── Dress code ────────────────────────────────────────────────────── -->
-    <section class="scene light" id="dress" data-scene style="--bg:url('assets/chennai-env-08-golden-terrace.webp')">
+    <section class="scene light" id="dress" data-scene data-plate="7">
       <div class="panel">
         <p class="section-label">Come dressed for the coast</p>
         <h2>What to wear</h2>
@@ -659,7 +746,7 @@
     </section>
 
     <!-- ── Explore Vizag ─────────────────────────────────────────────────── -->
-    <section class="scene light" id="explore-vizag" data-scene style="--bg:url('assets/chennai-env-06-ceremony-courtyard.webp')">
+    <section class="scene light" id="explore-vizag" data-scene data-plate="8">
       <div class="panel">
         <p class="section-label">For our out-of-town guests</p>
         <h2>Exploring Vizag</h2>
@@ -682,7 +769,7 @@
     </section>
 
     <!-- ── Performances ──────────────────────────────────────────────────── -->
-    <section class="scene light" id="performances" data-scene style="--bg:url('assets/chennai-env-05-jasmine-courtyard.webp')">
+    <section class="scene light" id="performances" data-scene data-plate="3">
       <div class="panel">
         <p class="section-label">The celebrations</p>
         <h2>Performances &amp; Songs</h2>
@@ -700,7 +787,7 @@
     </section>
 
     <!-- ── RSVP ──────────────────────────────────────────────────────────── -->
-    <section class="scene" id="rsvp" data-scene style="--bg:url('assets/chennai-env-08-golden-terrace.webp')">
+    <section class="scene" id="rsvp" data-scene data-plate="7">
       <div class="rsvp-box">
         <p class="section-label">A place is waiting for you</p>
         <h2>We request your presence</h2>
@@ -735,7 +822,7 @@
     </section>
 
     <!-- ── Watch live ────────────────────────────────────────────────────── -->
-    <section class="scene light" id="watch-live" data-scene style="--bg:url('assets/chennai-env-07-heritage-hall.webp')">
+    <section class="scene light" id="watch-live" data-scene data-plate="5">
       <div class="panel">
         <p class="section-label">Can't join us in person?</p>
         <h2>Watch live</h2>
@@ -759,12 +846,11 @@
       </div>
     </section>
 
-    <!-- ── Transition 4 ──────────────────────────────────────────────────── -->
-    <section class="transition" data-transition aria-label="Scene transition" style="--img:url('assets/chennai-trans-04-ceremony-to-closing.webp')">
-      <div class="transition-sticky">
-        <div class="transition-wash" aria-hidden="true"></div>
-        <p class="transition-caption">A golden settle onto the shore<small>Scene four</small></p>
-        <span class="transition-line" aria-hidden="true"></span>
+    <!-- ── Transition 4 · focus: blur pulls into sharp as the frame settles ── -->
+    <section class="transition focus" data-transition="focus" data-plate="7" aria-label="A golden settle onto the shore">
+      <div class="transitionSticky">
+        <picture class="transitionPic"><img src="assets/chennai-trans-04-ceremony-to-closing.webp" alt="" loading="lazy"></picture>
+        <div class="transitionWash"></div>
       </div>
     </section>
 
@@ -823,46 +909,23 @@
   <script>
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    /* ── Cover ─────────────────────────────────────────────────────────── */
+    /* ── The gate ──────────────────────────────────────────────────────── */
+    /* Pure CSS, so it never depends on the motion library loading. */
     const cover = document.getElementById('cover');
     const nav = document.getElementById('nav');
-    document.getElementById('open-invitation').addEventListener('click', () => {
-      cover.classList.add('open');
+    const openButton = document.getElementById('open-invitation');
+    openButton.addEventListener('click', () => {
       document.body.classList.remove('locked');
-      setTimeout(() => cover.remove(), 1200);
-    });
+      openButton.disabled = true;
+      cover.classList.add('opening');
+      // Doors take 1.5s, then the gate fades over 0.5s.
+      setTimeout(() => cover.remove(), 2100);
+    }, { once: true });
 
     /* ── Nav reveal past the hero ──────────────────────────────────────── */
     const hero = document.getElementById('home');
     new IntersectionObserver(([entry]) => nav.classList.toggle('show', !entry.isIntersecting), { threshold: 0.15 })
       .observe(hero);
-
-    /* ── Scene reveal (mirrors the reference's whileInView blur-in) ────── */
-    const sceneObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => { if (entry.isIntersecting) entry.target.classList.add('in'); });
-    }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
-    document.querySelectorAll('[data-scene]').forEach((el) => sceneObserver.observe(el));
-
-    /* ── Scroll-driven wipe transitions ────────────────────────────────── */
-    const transitions = [...document.querySelectorAll('[data-transition]')];
-    let ticking = false;
-    function updateTransitions() {
-      const viewport = window.innerHeight;
-      transitions.forEach((section) => {
-        const { top, height } = section.getBoundingClientRect();
-        const travel = height - viewport;
-        const progress = travel > 0 ? Math.min(1, Math.max(0, -top / travel)) : 0;
-        section.style.setProperty('--p', progress.toFixed(4));
-      });
-      ticking = false;
-    }
-    if (!reduceMotion && transitions.length) {
-      addEventListener('scroll', () => {
-        if (!ticking) { ticking = true; requestAnimationFrame(updateTransitions); }
-      }, { passive: true });
-      addEventListener('resize', updateTransitions, { passive: true });
-      updateTransitions();
-    }
 
     /* ── Drifting seafoam ──────────────────────────────────────────────── */
     if (!reduceMotion) {
@@ -997,6 +1060,180 @@
       document.getElementById('performance-empty').hidden = true;
       event.currentTarget.reset();
     });
+  </script>
+
+  <!-- ══ Motion layer ═════════════════════════════════════════════════════
+       Everything below is progressive enhancement. If the module fails, the
+       import times out, or the guest prefers reduced motion, the page stays
+       fully readable — nothing here is required to see the invitation. -->
+  <script type="module">
+    const EASE = [.22, 1, .36, 1];
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let lib = null;
+    try {
+      lib = await Promise.race([
+        import('https://cdn.jsdelivr.net/npm/motion@11/+esm'),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('motion: timeout')), 2500))
+      ]);
+    } catch (error) {
+      console.warn('Motion library unavailable — falling back to the static page.', error);
+    }
+
+    if (lib && !reduce) {
+      const { animate, inView, scroll, stagger } = lib;
+      document.documentElement.classList.add('motion');
+
+      /* ── One rAF loop drives every spring; writes only, no layout reads ─ */
+      const writers = [];
+      let last = performance.now();
+      (function frame(now) {
+        const dt = Math.min((now - last) / 1000, .064);
+        last = now;
+        for (const write of writers) write(dt);
+        requestAnimationFrame(frame);
+      })(last);
+
+      /* Motion One's scroll() reports raw progress with no smoothing, so we
+         reproduce Framer's useSpring ourselves with the same constants. */
+      function makeSpring({ stiffness, damping, mass }) {
+        let value = 0, target = 0, velocity = 0;
+        return {
+          set: (v) => { target = v; },
+          step(dt) {
+            let remaining = dt;
+            while (remaining > 0) {
+              const h = Math.min(remaining, 1 / 120);
+              velocity += ((-stiffness * (value - target) - damping * velocity) / mass) * h;
+              value += velocity * h;
+              remaining -= h;
+            }
+            return value;
+          }
+        };
+      }
+
+      /* ── Plate: whole-page parallax + crossfade between scenes ────────── */
+      const plates = [...document.querySelectorAll('.plateImage')];
+      const travel = document.getElementById('plate-travel');
+      const plateSpring = makeSpring({ stiffness: 60, damping: 26, mass: .4 });
+
+      scroll((progress) => plateSpring.set(progress));
+      writers.push((dt) => {
+        const s = plateSpring.step(dt);
+        travel.style.transform =
+          `translateY(${(-1.6 + 3.2 * s).toFixed(3)}%) scale(${(1 + .055 * s).toFixed(4)})`;
+      });
+
+      const loadPlate = (i) => {
+        const el = plates[i];
+        if (el?.dataset.src) {
+          el.style.backgroundImage = `url('${el.dataset.src}')`;
+          delete el.dataset.src;
+        }
+      };
+      let active = 0;
+      const setPlate = (i) => {
+        if (i === active || !plates[i]) return;
+        loadPlate(i);
+        plates[active].classList.remove('plateOn');
+        plates[i].classList.add('plateOn');
+        active = i;
+      };
+      document.querySelectorAll('[data-plate]').forEach((section) => {
+        const index = Number(section.dataset.plate);
+        // Prefetch a full viewport ahead so a crossfade never lands on a blank layer.
+        inView(section, () => loadPlate(index), { margin: '100% 0px 100% 0px' });
+        // Whichever section holds the middle band of the viewport owns the plate.
+        inView(section, () => setPlate(index), { margin: '-45% 0px -45% 0px' });
+      });
+
+      /* ── The four scroll-scrubbed camera moves ────────────────────────── */
+      const wide = matchMedia('(min-width: 701px)').matches;
+      // The iris rewrites mask-image every frame — the heaviest paint on the
+      // page. Only spend it where there is headroom.
+      const allowIris = wide && (navigator.hardwareConcurrency ?? 4) > 4;
+
+      document.querySelectorAll('[data-transition]').forEach((section) => {
+        const variant = section.dataset.transition;
+        const pic = section.querySelector('.transitionPic');
+        const sp = makeSpring({ stiffness: 70, damping: 30, mass: .5 });
+        scroll((progress) => sp.set(progress),
+          { target: section, offset: ['start start', 'end end'] });
+
+        const oversize = variant === 'pan' ? (wide ? 1.7 : 2.45)
+          : variant === 'crane' ? (wide ? 1.35 : 1.6) : 1;
+        const reach = -((oversize - 1) / oversize * 100);
+
+        writers.push((dt) => {
+          const p = sp.step(dt);
+          const x = variant === 'pan' ? reach * p : 0;
+          const y = variant === 'crane' ? reach * p : 0;
+          const scale = variant === 'push' ? 1 + .55 * p
+            : variant === 'focus' ? 1.09 - .09 * p
+            : 1 + .035 * p;
+
+          pic.style.transform =
+            `translate(${x.toFixed(3)}%, ${y.toFixed(3)}%) scale(${scale.toFixed(4)})`;
+
+          if (variant === 'focus') {
+            const blur = p <= .72 ? 11 - 10 * (p / .72) : 1 - (p - .72) / .28;
+            pic.style.filter = `blur(${Math.max(0, blur).toFixed(2)}px)`;
+          }
+          if (variant === 'push' && allowIris) {
+            const r = 150 * p;
+            const mask =
+              `radial-gradient(circle at 50% 52%, transparent ${r.toFixed(1)}%, #000 ${(1.45 * r + 6).toFixed(1)}%)`;
+            pic.style.maskImage = mask;
+            pic.style.webkitMaskImage = mask;
+          }
+        });
+      });
+
+      /* ── Staggered content entrance ───────────────────────────────────── */
+      document.querySelectorAll('[data-scene]').forEach((section) => {
+        const amount = Number(section.dataset.amount ?? .4);
+        const targets = section.matches('.paper-section')
+          ? section.querySelectorAll(':scope > .inner')
+          : section.querySelectorAll(':scope > *:not(.scroll-note):not(.foam):not(.sun-glow)');
+        if (!targets.length) return;
+        inView(section, () => {
+          animate(targets,
+            { opacity: [0, 1], y: [26, 0], clipPath: ['inset(100% 0 0 0)', 'inset(0% 0 0 0)'] },
+            { duration: .85, ease: EASE, delay: stagger(.09, { startDelay: .05 }) });
+        }, { amount });
+      });
+
+      const title = document.querySelector('[data-transition-title]');
+      if (title) {
+        inView(title, () => {
+          animate(title,
+            { opacity: [0, 1], clipPath: ['inset(100% 0 0 0)', 'inset(0% 0 0 0)'] },
+            { duration: 1.1, ease: EASE });
+        }, { amount: .6 });
+      }
+
+      /* ── Self-scrolling rails ─────────────────────────────────────────── */
+      function autoRail(el, axis, speed) {
+        if (!el) return;
+        const pos = axis === 'x' ? 'scrollLeft' : 'scrollTop';
+        let limit = 0, paused = false;
+        const measure = () => {
+          limit = axis === 'x' ? el.scrollWidth - el.clientWidth : el.scrollHeight - el.clientHeight;
+        };
+        measure();
+        new ResizeObserver(measure).observe(el);
+        for (const e of ['pointerenter', 'pointerdown', 'focusin']) el.addEventListener(e, () => { paused = true; });
+        for (const e of ['pointerleave', 'focusout']) el.addEventListener(e, () => { paused = false; });
+        writers.push((dt) => {
+          if (paused || limit <= 0) return;
+          const next = el[pos] + speed * dt;
+          el[pos] = next >= limit ? 0 : next;
+        });
+      }
+      autoRail(document.querySelector('.gallery-strip'), 'x', 34);
+      autoRail(document.getElementById('blessing-list'), 'y', 22);
+    }
   </script>
 </body>
 </html>
