@@ -53,9 +53,26 @@
        and tapping slides them apart to reveal the photograph behind, which is
        held blurred until that moment and resolves as the doors open. */
     .cover { position:fixed; z-index:60; inset:0; display:grid; place-items:center; overflow:hidden; padding:1.5rem; background:var(--sea-deep); }
-    .cover-plate { position:absolute; z-index:0; inset:-4%; pointer-events:none; will-change:transform,filter;
-      background:linear-gradient(rgb(9 38 45 / .42),rgb(9 38 45 / .58)),url('assets/chennai-env-01-heritage-entrance.webp') 50% 46%/cover no-repeat;
-      transform:scale(1.1); filter:blur(9px) saturate(.82) brightness(.66); }
+    /* A Bay-of-Bengal shoreline drawn in CSS — sky, sun, sea and sand. All the
+       photography we have is courtyards, so the beach is built rather than shot. */
+    .cover-plate { position:absolute; z-index:0; inset:-4%; overflow:hidden; pointer-events:none; will-change:transform,filter;
+      transform:scale(1.1); filter:blur(9px) saturate(.82) brightness(.66);
+      background:linear-gradient(180deg,
+        #08283a 0%,#0e4257 15%,#1d6a7d 32%,#4a9aa4 47%,#93c9bf 56%,
+        #f0d49c 60.5%,#ffeabd 62%,
+        #2f8791 62.6%,#1c6a76 71%,#12505e 79%,
+        #b99f78 81.5%,#e2cda2 88%,#f6e8c6 100%); }
+    .cover-sun { position:absolute; left:50%; top:58%; width:clamp(64px,9vw,110px); aspect-ratio:1; border-radius:50%;
+      transform:translate(-50%,-50%);
+      background:radial-gradient(circle,#fff7e2 0 40%,#ffdfa4 58%,rgb(255 200 130 / .32) 74%,transparent 80%);
+      box-shadow:0 0 90px 42px rgb(255 214 150 / .34); }
+    .cover-glint { position:absolute; left:0; right:0; top:62.6%; height:19%;
+      background:linear-gradient(90deg,transparent 38%,rgb(255 230 176 / .5) 50%,transparent 62%);
+      -webkit-mask-image:linear-gradient(180deg,#000,transparent 88%); mask-image:linear-gradient(180deg,#000,transparent 88%); }
+    .cover-foam { position:absolute; left:-5%; right:-5%; top:78.5%; height:9%; filter:blur(3px);
+      background:radial-gradient(ellipse 55% 58% at 18% 50%,rgb(255 255 255 / .58),transparent 70%),
+        radial-gradient(ellipse 42% 52% at 55% 38%,rgb(255 255 255 / .46),transparent 70%),
+        radial-gradient(ellipse 58% 50% at 88% 56%,rgb(255 255 255 / .4),transparent 70%); }
     .cover-seam { position:absolute; z-index:1; top:0; bottom:0; left:50%; width:5rem; margin-left:-2.5rem; opacity:.55;
       pointer-events:none; filter:blur(12px); will-change:transform,opacity;
       background:linear-gradient(90deg,transparent,rgb(255 232 176 / .85),transparent); }
@@ -74,6 +91,21 @@
       filter:drop-shadow(0 6px 10px rgb(9 38 45 / .45));
       background:radial-gradient(circle at 50% 0,rgb(255 240 197 / .9) 22%,rgb(192 139 62 / .85) 23% 34%,transparent 35%) 0 .75rem/2.4rem 2.6rem repeat-x,
         linear-gradient(var(--sea) 0 .5rem,rgb(27 106 114 / .55) .5rem .78rem,transparent .78rem); }
+    /* Palms sit in FRONT of the doors (z 4). The doors cover the whole screen while
+       closed, so anything behind them is invisible until you tap — and the gate is
+       where the beach theme has to read first. */
+    .cover-palm { position:absolute; z-index:4; bottom:-3%; width:clamp(190px,34vw,420px); aspect-ratio:.78; pointer-events:none; opacity:.86;
+      transform-origin:bottom center; animation:palm-sway 9s ease-in-out infinite;
+      background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 340'%3E%3Cg fill='%230a2731'%3E%3Cpath d='M152 340c6-72 10-142 13-210l15 2c-4 68-9 138-11 208z'/%3E%3Cpath d='M170 110c35-38 88-42 126-18-38-10-84-4-120 28z'/%3E%3Cpath d='M170 110c44-14 96-2 126 30-34-20-82-26-122-12z'/%3E%3Cpath d='M170 110c40 18 74 58 84 110-20-44-52-80-92-96z'/%3E%3Cpath d='M170 110c10-40 4-80-14-110 4 38 4 74 6 108z'/%3E%3Cpath d='M166 110c-35-38-88-42-126-18 38-10 84-4 120 28z'/%3E%3Cpath d='M166 110c-44-14-96-2-126 30 34-20 82-26 122-12z'/%3E%3Cpath d='M166 110c-40 18-74 58-84 110 20-44 52-80 92-96z'/%3E%3Cpath d='M166 110c-16 34-20 74-12 112-2-40 4-78 20-106z'/%3E%3Ccircle cx='159' cy='116' r='8'/%3E%3Ccircle cx='176' cy='124' r='6'/%3E%3Ccircle cx='143' cy='124' r='6'/%3E%3C/g%3E%3C/svg%3E") bottom center/contain no-repeat; }
+    .cover-palm-l { left:-9%; }
+    .cover-palm-r { right:-9%; transform:scaleX(-1); animation-name:palm-sway-flip; }
+    /* A line of foam along the foot of the gate, also in front of the doors. */
+    .cover-shore { position:absolute; z-index:3; left:0; right:0; bottom:0; height:clamp(48px,9vh,96px); pointer-events:none;
+      background:radial-gradient(ellipse 24% 78% at 12% 100%,rgb(255 252 244 / .72),transparent 70%),
+        radial-gradient(ellipse 20% 68% at 38% 100%,rgb(255 252 244 / .6),transparent 70%),
+        radial-gradient(ellipse 26% 74% at 66% 100%,rgb(255 252 244 / .66),transparent 70%),
+        radial-gradient(ellipse 22% 70% at 90% 100%,rgb(255 252 244 / .58),transparent 70%),
+        linear-gradient(180deg,transparent,rgb(233 209 160 / .5) 62%,rgb(226 199 146 / .78)); }
 
     /* The open sequence is driven entirely by CSS. Doing it with JS animations
        meant each one released its end state on finish and the element snapped
@@ -120,8 +152,10 @@
       transition:transform .5s cubic-bezier(.22,1,.36,1),opacity .4s ease; opacity:0; }
     nav.show { transform:translateX(-50%) translateY(0); opacity:1; }
     .nav-logo { color:var(--zari-lit); font:1.35rem var(--display); letter-spacing:.06em; text-decoration:none; }
-    .nav-links { display:flex; gap:1.15rem; }
-    .nav-links a { color:#fdf6e9; font-size:.6rem; font-weight:700; letter-spacing:.15em; text-decoration:none; text-transform:uppercase; opacity:.85; transition:color .2s ease,opacity .2s ease; }
+    .nav-links { display:flex; gap:1.15rem; min-width:0; overflow-x:auto; scrollbar-width:none; }
+    .nav-links::-webkit-scrollbar { display:none; }
+    .nav-links a { white-space:nowrap; }
+    .nav-links a { color:#fdf6e9; padding:.45rem 0; font-size:.6rem; font-weight:700; letter-spacing:.15em; text-decoration:none; text-transform:uppercase; opacity:.85; transition:color .2s ease,opacity .2s ease; }
     .nav-links a:hover { color:var(--zari-lit); opacity:1; }
 
     /* ── The plate: ONE fixed backdrop shared by the whole page. Scenes claim a
@@ -172,9 +206,6 @@
     .foam span { position:absolute; bottom:-12%; width:6px; height:6px; border-radius:50%; background:rgb(255 250 238 / .55);
       box-shadow:0 0 10px rgb(255 250 238 / .5); animation:foam-drift linear infinite; }
     @keyframes foam-drift { from { transform:translate3d(0,0,0) scale(.5); opacity:0; } 15% { opacity:.85; } 85% { opacity:.6; } to { transform:translate3d(38px,-102vh,0) scale(1.25); opacity:0; } }
-    .palm { position:absolute; z-index:-1; bottom:-2%; width:clamp(160px,26vw,330px); opacity:.32; pointer-events:none; color:#08202680;
-      animation:palm-sway 9s ease-in-out infinite; transform-origin:bottom center; }
-    .palm.left { left:-3%; } .palm.right { right:-3%; transform:scaleX(-1); animation-name:palm-sway-flip; }
     @keyframes palm-sway { 50% { transform:rotate(2.6deg); } }
     @keyframes palm-sway-flip { 0%,100% { transform:scaleX(-1) rotate(0); } 50% { transform:scaleX(-1) rotate(2.6deg); } }
 
@@ -409,9 +440,11 @@
     /* ── Footer ────────────────────────────────────────────────────────────── */
     footer { position:relative; display:grid; min-height:100svh; place-items:center; overflow:hidden; padding:3rem 1.5rem; color:#fff8e8;
       background:url('assets/chennai-env-08-golden-terrace.webp') center/cover no-repeat; text-align:center; isolation:isolate; }
-    footer::before { content:""; position:absolute; z-index:-1; inset:7% max(2%,5rem); background:linear-gradient(180deg,rgb(9 38 45 / .5),rgb(9 38 45 / .68)); backdrop-filter:blur(2px); }
+    /* The inset has to shrink with the viewport — a fixed 5rem left the backdrop a
+       narrow strip on a phone while the text spilled out either side of it. */
+    footer::before { content:""; position:absolute; z-index:-1; inset:7% clamp(.5rem,4vw,5rem); background:linear-gradient(180deg,rgb(9 38 45 / .5),rgb(9 38 45 / .68)); backdrop-filter:blur(2px); }
     .closing-content { max-width:860px; }
-    .closing-message { max-width:850px; margin:0 auto 1.2rem; color:#f8dfaa; font:clamp(.65rem,1.2vw,.82rem)/1.7 var(--body); letter-spacing:.14em; text-transform:uppercase; }
+    .closing-message { max-width:850px; margin:0 auto 1.2rem; color:#f8dfaa; font:clamp(.72rem,1.2vw,.82rem)/1.7 var(--body); letter-spacing:.11em; text-transform:uppercase; }
     .closing-names { margin:0; color:#fffaf0; font:clamp(4.2rem,11vw,8.5rem)/.85 var(--display); text-shadow:0 3px 20px rgb(0 0 0 / .3); }
     .closing-names .amp { display:block; padding:0; color:var(--zari-lit); font-size:.42em; line-height:.85; }
     .closing-note { margin:1.6rem 0 .55rem; font:1rem var(--quote); }
@@ -431,7 +464,9 @@
       .dress-cols { grid-template-columns:1fr 1fr; }
       .contact-grid { grid-template-columns:repeat(3,1fr); }
     }
-    @media (min-width:800px) {
+    /* 900, not 800 — at tablet width a side-by-side map and card were both too
+       cramped to read. */
+    @media (min-width:900px) {
       .venue-wrap { grid-template-columns:1fr 1fr; align-items:center; }
       .venue-card { text-align:left; }
       .venue-map { min-height:460px; }
@@ -443,14 +478,53 @@
       .step:not(:last-child)::after { width:2.3rem; }
       .attendance-options { grid-template-columns:1fr; }
       .attendance-option { grid-template-columns:3.2rem 1fr; min-height:0; text-align:left; }
-      .nav-links { gap:.7rem; }
-      .nav-links a { font-size:.53rem; }
+      .nav-links { gap:.5rem; }
+      .nav-links a { font-size:.58rem; letter-spacing:.08em; }
     }
-    @media (max-width:450px) {
+    @media (max-width:480px) {
       .cover-card { outline-offset:-10px; padding-top:4rem; }
       .cover h1 { font-size:2.7rem; }
       .seal { width:118px; top:-60px; font-size:2.1rem; }
-      .nav-logo { display:none; }
+      /* Keep the monogram on phones — tighten the type so it and the six links
+         both fit rather than dropping it. */
+      .nav-logo { font-size:1.05rem; }
+      .nav-links { gap:.38rem; }
+      .nav-links a { font-size:.55rem; letter-spacing:.05em; }
+      nav { gap:.5rem; padding:.35rem .6rem .35rem .85rem; }
+    }
+
+    /* Tablets are touch devices too — the same floors apply, just gentler. */
+    @media (max-width:1024px) {
+      .dress-chip { font-size:.64rem; }
+      .tile-kind, .place-kind { font-size:.66rem; }
+      label, .rsvp-details label, .wish-field label { font-size:.66rem; }
+      .gallery-strip figcaption, .venue-map figcaption { font-size:.68rem; }
+      .attendance-copy small, .live-title { font-size:.7rem; }
+      .watch-card a, .contact a { display:inline-block; padding:.5rem 0; }
+    }
+
+    /* Touch-size and legibility floors. Several labels sat under 11px, which is
+       below what is comfortable on a phone. */
+    @media (max-width:700px) {
+      .date-seal { width:clamp(176px,46vw,205px); }
+      .date-seal span { max-width:82%; font-size:.58rem; letter-spacing:.07em; line-height:1.35; }
+      .dress-chip { font-size:.66rem; }
+      .tile-kind, .place-kind, .performance-heading { font-size:.68rem; }
+      label, .rsvp-details label, .wish-field label { font-size:.68rem; }
+      .gallery-strip figcaption, .venue-map figcaption { font-size:.7rem; }
+      .attendance-copy small { font-size:.72rem; }
+      .live-title { font-size:.72rem; }
+      .event time, .event .location { font-size:.76rem; }
+      .weather-grid span, .countdown span { font-size:.66rem; }
+      .step::before { font-size:.6rem; }
+      .closing-date { font-size:.74rem; }
+      .watch-card time { font-size:.76rem; }
+      .hero-place { font-size:.8rem; }
+      .section-label { font-size:.74rem; }
+      .scroll-note { padding:.5rem 1rem; font-size:.68rem; }
+      .watch-card a, .contact a { display:inline-block; padding:.5rem 0; font-size:.78rem; }
+      .venue-map { min-height:300px; }
+      .venue-map iframe { min-height:280px; }
     }
     /* Mobile gets shorter scroll tracks and a larger oversize factor, so the pan
        still reads as travel on a narrow screen. */
@@ -474,11 +548,18 @@
 
   <!-- ══ Cover / gate ══════════════════════════════════════════════════════ -->
   <section class="cover" id="cover" aria-label="Invitation cover">
-    <span class="cover-plate" id="cover-plate" aria-hidden="true"></span>
+    <span class="cover-plate" id="cover-plate" aria-hidden="true">
+      <span class="cover-sun"></span>
+      <span class="cover-glint"></span>
+      <span class="cover-foam"></span>
+    </span>
     <span class="cover-seam" id="cover-seam" aria-hidden="true"></span>
     <span class="cover-panel cover-left" id="cover-left" aria-hidden="true"></span>
     <span class="cover-panel cover-right" id="cover-right" aria-hidden="true"></span>
     <span class="cover-toran" aria-hidden="true"></span>
+    <span class="cover-shore" aria-hidden="true"></span>
+    <span class="cover-palm cover-palm-l" aria-hidden="true"></span>
+    <span class="cover-palm cover-palm-r" aria-hidden="true"></span>
     <div class="cover-card" id="cover-card">
       <span class="seal" aria-hidden="true">R <i>&amp;</i> S</span>
       <p class="kicker">Together with their families</p>
@@ -1155,9 +1236,6 @@
 
       /* ── The four scroll-scrubbed camera moves ────────────────────────── */
       const wide = matchMedia('(min-width: 701px)').matches;
-      // The iris rewrites mask-image every frame — the heaviest paint on the
-      // page. Only spend it where there is headroom.
-      const allowIris = wide && (navigator.hardwareConcurrency ?? 4) > 4;
 
       document.querySelectorAll('[data-transition]').forEach((section) => {
         const variant = section.dataset.transition;
@@ -1182,10 +1260,15 @@
             const blur = p <= .72 ? 11 - 10 * (p / .72) : 1 - (p - .72) / .28;
             pic.style.filter = `blur(${Math.max(0, blur).toFixed(2)}px)`;
           }
-          if (variant === 'push' && allowIris) {
+          if (variant === 'push') {
             const r = 150 * p;
+            // Grow the feather in with the hole. A fixed 6% edge meant that at
+            // progress 0 the mask was still `transparent 0%, #000 6%` — a soft
+            // transparent spot punched in the middle of the frame before the
+            // wipe had started.
+            const feather = Math.min(6, r * 2);
             const mask =
-              `radial-gradient(circle at 50% 52%, transparent ${r.toFixed(1)}%, #000 ${(1.45 * r + 6).toFixed(1)}%)`;
+              `radial-gradient(circle at 50% 52%, transparent ${r.toFixed(1)}%, #000 ${(1.45 * r + feather).toFixed(1)}%)`;
             pic.style.maskImage = mask;
             pic.style.webkitMaskImage = mask;
           }
