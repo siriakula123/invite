@@ -21,10 +21,13 @@
       --display:"Italiana",Georgia,serif;
       --body:"Lato","Segoe UI",system-ui,sans-serif;
       --quote:"Playfair Display",Georgia,serif;
-      --veil-ink:radial-gradient(ellipse 82% 76% at 50% 50%,rgb(8 32 38 / .74) 0%,rgb(8 32 38 / .6) 46%,rgb(8 32 38 / .26) 74%,rgb(8 32 38 / 0) 100%);
+      /* Neutral warm-dark wash used for every legibility overlay on a photo —
+         kept off the teal ink/sea hues so photos darken without a green cast. */
+      --veil:20 17 15;
+      --veil-ink:radial-gradient(ellipse 82% 76% at 50% 50%,rgb(var(--veil) / .56) 0%,rgb(var(--veil) / .46) 46%,rgb(var(--veil) / .2) 74%,rgb(var(--veil) / 0) 100%);
       /* Keeps a floor of tint at the edges: a light panel sits over the middle, so
          without it only the bright untinted corners would show. */
-      --veil-ink-soft:radial-gradient(ellipse 88% 82% at 50% 50%,rgb(8 32 38 / .54) 0%,rgb(8 32 38 / .44) 46%,rgb(8 32 38 / .26) 74%,rgb(8 32 38 / .12) 100%);
+      --veil-ink-soft:radial-gradient(ellipse 88% 82% at 50% 50%,rgb(var(--veil) / .4) 0%,rgb(var(--veil) / .33) 46%,rgb(var(--veil) / .2) 74%,rgb(var(--veil) / .1) 100%);
     }
     * { box-sizing:border-box; }
     html { scroll-behavior:smooth; background:var(--sand); -webkit-text-size-adjust:100%; }
@@ -131,8 +134,8 @@
       animation:cover-arrive 1.15s cubic-bezier(.22,1,.36,1) both; will-change:transform,opacity; }
     .seal { position:absolute; top:-78px; left:50%; display:grid; place-items:center; width:150px; aspect-ratio:1; border:2px solid #b98a3b; border-radius:50%;
       outline:1px solid #d7b776; outline-offset:-10px; background:radial-gradient(circle at 36% 26%,#fffaea,#f0dcb6); transform:translateX(-50%);
-      box-shadow:0 5px 18px rgb(9 38 45 / .26); font:2.8rem var(--display); color:var(--ink); white-space:nowrap; }
-    .seal i { color:var(--zari); font:1.1rem var(--quote); }
+      box-shadow:0 5px 18px rgb(9 38 45 / .26); }
+    .seal img { width:76%; aspect-ratio:1; object-fit:contain; }
     .kicker { margin:0 0 1rem; color:var(--coral); font-size:.72rem; font-weight:700; letter-spacing:.31em; text-transform:uppercase; }
     .cover h1,.hero h1 { font:clamp(3.1rem,8vw,6.2rem)/.98 var(--display); letter-spacing:-.035em; margin:0; }
     .cover-place { margin:0 0 1.9rem; color:var(--ink-soft); font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; }
@@ -167,8 +170,8 @@
       background-position:var(--plate-focus,50% 50%); transition:opacity 1.15s cubic-bezier(.22,1,.36,1); }
     .plateOn { opacity:1; }
     .plateAir { position:absolute; inset:0;
-      background:linear-gradient(rgb(255 246 222 / .16),transparent 26% 72%,rgb(9 38 45 / .22)),
-                 radial-gradient(transparent 52%,rgb(9 38 45 / .18) 100%); }
+      background:linear-gradient(rgb(255 246 222 / .16),transparent 26% 72%,rgb(var(--veil) / .22)),
+                 radial-gradient(transparent 52%,rgb(var(--veil) / .18) 100%); }
 
     /* ── Scenes: content riding over the plate ─────────────────────────────── */
     main { position:relative; z-index:1; }
@@ -191,6 +194,11 @@
     .paper-section::before { content:""; position:absolute; inset:0; opacity:.22; pointer-events:none;
       background:repeating-linear-gradient(0deg,transparent 0 4px,rgb(27 106 114 / .1) 5px); }
 
+    /* These four sit directly over the shared plate photo, like the .scene
+       sections, instead of the flat opaque paper backdrop. */
+    .invitation-section::after,#events::after,.blessing::after,#people::after { content:""; position:absolute; z-index:0; inset:0; pointer-events:none; background:var(--veil-ink-soft); }
+    .invitation-section > .inner,#events > .inner,.blessing > .inner,#people > .inner { position:relative; z-index:1; }
+
     /* Entrance states apply ONLY once the motion library has loaded, so a CDN
        failure leaves a fully readable page. */
     html.motion .scene > *:not(.scroll-note):not(.foam):not(.sun-glow),
@@ -212,8 +220,9 @@
     /* ── Hero ──────────────────────────────────────────────────────────────── */
     .hero { color:#fff6e4; text-align:center; text-shadow:0 2px 18px rgb(0 0 0 / .45); }
     .hero .section-label { color:var(--zari-lit); }
-    .hero-date { margin:2.1rem 0 .65rem; color:#ffd982; font:1.05rem var(--quote); letter-spacing:.09em; }
-    .hero-place { margin:0; font-size:.76rem; letter-spacing:.12em; text-transform:uppercase; }
+    .hero-monogram { display:block; width:clamp(110px,22vw,165px); aspect-ratio:1; margin:1.6rem auto; object-fit:contain;
+      filter:drop-shadow(0 8px 18px rgb(9 38 45 / .45)); }
+    .hero-place { margin:2.1rem 0 0; font-size:.76rem; letter-spacing:.12em; text-transform:uppercase; }
     .hero-sub { margin:.9rem 0 0; color:#e8f1ee; font:italic 1rem var(--quote); text-transform:none; letter-spacing:.02em; }
     .scroll-note { position:absolute; bottom:1.7rem; left:50%; color:#fff4d8; font-size:.62rem; letter-spacing:.2em; text-decoration:none;
       text-transform:uppercase; transform:translateX(-50%); opacity:1 !important; }
@@ -233,15 +242,15 @@
     .pan .transitionPic { width:170%; height:110svh; top:-5svh; left:0; }
     .transitionPic img { display:block; width:100%; height:100%; object-fit:cover; }
     .transitionWash { position:absolute; inset:0; pointer-events:none; }
-    .push .transitionWash { background:radial-gradient(transparent 30%,rgb(14 61 71 / .42) 100%); }
-    .pan .transitionWash { background:linear-gradient(transparent 54%,rgb(9 38 45 / .46)); }
-    .focus .transitionWash { background:radial-gradient(circle at 68% 32%,rgb(255 247 193 / .34),transparent 38%),linear-gradient(transparent 56%,rgb(14 61 71 / .26)); }
+    .push .transitionWash { background:radial-gradient(transparent 30%,rgb(var(--veil) / .42) 100%); }
+    .pan .transitionWash { background:linear-gradient(transparent 54%,rgb(var(--veil) / .46)); }
+    .focus .transitionWash { background:radial-gradient(circle at 68% 32%,rgb(255 247 193 / .34),transparent 38%),linear-gradient(transparent 56%,rgb(var(--veil) / .26)); }
     .transitionTitle { position:absolute; inset:auto 0 13%; margin:0; padding:0 1.5rem; text-align:center; color:#fff8ea;
       font:clamp(2.6rem,8vw,6.5rem)/1 var(--display); text-shadow:0 2px 26px rgb(9 38 45 / .62); }
 
     /* ── Date reveal ───────────────────────────────────────────────────────── */
     .date-card { width:min(100%,620px); padding:clamp(2rem,5vw,3.5rem) 1.5rem; border:1px solid rgb(255 247 221 / .62);
-      background:rgb(255 250 238 / .82); color:var(--ink); text-align:center; box-shadow:0 14px 44px rgb(9 38 45 / .26); backdrop-filter:blur(3px); }
+      background:rgb(255 250 238 / .6); color:var(--ink); text-align:center; box-shadow:0 14px 44px rgb(9 38 45 / .26); backdrop-filter:blur(6px); }
     .date-card > p { margin:0; font-size:.75rem; font-weight:700; letter-spacing:.19em; text-transform:uppercase; }
     .date-seal { position:relative; display:grid; place-items:center; width:clamp(150px,33vw,205px); aspect-ratio:1; margin:2.2rem auto; border:2px solid #e9d8ad;
       border-radius:50%; outline:1px solid var(--zari); outline-offset:-11px; color:var(--ink);
@@ -276,38 +285,71 @@
     .date-card.revealed .date-prompt { display:none; }
 
     /* ── Invitation ────────────────────────────────────────────────────────── */
+    .invitation-section { background:transparent; }
     .invitation { max-width:720px; margin:auto; padding:clamp(2.8rem,7vw,5rem); border:1px solid rgb(255 247 221 / .62); outline:1px solid var(--line); outline-offset:-11px;
-      background:linear-gradient(145deg,rgb(255 253 244 / .95),rgb(255 244 224 / .88)); text-align:center; box-shadow:0 16px 42px rgb(9 38 45 / .2); backdrop-filter:blur(3px); }
+      background:linear-gradient(145deg,rgb(255 253 244 / .68),rgb(255 244 224 / .6)); text-align:center; box-shadow:0 16px 42px rgb(9 38 45 / .2); backdrop-filter:blur(6px); }
     .invitation blockquote { max-width:570px; margin:1.8rem auto; font:italic 1.2rem/1.75 var(--quote); }
-    .invitation-family { margin:1.5rem 0 .7rem; color:var(--ink-soft); font-size:.7rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; }
-    .date-line { margin:.35rem 0; color:var(--coral); font:1.1rem var(--quote); letter-spacing:.08em; }
+    .invocation-line { margin:0 0 1.7rem; color:var(--coral); font:italic 1.3rem var(--quote); letter-spacing:.07em; }
+    html.motion .invocation-line { opacity:0; transform:scale(1.7); }
 
-    /* ── Couple + story ────────────────────────────────────────────────────── */
+    /* ── Couple ────────────────────────────────────────────────────────────── */
     .couple-section .section-label,.couple-section h2 { color:#fff8e9; text-shadow:0 2px 12px rgb(0 0 0 / .4); }
-    .people { display:grid; gap:2rem; margin-top:3rem; }
-    .person { text-align:center; }
-    .portrait { width:100%; aspect-ratio:1.14; overflow:hidden; padding:1.35rem; border:1px solid rgb(255 247 221 / .86); background:rgb(255 250 238 / .82); box-shadow:0 10px 28px rgb(9 38 45 / .26); }
-    .portrait img { width:100%; height:100%; object-fit:cover; object-position:50% 16%; }
-    .person > div:last-child { padding:2rem 1.5rem; color:var(--ink); background:rgb(255 249 234 / .84); box-shadow:0 8px 24px rgb(9 38 45 / .14); backdrop-filter:blur(4px); }
-    .person h3 { font-size:clamp(2.3rem,5vw,3.4rem); }
-    .person p { max-width:510px; margin:1rem auto 0; font:1rem/1.75 var(--body); }
-    .story { color:#fff9eb; }
-    .story .inner { max-width:900px; }
-    .story .section-label,.story h2 { text-shadow:0 2px 12px rgb(0 0 0 / .45); }
-    .story-row { display:grid; gap:0; margin:2.7rem auto 0; text-align:left; }
-    /* Portrait source in a landscape frame: bias the crop upward or cover() takes
-       the middle band and cuts their heads off. */
-    .story-photo { width:100%; aspect-ratio:1.16; padding:1.35rem; border:1px solid rgb(255 244 204 / .86); object-fit:cover; object-position:50% 14%; background:rgb(255 250 238 / .82); box-shadow:0 10px 30px rgb(0 0 0 / .3); }
-    .story-copy { padding:2.4rem 1.6rem; color:var(--ink); background:rgb(255 249 234 / .84); box-shadow:0 8px 24px rgb(0 0 0 / .16); backdrop-filter:blur(4px); }
-    .story-copy h3 { margin-top:.6rem; font-size:clamp(2rem,4vw,3rem); }
-    .story-copy p { max-width:460px; margin:1rem 0 0; font:1.05rem/1.7 var(--body); }
-    .year { color:var(--coral); font:1.1rem var(--body); letter-spacing:.2em; }
+    .couple-photo { width:min(100%,480px); aspect-ratio:1.05; margin:3rem auto 0; overflow:hidden; padding:1.35rem; border:1px solid rgb(255 247 221 / .86); background:rgb(255 250 238 / .6); box-shadow:0 10px 28px rgb(9 38 45 / .26); backdrop-filter:blur(4px); }
+    .couple-photo img { width:100%; height:100%; object-fit:cover; object-position:50% 18%; }
+    .couple-note { max-width:560px; margin:2rem auto 0; padding:1.8rem 2.1rem; color:var(--ink); font:italic 1.05rem/1.75 var(--quote); background:rgb(255 249 234 / .6); box-shadow:0 8px 24px rgb(9 38 45 / .14); backdrop-filter:blur(6px); }
+
+    /* ── Journey: two cities converging on Vizag, built from the watercolor
+       cutouts in assets/journey/. Grid rows (not absolute placement) so the
+       arrows and destination card reflow naturally at every width. ────────── */
+    .journey-sky { display:flex; justify-content:space-between; align-items:flex-start; max-width:760px; margin:0 auto; padding:0 1.5rem; }
+    .journey-cloud,.journey-birds { width:clamp(70px,14vw,140px); opacity:.8; will-change:transform; }
+    .journey-birds { width:clamp(56px,10vw,105px); margin-top:1.2rem; }
+    .journey-cloud { animation:journey-drift 15s ease-in-out infinite; }
+    .journey-birds { animation:journey-fly 12s ease-in-out infinite; }
+    @keyframes journey-drift { 0%,100% { transform:translateX(0) } 50% { transform:translateX(3%) } }
+    @keyframes journey-fly { 0%,100% { transform:translate(0,0) } 50% { transform:translate(-4%,-8%) } }
+    .journey-map { display:grid; grid-template-columns:1fr 1fr; column-gap:clamp(1rem,4vw,2.5rem); row-gap:.4rem; max-width:760px; margin:.5rem auto 0; align-items:start; }
+    .journey-origin { display:grid; justify-items:center; gap:.5rem; grid-row:1; }
+    .journey-origin--her { grid-column:1; }
+    .journey-origin--him { grid-column:2; }
+    .journey-origin img:first-child { width:min(78%,230px); }
+    .journey-caption { width:min(92%,235px); }
+    .journey-arrow { grid-row:2; width:min(60%,175px); margin-top:.25rem; }
+    .journey-arrow--her { grid-column:1; justify-self:end; margin-right:8%; }
+    .journey-arrow--him { grid-column:2; justify-self:start; margin-left:8%; }
+    .journey-destination { grid-column:1/-1; grid-row:3; justify-self:center; margin-top:.5rem; }
+    .journey-destination img { width:min(100%,340px); }
+    .journey-landscape { position:relative; width:100%; max-width:1120px; margin:3.5rem auto 0; }
+    .journey-landscape-photo { width:100%; height:auto; display:block; }
+    .journey-deco { position:absolute; width:min(22vw,150px); pointer-events:none; filter:drop-shadow(0 10px 18px rgb(9 38 45 / .16)); animation:journey-sway 9s ease-in-out infinite; }
+    .journey-deco--pink { left:-3%; bottom:-16%; }
+    .journey-deco--white { right:-2%; bottom:-18%; width:min(20vw,135px); animation-duration:11s; animation-direction:reverse; }
+    .journey-deco--leaves { left:1%; top:-12%; width:min(17vw,110px); animation-duration:8s; }
+    .journey-deco--hibiscus { right:2%; top:-11%; width:min(17vw,110px); animation-duration:10s; animation-direction:reverse; }
+    @keyframes journey-sway { 50% { transform:rotate(3deg) translateY(-5px); } }
+    @media (max-width:640px) {
+      .journey-map { grid-template-columns:1fr; max-width:280px; }
+      .journey-origin--her,.journey-origin--him,.journey-arrow--her,.journey-arrow--him,.journey-destination { grid-column:1; justify-self:center; margin:0; }
+      .journey-origin--her { grid-row:1; } .journey-arrow--her { grid-row:2; }
+      .journey-origin--him { grid-row:3; } .journey-arrow--him { grid-row:4; }
+      .journey-destination { grid-row:5; margin-top:.75rem; }
+      .journey-arrow { width:110px; }
+      .journey-arrow--him { transform:scaleX(-1); }
+      .journey-deco { width:min(30vw,105px); }
+      .journey-deco--pink { bottom:-9%; } .journey-deco--white { bottom:-10%; }
+      .journey-deco--leaves,.journey-deco--hibiscus { display:none; }
+    }
+    @media (prefers-reduced-motion:reduce) {
+      .journey-cloud,.journey-birds,.journey-deco { animation:none; }
+    }
 
     /* ── Events ────────────────────────────────────────────────────────────── */
+    #events { background:transparent; }
+    #events .section-label,#events h2 { color:#fff8e9; text-shadow:0 2px 12px rgb(0 0 0 / .4); }
     .day-schedule { display:grid; gap:2rem; margin-top:3rem; }
     .day-heading { margin:0; padding:.9rem 1.2rem; color:#fff8e6; background:var(--sea); font:1.1rem var(--quote); letter-spacing:.08em; text-align:left; }
     .schedule { display:grid; gap:1px; background:var(--line); }
-    .event { display:grid; grid-template-columns:50px 1fr; gap:1rem; padding:1.6rem; background:var(--shell); text-align:left; transition:background .25s ease; }
+    .event { position:relative; display:grid; grid-template-columns:50px 1fr; gap:1rem; padding:1.6rem; background:var(--shell); text-align:left; transition:background .25s ease; }
     .event:hover { background:#fff4dd; }
     .number { color:var(--coral); font:1.7rem var(--display); }
     .event time,.event .location { display:block; margin:.3rem 0; color:var(--ink-soft); font-size:.72rem; letter-spacing:.06em; }
@@ -327,15 +369,15 @@
 
     /* ── Venue + map ───────────────────────────────────────────────────────── */
     .venue-wrap { display:grid; gap:1.25rem; width:min(100%,1060px); }
-    .venue-card { padding:clamp(2rem,6vw,4rem); border:1px solid rgb(255 238 189 / .76); background:rgb(255 249 234 / .88); box-shadow:0 14px 36px rgb(9 38 45 / .22); text-align:center; }
+    .venue-card { padding:clamp(2rem,6vw,4rem); border:1px solid rgb(255 238 189 / .76); background:rgb(255 249 234 / .6); box-shadow:0 14px 36px rgb(9 38 45 / .22); text-align:center; backdrop-filter:blur(6px); }
     .venue-card blockquote { margin:1.5rem 0; font:italic 1rem/1.8 var(--quote); color:var(--ink-soft); }
-    .venue-map { position:relative; min-height:350px; margin:0; padding:.75rem; border:1px solid rgb(255 238 189 / .76); background:rgb(255 249 234 / .88); box-shadow:0 14px 36px rgb(9 38 45 / .22); }
+    .venue-map { position:relative; min-height:350px; margin:0; padding:.75rem; border:1px solid rgb(255 238 189 / .76); background:rgb(255 249 234 / .6); box-shadow:0 14px 36px rgb(9 38 45 / .22); backdrop-filter:blur(6px); }
     .venue-map iframe { width:100%; height:100%; min-height:320px; border:0; filter:sepia(.1) saturate(.9) hue-rotate(-6deg); }
     .venue-map figcaption { position:absolute; right:1.45rem; bottom:1.35rem; padding:.65rem .9rem; color:#fff9eb; background:rgb(14 61 71 / .82); font-size:.64rem; letter-spacing:.12em; text-transform:uppercase; }
 
     /* ── Travel / stay / dress code ────────────────────────────────────────── */
     .panel { width:min(100%,1080px); padding:clamp(2rem,6vw,4.5rem); border:1px solid rgb(255 247 221 / .62);
-      background:linear-gradient(145deg,rgb(255 253 244 / .88),rgb(255 242 214 / .78)); box-shadow:0 14px 44px rgb(9 38 45 / .22); text-align:center; backdrop-filter:blur(3px); }
+      background:linear-gradient(145deg,rgb(255 253 244 / .62),rgb(255 242 214 / .55)); box-shadow:0 14px 44px rgb(9 38 45 / .22); text-align:center; backdrop-filter:blur(6px); }
     .panel-intro { max-width:580px; margin:.8rem auto 2rem; color:var(--ink-soft); font:1rem/1.65 var(--quote); }
     .tile-grid { display:grid; gap:1px; background:rgb(192 139 62 / .42); text-align:left; }
     .tile { padding:1.5rem; background:rgb(255 251 238 / .72); }
@@ -346,10 +388,8 @@
     .weather-grid div { padding:1rem .65rem; background:rgb(255 251 238 / .66); }
     .weather-grid strong { display:block; color:var(--coral); font:clamp(1.3rem,3vw,1.85rem) var(--display); }
     .weather-grid span { display:block; margin-top:.25rem; color:var(--ink-soft); font-size:.62rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; }
-    .dress-cols { display:grid; gap:1px; background:rgb(192 139 62 / .42); text-align:left; }
-    .dress-cols > div { padding:1.5rem; background:rgb(255 251 238 / .72); }
-    .swatches { display:flex; flex-wrap:wrap; gap:.55rem; margin-top:.9rem; }
-    .swatches i { width:2.1rem; aspect-ratio:1; border:1px solid rgb(255 255 255 / .8); border-radius:50%; box-shadow:0 3px 9px rgb(9 38 45 / .2); }
+    .event-swatches { position:absolute; top:1.2rem; right:1.2rem; display:flex; gap:.35rem; }
+    .event-swatches i { width:1rem; aspect-ratio:1; border:1px solid rgb(255 255 255 / .8); border-radius:50%; box-shadow:0 2px 5px rgb(9 38 45 / .18); }
 
     /* ── Performances ──────────────────────────────────────────────────────── */
     .performance-empty { margin:1.8rem auto; padding:1.1rem; border-top:1px solid rgb(192 139 62 / .42); border-bottom:1px solid rgb(192 139 62 / .42); color:var(--ink-soft); font:italic .95rem var(--quote); }
@@ -366,14 +406,14 @@
 
     /* ── RSVP ──────────────────────────────────────────────────────────────── */
     .rsvp-box { width:min(100%,860px); padding:clamp(2.5rem,6vw,5rem) clamp(1.5rem,7vw,6rem); border:1px solid rgb(192 139 62 / .55);
-      background:linear-gradient(145deg,rgb(255 253 246 / .95),rgb(253 240 214 / .88)); text-align:center; box-shadow:0 18px 52px rgb(9 38 45 / .24); backdrop-filter:blur(7px); }
+      background:linear-gradient(145deg,rgb(255 253 246 / .68),rgb(253 240 214 / .6)); text-align:center; box-shadow:0 18px 52px rgb(9 38 45 / .24); backdrop-filter:blur(7px); }
     .rsvp-box .section-label { margin-bottom:1.4rem; }
     .rsvp-kicker { max-width:490px; margin:1rem auto 1.6rem; color:var(--ink-soft); font:italic 1.05rem/1.65 var(--quote); }
-    .steps { display:flex; justify-content:center; gap:3.6rem; margin:1.8rem 0 2.9rem; }
+    .steps { display:flex; flex-wrap:wrap; justify-content:center; gap:2.5rem 2.2rem; margin:1.8rem 0 2.9rem; }
     .step { position:relative; display:grid; place-items:center; width:1.9rem; height:1.9rem; border:1px solid var(--zari); border-radius:50%; color:var(--ink-soft); font-size:.75rem; transition:background .3s ease,color .3s ease; }
     .step::before { position:absolute; top:2.35rem; color:var(--ink-soft); font:700 .56rem var(--body); letter-spacing:.11em; text-transform:uppercase; white-space:nowrap; }
-    .step:nth-child(1)::before { content:"Response"; } .step:nth-child(2)::before { content:"Details"; } .step:nth-child(3)::before { content:"Blessing"; }
-    .step:not(:last-child)::after { content:""; position:absolute; left:100%; width:3.6rem; height:1px; background:rgb(192 139 62 / .65); }
+    .step:nth-child(1)::before { content:"Response"; } .step:nth-child(2)::before { content:"Days"; } .step:nth-child(3)::before { content:"Guests"; } .step:nth-child(4)::before { content:"Details"; } .step:nth-child(5)::before { content:"Blessing"; }
+    .step:not(:last-child)::after { content:""; position:absolute; left:100%; width:2.2rem; height:1px; background:rgb(192 139 62 / .65); }
     .step.active { color:#fff; background:var(--coral); border-color:var(--coral); }
     .rsvp-question { margin:0 0 1.35rem; color:var(--ink); font:clamp(1.35rem,3vw,2rem) var(--display); }
     .attendance-options { display:grid; grid-template-columns:repeat(3,1fr); gap:.7rem; }
@@ -386,13 +426,29 @@
     .attendance-copy strong { font-size:.8rem; }
     .attendance-copy small { font-size:.66rem; letter-spacing:.04em; }
     .rsvp-box .button { margin-top:1.6rem; }
-    .rsvp-details { display:grid; max-width:520px; max-height:0; gap:.9rem; margin:0 auto; opacity:0; overflow:hidden; text-align:left;
-      transition:max-height .55s ease,opacity .35s ease,margin .55s ease; }
-    .rsvp-details.show { max-height:560px; margin-top:1.6rem; opacity:1; }
-    .rsvp-details label { color:var(--ink-soft); font-size:.65rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
-    .rsvp-details input,.rsvp-details textarea { width:100%; padding:.85rem; border:1px solid rgb(192 139 62 / .48); color:var(--ink); background:rgb(255 255 255 / .78); font:inherit; }
-    .rsvp-details textarea { min-height:80px; resize:vertical; }
+    .button.ghost { color:var(--ink); background:transparent; border:1px solid var(--zari); }
+    .button.ghost:hover { color:#fff; background:var(--ink-soft); box-shadow:none; }
+    .rsvp-nav { display:flex; justify-content:center; gap:1rem; margin-top:1.6rem; }
+    .rsvp-nav .button { margin-top:0; }
+    .rsvp-page { display:none; }
+    .rsvp-page.active { display:block; }
+    .rsvp-page[data-page="details"].active { display:grid; max-width:520px; gap:.9rem; margin:0 auto; text-align:left; }
+    .rsvp-page[data-page="details"] label { color:var(--ink-soft); font-size:.65rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
+    .rsvp-page[data-page="details"] input { width:100%; padding:.85rem; border:1px solid rgb(192 139 62 / .48); color:var(--ink); background:rgb(255 255 255 / .78); font:inherit; }
+    .rsvp-page[data-page="details"] .rsvp-question { text-align:center; }
+    .rsvp-page .rsvp-question,.rsvp-page .attendance-options { text-align:center; }
+    #day-options .attendance-option { grid-template-columns:1fr; text-align:center; }
+    .guest-stepper { display:flex; align-items:center; justify-content:center; gap:1.2rem; }
+    .stepper-btn { display:grid; place-items:center; width:2.6rem; aspect-ratio:1; border:1px solid var(--zari); border-radius:50%; color:var(--coral); background:rgb(255 255 255 / .7); font-size:1.2rem; transition:background .2s ease,color .2s ease; }
+    .stepper-btn:hover { color:#fff; background:var(--coral); }
+    .stepper-value { min-width:3rem; color:var(--ink); font:700 1.6rem var(--body); text-align:center; }
+    .stepper-note { margin:.8rem 0 0; color:var(--ink-soft); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; text-align:center; }
+    .phone-field { display:flex; }
+    .phone-field .phone-code { display:grid; place-items:center; padding:0 .9rem; border:1px solid rgb(192 139 62 / .48); border-right:0; color:var(--ink-soft); background:rgb(253 240 214 / .6); font-weight:700; }
+    .phone-field input { border-left:0; }
     .response { min-height:1rem; margin:1.2rem 0 0; color:var(--coral); font-size:.82rem; }
+    .confetti-piece { position:fixed; top:-12px; z-index:200; border-radius:2px; pointer-events:none; animation:confetti-fall linear forwards; }
+    @keyframes confetti-fall { to { transform:translateY(105vh) rotate(540deg); opacity:.85; } }
 
     /* ── Watch live ────────────────────────────────────────────────────────── */
     .watch-intro { max-width:510px; margin:.8rem auto 2rem; color:var(--ink-soft); font:italic 1rem/1.65 var(--quote); }
@@ -405,8 +461,9 @@
     .watch-card p { margin:1rem 0 0; color:var(--ink-soft); font:italic .88rem/1.5 var(--quote); }
 
     /* ── Blessings ─────────────────────────────────────────────────────────── */
+    .blessing { background:transparent; }
     .blessing .inner { max-width:1180px; padding:clamp(2rem,6vw,4.5rem); border:1px solid rgb(255 247 221 / .62);
-      background:linear-gradient(145deg,rgb(255 253 244 / .9),rgb(255 242 214 / .8)); box-shadow:0 15px 42px rgb(9 38 45 / .2); backdrop-filter:blur(5px); }
+      background:linear-gradient(145deg,rgb(255 253 244 / .62),rgb(255 242 214 / .55)); box-shadow:0 15px 42px rgb(9 38 45 / .2); backdrop-filter:blur(6px); }
     .blessings-layout { display:grid; gap:2.4rem; max-width:1000px; margin:0 auto; text-align:left; }
     .blessing-intro { margin:.8rem 0 2rem; color:var(--ink-soft); font:1rem/1.65 var(--quote); }
     .live-title { display:flex; align-items:center; gap:.5rem; margin:0 0 1rem; color:var(--coral); font-size:.68rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; }
@@ -429,20 +486,21 @@
     .wish-output { margin:1.3rem 0 0; color:var(--coral); font:italic 1rem var(--quote); }
 
     /* ── Our people ────────────────────────────────────────────────────────── */
+    #people { background:transparent; }
+    #people .section-label,#people h2 { color:#fff8e9; text-shadow:0 2px 12px rgb(0 0 0 / .4); }
     .contact-grid { display:grid; gap:1px; background:rgb(192 139 62 / .42); text-align:left; }
     .contact { padding:1.4rem 1.5rem; background:rgb(255 251 238 / .72); }
     .contact strong { display:block; font-size:.95rem; }
     .contact span { display:block; margin-top:.2rem; color:var(--ink-soft); font-size:.68rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
     .contact a { display:inline-block; margin-top:.6rem; color:var(--coral); font-size:.8rem; text-decoration:none; }
     .contact a:hover { text-decoration:underline; }
-    .hashtag { margin:2.6rem 0 0; color:var(--sea); font:clamp(1.6rem,4vw,2.6rem) var(--display); letter-spacing:.02em; }
 
     /* ── Footer ────────────────────────────────────────────────────────────── */
     footer { position:relative; display:grid; min-height:100svh; place-items:center; overflow:hidden; padding:3rem 1.5rem; color:#fff8e8;
       background:url('assets/chennai-env-08-golden-terrace.webp') center/cover no-repeat; text-align:center; isolation:isolate; }
     /* The inset has to shrink with the viewport — a fixed 5rem left the backdrop a
        narrow strip on a phone while the text spilled out either side of it. */
-    footer::before { content:""; position:absolute; z-index:-1; inset:7% clamp(.5rem,4vw,5rem); background:linear-gradient(180deg,rgb(9 38 45 / .5),rgb(9 38 45 / .68)); backdrop-filter:blur(2px); }
+    footer::before { content:""; position:absolute; z-index:-1; inset:7% clamp(.5rem,4vw,5rem); background:linear-gradient(180deg,rgb(var(--veil) / .5),rgb(var(--veil) / .68)); backdrop-filter:blur(2px); }
     .closing-content { max-width:860px; }
     .closing-message { max-width:850px; margin:0 auto 1.2rem; color:#f8dfaa; font:clamp(.72rem,1.2vw,.82rem)/1.7 var(--body); letter-spacing:.11em; text-transform:uppercase; }
     .closing-names { margin:0; color:#fffaf0; font:clamp(4.2rem,11vw,8.5rem)/.85 var(--display); text-shadow:0 3px 20px rgb(0 0 0 / .3); }
@@ -453,15 +511,11 @@
 
     /* ── Responsive ────────────────────────────────────────────────────────── */
     @media (min-width:700px) {
-      .people { grid-template-columns:1fr 1fr; }
-      .story-row { grid-template-columns:1.15fr .85fr; align-items:center; }
-      .story-copy { margin-left:-1.7rem; }
       .event { grid-template-columns:65px 1fr; padding:2rem; }
       .weather-grid { grid-template-columns:repeat(4,1fr); }
       .tile-grid { grid-template-columns:repeat(2,1fr); }
       .watch-grid { grid-template-columns:1fr 1fr; }
       .watch-card { min-height:260px; }
-      .dress-cols { grid-template-columns:1fr 1fr; }
       .contact-grid { grid-template-columns:repeat(3,1fr); }
     }
     /* 900, not 800 — at tablet width a side-by-side map and card were both too
@@ -484,7 +538,7 @@
     @media (max-width:480px) {
       .cover-card { outline-offset:-10px; padding-top:4rem; }
       .cover h1 { font-size:2.7rem; }
-      .seal { width:118px; top:-60px; font-size:2.1rem; }
+      .seal { width:118px; top:-60px; }
       /* Keep the monogram on phones — tighten the type so it and the six links
          both fit rather than dropping it. */
       .nav-logo { font-size:1.05rem; }
@@ -497,7 +551,7 @@
     @media (max-width:1024px) {
       .dress-chip { font-size:.64rem; }
       .tile-kind, .place-kind { font-size:.66rem; }
-      label, .rsvp-details label, .wish-field label { font-size:.66rem; }
+      label, .rsvp-page[data-page="details"] label, .wish-field label { font-size:.66rem; }
       .gallery-strip figcaption, .venue-map figcaption { font-size:.68rem; }
       .attendance-copy small, .live-title { font-size:.7rem; }
       .watch-card a, .contact a { display:inline-block; padding:.5rem 0; }
@@ -510,7 +564,7 @@
       .date-seal span { max-width:82%; font-size:.58rem; letter-spacing:.07em; line-height:1.35; }
       .dress-chip { font-size:.66rem; }
       .tile-kind, .place-kind, .performance-heading { font-size:.68rem; }
-      label, .rsvp-details label, .wish-field label { font-size:.68rem; }
+      label, .rsvp-page[data-page="details"] label, .wish-field label { font-size:.68rem; }
       .gallery-strip figcaption, .venue-map figcaption { font-size:.7rem; }
       .attendance-copy small { font-size:.72rem; }
       .live-title { font-size:.72rem; }
@@ -521,6 +575,8 @@
       .watch-card time { font-size:.76rem; }
       .hero-place { font-size:.8rem; }
       .section-label { font-size:.74rem; }
+      .hero .section-label { font-size:1.6rem; letter-spacing:.12em; }
+      .hero-sub { font-size:1.45rem; }
       .scroll-note { padding:.5rem 1rem; font-size:.68rem; }
       .watch-card a, .contact a { display:inline-block; padding:.5rem 0; font-size:.78rem; }
       .venue-map { min-height:300px; }
@@ -561,7 +617,7 @@
     <span class="cover-palm cover-palm-l" aria-hidden="true"></span>
     <span class="cover-palm cover-palm-r" aria-hidden="true"></span>
     <div class="cover-card" id="cover-card">
-      <span class="seal" aria-hidden="true">R <i>&amp;</i> S</span>
+      <span class="seal" aria-hidden="true"><img src="assets/sr-monogram.webp" alt=""></span>
       <p class="kicker">Together with their families</p>
       <h1>Rishi <span class="amp">&amp;</span> Sirisha</h1>
       <div class="mini-rule"></div>
@@ -574,14 +630,12 @@
   <div class="plate" aria-hidden="true">
     <div class="plateTravel" id="plate-travel">
       <div class="plateImage plateOn" style="--plate-focus:50% 46%; background-image:url('assets/chennai-env-01-heritage-entrance.webp')"></div>
+      <div class="plateImage" style="--plate-focus:50% 50%" data-src="assets/chennai-env-02-kolam-threshold.webp"></div>
       <div class="plateImage" style="--plate-focus:50% 62%" data-src="assets/chennai-env-03-open-courtyard.webp"></div>
       <div class="plateImage" style="--plate-focus:50% 54%" data-src="assets/chennai-env-04-pillared-verandah.webp"></div>
       <div class="plateImage" style="--plate-focus:50% 48%" data-src="assets/chennai-env-05-jasmine-courtyard.webp"></div>
-      <div class="plateImage" style="--plate-focus:50% 50%" data-src="assets/chennai-env-04-pillared-verandah.webp"></div>
-      <div class="plateImage" style="--plate-focus:50% 52%" data-src="assets/chennai-env-07-heritage-hall.webp"></div>
-      <div class="plateImage" style="--plate-focus:50% 50%" data-src="assets/chennai-env-01-heritage-entrance.webp"></div>
-      <div class="plateImage" style="--plate-focus:50% 56%" data-src="assets/chennai-env-08-golden-terrace.webp"></div>
-      <div class="plateImage" style="--plate-focus:50% 48%" data-src="assets/chennai-env-06-ceremony-courtyard.webp"></div>
+      <div class="plateImage" style="--plate-focus:50% 32%" data-src="assets/lotus-pond-colonnade.webp"></div>
+      <div class="plateImage" style="--plate-focus:50% 62%" data-src="assets/pond-mandap-sunset.webp"></div>
     </div>
     <div class="plateAir"></div>
   </div>
@@ -590,7 +644,7 @@
   <nav id="nav" aria-label="Invitation sections">
     <a class="nav-logo" href="#home">R &amp; S</a>
     <div class="nav-links">
-      <a href="#story">Story</a>
+      <a href="#journey">Journey</a>
       <a href="#events">Events</a>
       <a href="#venue">Venue</a>
       <a href="#travel">Travel</a>
@@ -605,11 +659,11 @@
       <div class="sun-glow" aria-hidden="true"></div>
       <div class="foam" aria-hidden="true"></div>
       <div class="inner">
-        <p class="section-label">Together with their families</p>
+        <p class="section-label">With the blessings of our families</p>
+        <img class="hero-monogram" src="assets/sr-monogram.webp" alt="Sirisha and Rishi monogram">
         <h1>Rishi <span class="amp">&amp;</span> Sirisha</h1>
-        <p class="hero-date">5 December 2026</p>
         <p class="hero-place">Sai Priya Resorts · Visakhapatnam</p>
-        <p class="hero-sub">Where the Bay of Bengal meets the shore, a new tide begins.</p>
+        <p class="hero-sub">In the City of Destiny, Visakhapatnam.</p>
       </div>
       <a class="scroll-note" href="#date">Scroll toward the shore</a>
     </section>
@@ -655,9 +709,8 @@
         <p class="section-label">With the blessings of our families</p>
         <h2>You are warmly invited</h2>
         <div class="mini-rule"></div>
+        <p class="invocation-line">Srirastu Subhamastu Avignamastu</p>
         <blockquote>“Together with our families, we joyfully invite you to join us as we begin this new chapter — with the sea at our side and every person we love on the shore. Your presence, blessings, and love will make our celebration complete.”</blockquote>
-        <p class="invitation-family">Together with their families</p>
-        <p class="date-line">5 December 2026</p>
         <p>Sai Priya Resorts · Visakhapatnam</p>
       </div>
     </section>
@@ -667,38 +720,45 @@
       <div class="inner center">
         <p class="section-label">The two of us</p>
         <h2>The Bride &amp; Groom</h2>
-        <div class="people">
-          <article class="person">
-            <div class="portrait"><img src="WhatsApp%20Image%202026-07-10%20at%203.49.47%20PM.jpeg" alt="Portrait of Rishi" loading="lazy"></div>
-            <div>
-              <h3>Rishi</h3>
-              <p>Kind-hearted, thoughtful, and always ready with a smile, he makes every moment feel steady and special. We are blessed to celebrate this journey with him.</p>
-            </div>
-          </article>
-          <article class="person">
-            <div class="portrait"><img src="WhatsApp%20Image%202026-07-10%20at%208.22.00%20PM.jpeg" alt="Portrait of Sirisha" loading="lazy"></div>
-            <div>
-              <h3>Sirisha</h3>
-              <p>Warm, graceful, and full of joy, she brings love and light into every room. We are excited to celebrate this beautiful new chapter with her.</p>
-            </div>
-          </article>
-        </div>
+        <figure class="couple-photo">
+          <img src="WhatsApp%20Image%202026-09-12%20at%2010.17.18%20PM.jpeg" alt="Rishi and Sirisha together" loading="lazy">
+        </figure>
+        <p class="couple-note">One brings the punctuality, the other brings the playlists — somehow they've never missed a flight, a deadline, or a chance to dance in the kitchen. They debate everything from movie endings to who makes the better filter coffee, and agree on exactly one thing: neither of them is changing a bit, and neither would want them to.</p>
       </div>
     </section>
 
-    <!-- ── Story ─────────────────────────────────────────────────────────── -->
-    <section class="scene story" id="story" data-scene data-plate="3" data-amount=".35">
+    <!-- ── Journey ───────────────────────────────────────────────────────── -->
+    <section class="paper-section journey" id="journey" data-scene>
       <div class="inner center">
-        <p class="section-label">Our story, in bloom</p>
-        <h2>The path that brought us here</h2>
-        <div class="story-row">
-          <img class="story-photo" src="WhatsApp%20Image%202026-09-12%20at%2010.17.18%20PM.jpeg" alt="Rishi and Sirisha together" loading="lazy">
-          <div class="story-copy">
-            <span class="year">2026</span>
-            <h3>The Story</h3>
-            <p>A story that began with a smile and grew into a promise of forever — and now finds its way to the coast, where the water keeps returning to the same shore.</p>
+        <p class="section-label">From two cities, to one shore</p>
+        <h2>Two journeys, one destination</h2>
+        <div class="mini-rule"></div>
+        <div class="journey-sky" aria-hidden="true">
+          <img class="journey-cloud" src="assets/journey/13_watercolor_cloud.webp" alt="" loading="lazy">
+          <img class="journey-birds" src="assets/journey/14_birds.webp" alt="" loading="lazy">
+        </div>
+        <div class="journey-map">
+          <div class="journey-origin journey-origin--her">
+            <img src="assets/journey/01_qutub_minar_delhi.webp" alt="Qutub Minar, Delhi" loading="lazy">
+            <img class="journey-caption" src="assets/journey/02_her_city_text.webp" alt="She began her journey from Her City" loading="lazy">
+          </div>
+          <div class="journey-origin journey-origin--him">
+            <img src="assets/journey/03_charminar_hyderabad.webp" alt="Charminar, Hyderabad" loading="lazy">
+            <img class="journey-caption" src="assets/journey/04_his_city_text.webp" alt="He began his journey from His City" loading="lazy">
+          </div>
+          <img class="journey-arrow journey-arrow--her" src="assets/journey/05_delhi_to_vizag_arrow.webp" alt="" aria-hidden="true" loading="lazy">
+          <img class="journey-arrow journey-arrow--him" src="assets/journey/06_hyderabad_to_vizag_arrow.webp" alt="" aria-hidden="true" loading="lazy">
+          <div class="journey-destination">
+            <img src="assets/journey/07_vizag_destination_text.webp" alt="To our destination: Vizag, Visakhapatnam, Andhra Pradesh" loading="lazy">
           </div>
         </div>
+        <figure class="journey-landscape">
+          <img class="journey-landscape-photo" src="assets/journey/08_vizag_landscape.webp" alt="RK Beach coastline, Visakhapatnam" loading="lazy">
+          <img class="journey-deco journey-deco--leaves" src="assets/journey/11_tropical_leaves.webp" alt="" aria-hidden="true" loading="lazy">
+          <img class="journey-deco journey-deco--hibiscus" src="assets/journey/12_hibiscus.webp" alt="" aria-hidden="true" loading="lazy">
+          <img class="journey-deco journey-deco--pink" src="assets/journey/09_pink_florals.webp" alt="" aria-hidden="true" loading="lazy">
+          <img class="journey-deco journey-deco--white" src="assets/journey/10_white_florals.webp" alt="" aria-hidden="true" loading="lazy">
+        </figure>
       </div>
     </section>
 
@@ -712,16 +772,16 @@
           <section>
             <h3 class="day-heading">Day 1 · 3 December 2026</h3>
             <div class="schedule">
-              <article class="event"><span class="number">01</span><div><time datetime="2026-12-03T09:30">9:30 AM</time><h3>Ite Pellikuturu</h3><p>The first of the rituals, as the morning light comes off the water.</p><span class="dress-chip">Traditional</span></div></article>
-              <article class="event"><span class="number">02</span><div><time datetime="2026-12-03T12:00">12:00 PM</time><h3>Pellikudu</h3><p>Family, food, and the old songs — the celebration properly begins.</p><span class="dress-chip">Traditional</span></div></article>
-              <article class="event"><span class="number">03</span><div><time datetime="2026-12-03T19:30">7:30 PM</time><h3>Cocktail Night</h3><p>An evening by the shore with music, the sea breeze, and dancing.</p><span class="dress-chip">Beach cocktail</span></div></article>
+              <article class="event"><span class="number">01</span><div><time datetime="2026-12-03T09:30">9:30 AM</time><h3>Ite Pellikuturu</h3><p>The first of the rituals, as the morning light comes off the water.</p><span class="dress-chip">Pastels · Traditional</span><span class="event-swatches" aria-hidden="true"><i style="background:#f4c9c9"></i><i style="background:#cfe8d9"></i><i style="background:#ddd3ef"></i></span></div></article>
+              <article class="event"><span class="number">02</span><div><time datetime="2026-12-03T12:00">12:00 PM</time><h3>Pellikudu</h3><p>Family, food, and the old songs — the celebration properly begins.</p><span class="dress-chip">Pastels · Traditional</span><span class="event-swatches" aria-hidden="true"><i style="background:#f4c9c9"></i><i style="background:#cfe8d9"></i><i style="background:#ddd3ef"></i></span></div></article>
+              <article class="event"><span class="number">03</span><div><time datetime="2026-12-03T19:30">7:30 PM</time><h3>Cocktail Night</h3><p>An evening by the shore with music, the sea breeze, and dancing.</p><span class="dress-chip">Black, gold &amp; silver shimmer</span><span class="event-swatches" aria-hidden="true"><i style="background:#1c1c1c"></i><i style="background:#c9a227"></i><i style="background:#c9c9ce"></i></span></div></article>
             </div>
           </section>
           <section>
             <h3 class="day-heading">Day 2 · 4 December 2026</h3>
             <div class="schedule">
-              <article class="event"><span class="number">01</span><div><time datetime="2026-12-04T10:00">10:00 AM</time><h3>Haldi</h3><p>Turmeric, laughter, and a great deal of yellow — outdoors, in the sun.</p><span class="dress-chip">Yellow · easy to wash</span></div></article>
-              <article class="event"><span class="number">02</span><div><time datetime="2026-12-04T15:30">3:30 PM</time><h3>Pradhanam</h3><p>The formal blessing of the union by both families.</p><span class="dress-chip">Traditional</span></div></article>
+              <article class="event"><span class="number">01</span><div><time datetime="2026-12-04T10:00">10:00 AM</time><h3>Haldi</h3><p>Turmeric, laughter, and a great deal of yellow — outdoors, in the sun.</p><span class="dress-chip">Yellow · easy to wash</span><span class="event-swatches" aria-hidden="true"><i style="background:#e8a93d"></i><i style="background:#f2c14e"></i><i style="background:#d98e04"></i></span></div></article>
+              <article class="event"><span class="number">02</span><div><time datetime="2026-12-04T15:30">3:30 PM</time><h3>Pradhanam</h3><p>The formal blessing of the union by both families.</p><span class="dress-chip">Pastels · Traditional</span><span class="event-swatches" aria-hidden="true"><i style="background:#f4c9c9"></i><i style="background:#cfe8d9"></i><i style="background:#ddd3ef"></i></span></div></article>
               <article class="event"><span class="number">03</span><div><time datetime="2026-12-04T19:30">7:30 PM</time><h3>Grand Reception</h3><p>The big evening — dinner, performances, and celebration under the stars.</p><span class="dress-chip">Formal</span></div></article>
             </div>
           </section>
@@ -786,46 +846,6 @@
         <div class="tile-grid">
           <article class="tile"><span class="tile-kind">By air</span><h3>Visakhapatnam Airport</h3><p>VTZ is roughly 40 minutes from the resort. Direct flights from Hyderabad, Bengaluru, Chennai, Delhi and Mumbai.</p></article>
           <article class="tile"><span class="tile-kind">By rail</span><h3>Visakhapatnam Junction</h3><p>About 30 minutes away, on the Howrah–Chennai line with frequent services.</p></article>
-          <article class="tile"><span class="tile-kind">Transfers</span><h3>We'll pick you up</h3><p>Share your arrival details in the RSVP and the families will arrange a car from the airport or station.</p></article>
-          <article class="tile"><span class="tile-kind">Parking</span><h3>On-site</h3><p>Complimentary parking is available within the resort for all three days of celebration.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── Where to stay ─────────────────────────────────────────────────── -->
-    <section class="paper-section" id="stay" data-scene>
-      <div class="inner center">
-        <p class="section-label">Rest between the celebrations</p>
-        <h2>Where to stay</h2>
-        <div class="mini-rule"></div>
-        <p class="panel-intro">We have held a block of rooms at the resort. If it fills, these are a short drive away along the same coast road.</p>
-        <div class="tile-grid">
-          <article class="tile"><span class="tile-kind">Our block of rooms</span><h3>Sai Priya Resorts</h3><p>Staying on-site means you are steps from every function. Mention “Rishi &amp; Sirisha” when booking.</p></article>
-          <article class="tile"><span class="tile-kind">Nearby</span><h3>Rushikonda Beach hotels</h3><p>A cluster of sea-facing options 10–15 minutes from the venue, at a range of price points.</p></article>
-          <article class="tile"><span class="tile-kind">Nearby</span><h3>Beach Road, city side</h3><p>Closer to RK Beach and the city, around 25 minutes away — good if you want to explore Vizag.</p></article>
-          <article class="tile"><span class="tile-kind">Need help?</span><h3>Ask us</h3><p>Call any of the numbers in “Our people” below and we will help you find a room.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── Dress code ────────────────────────────────────────────────────── -->
-    <section class="scene light" id="dress" data-scene data-plate="7">
-      <div class="panel">
-        <p class="section-label">Come dressed for the coast</p>
-        <h2>What to wear</h2>
-        <p class="panel-intro">December on the Bay of Bengal is warm by day and breezy after sunset. Light fabrics, and something you can walk on sand in.</p>
-        <div class="dress-cols">
-          <div>
-            <span class="tile-kind">Colours we love</span>
-            <p>Sea glass, sand, coral, ivory and gold — anything that catches the light off the water.</p>
-            <div class="swatches" aria-hidden="true">
-              <i style="background:#1b6a72"></i><i style="background:#7fb7b0"></i><i style="background:#f2e4c9"></i><i style="background:#c9543a"></i><i style="background:#c08b3e"></i><i style="background:#fffaf0"></i>
-            </div>
-          </div>
-          <div>
-            <span class="tile-kind">A gentle note</span>
-            <p>Please avoid stilettos for the beachside functions — the sand will win. Flats, wedges or bare feet are perfect. Carry a light shawl for the evening breeze.</p>
-          </div>
         </div>
       </div>
     </section>
@@ -878,28 +898,57 @@
         <h2>We request your presence</h2>
         <p class="rsvp-kicker">Kindly confirm your attendance so the families can prepare every detail with care.</p>
         <div class="steps" aria-label="RSVP progress">
-          <span class="step active">1</span>
-          <span class="step" id="step-two">2</span>
-          <span class="step" id="step-three">3</span>
+          <span class="step active" id="step-response">1</span>
+          <span class="step" id="step-days">2</span>
+          <span class="step" id="step-guests">3</span>
+          <span class="step" id="step-details">4</span>
+          <span class="step" id="step-blessing">5</span>
         </div>
         <form id="rsvp-form">
-          <p class="rsvp-question">How would you like to RSVP?</p>
-          <div class="attendance-options" role="radiogroup" aria-label="Attendance response">
-            <button class="attendance-option" type="button" data-response="Yes, joyfully we will be there" role="radio" aria-checked="false"><span class="attendance-symbol">Yes</span><span class="attendance-copy"><strong>Joyfully</strong><small>We will be there</small></span></button>
-            <button class="attendance-option" type="button" data-response="Maybe, still confirming" role="radio" aria-checked="false"><span class="attendance-symbol">?</span><span class="attendance-copy"><strong>Maybe</strong><small>Still confirming</small></span></button>
-            <button class="attendance-option" type="button" data-response="No, regretfully declining" role="radio" aria-checked="false"><span class="attendance-symbol">No</span><span class="attendance-copy"><strong>Regretfully decline</strong><small>Sending love</small></span></button>
+          <div class="rsvp-page active" data-page="response">
+            <p class="rsvp-question">How would you like to RSVP?</p>
+            <div class="attendance-options" id="response-options" role="radiogroup" aria-label="Attendance response">
+              <button class="attendance-option" type="button" data-response="Yes, joyfully we will be there" role="radio" aria-checked="false"><span class="attendance-symbol">Yes</span><span class="attendance-copy"><strong>Joyfully</strong><small>We will be there</small></span></button>
+              <button class="attendance-option" type="button" data-response="Maybe, still confirming" role="radio" aria-checked="false"><span class="attendance-symbol">?</span><span class="attendance-copy"><strong>Maybe</strong><small>Still confirming</small></span></button>
+              <button class="attendance-option" type="button" data-response="No, regretfully declining" role="radio" aria-checked="false"><span class="attendance-symbol">No</span><span class="attendance-copy"><strong>Regretfully decline</strong><small>Sending love</small></span></button>
+            </div>
+            <button class="button" id="rsvp-continue" type="button" data-next="days" disabled>Continue</button>
           </div>
-          <button class="button" id="rsvp-continue" type="button" disabled>Continue</button>
-          <div class="rsvp-details" id="rsvp-details">
-            <label for="guest-name">Your name</label>
-            <input id="guest-name" autocomplete="name">
-            <label for="guest-count">Number of guests</label>
-            <input id="guest-count" type="number" min="1" max="10" value="1" inputmode="numeric">
-            <label for="guest-arrival">Arrival details (optional)</label>
-            <input id="guest-arrival" placeholder="Flight or train, date and time">
-            <label for="guest-note">A message for the couple</label>
-            <textarea id="guest-note"></textarea>
-            <button class="button" type="submit">Send RSVP</button>
+          <div class="rsvp-page" data-page="days">
+            <p class="rsvp-question">Which days will you join?</p>
+            <div class="attendance-options" id="day-options" role="group" aria-label="Days attending">
+              <button class="attendance-option" type="button" data-day="Day 1 · 3 December" aria-pressed="false"><span class="attendance-copy"><strong>Day 1</strong><small>3 December</small></span></button>
+              <button class="attendance-option" type="button" data-day="Day 2 · 4 December" aria-pressed="false"><span class="attendance-copy"><strong>Day 2</strong><small>4 December</small></span></button>
+              <button class="attendance-option" type="button" data-day="Day 3 · 5 December" aria-pressed="false"><span class="attendance-copy"><strong>Day 3</strong><small>5 December</small></span></button>
+            </div>
+            <div class="rsvp-nav">
+              <button class="button ghost" type="button" data-back>Back</button>
+              <button class="button" type="button" data-next="guests">Continue</button>
+            </div>
+          </div>
+          <div class="rsvp-page" data-page="guests">
+            <p class="rsvp-question">How many guests?</p>
+            <div class="guest-stepper">
+              <button class="stepper-btn" type="button" data-step="-1" aria-label="Decrease guests">−</button>
+              <span class="stepper-value" id="guest-count" aria-live="polite">1</span>
+              <button class="stepper-btn" type="button" data-step="1" aria-label="Increase guests">+</button>
+            </div>
+            <p class="stepper-note">Including yourself</p>
+            <div class="rsvp-nav">
+              <button class="button ghost" type="button" data-back>Back</button>
+              <button class="button" type="button" data-next="details">Continue</button>
+            </div>
+          </div>
+          <div class="rsvp-page" data-page="details">
+            <p class="rsvp-question">Your details</p>
+            <label for="guest-name">Full name</label>
+            <input id="guest-name" autocomplete="name" placeholder="Enter your full name">
+            <label for="guest-phone">Phone (WhatsApp)</label>
+            <div class="phone-field"><span class="phone-code">+91</span><input id="guest-phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="98765 43210"></div>
+            <div class="rsvp-nav">
+              <button class="button ghost" type="button" data-back>Back</button>
+              <button class="button" type="submit">Send RSVP</button>
+            </div>
           </div>
         </form>
         <p class="response" id="rsvp-response" aria-live="polite"></p>
@@ -976,7 +1025,6 @@
           <article class="contact"><strong>The Bride's family</strong><span>For Sirisha's side</span><a href="tel:+910000000000">+91 00000 00000</a></article>
           <article class="contact"><strong>Travel &amp; stay</strong><span>Transfers and rooms</span><a href="tel:+910000000000">+91 00000 00000</a></article>
         </div>
-        <p class="hashtag">#RishiFoundHisSirisha</p>
       </div>
     </section>
   </main>
@@ -1057,11 +1105,43 @@
 
     /* ── RSVP ──────────────────────────────────────────────────────────── */
     let selectedResponse = '';
-    const responseOptions = [...document.querySelectorAll('.attendance-option')];
+    let selectedDays = [];
+    let guestCount = 1;
+    const responseOptions = [...document.querySelectorAll('#response-options .attendance-option')];
+    const dayOptions = [...document.querySelectorAll('#day-options .attendance-option')];
     const continueButton = document.getElementById('rsvp-continue');
-    const rsvpDetails = document.getElementById('rsvp-details');
-    const stepTwo = document.getElementById('step-two');
-    const stepThree = document.getElementById('step-three');
+    const rsvpPages = [...document.querySelectorAll('.rsvp-page')];
+    const guestCountEl = document.getElementById('guest-count');
+    const pageOrder = ['response', 'days', 'guests', 'details'];
+    const stepOrder = ['response', 'days', 'guests', 'details', 'blessing'];
+    const stepEls = Object.fromEntries(stepOrder.map((key) => [key, document.getElementById(`step-${key}`)]));
+
+    function setActiveSteps(upToKey) {
+      const idx = stepOrder.indexOf(upToKey);
+      stepOrder.forEach((key, i) => stepEls[key].classList.toggle('active', i <= idx));
+    }
+
+    function showPage(name) {
+      rsvpPages.forEach((page) => page.classList.toggle('active', page.dataset.page === name));
+      setActiveSteps(name);
+    }
+
+    function launchConfetti() {
+      const colors = ['#c9543a', '#c08b3e', '#e8c37c', '#1b6a72', '#fdf6e9'];
+      for (let i = 0; i < 70; i++) {
+        const piece = document.createElement('span');
+        piece.className = 'confetti-piece';
+        const size = 6 + Math.random() * 6;
+        piece.style.left = `${Math.random() * 100}vw`;
+        piece.style.width = `${size}px`;
+        piece.style.height = `${size * .4}px`;
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.animationDuration = `${2.2 + Math.random() * 1.6}s`;
+        piece.style.animationDelay = `${Math.random() * .4}s`;
+        piece.addEventListener('animationend', () => piece.remove());
+        document.body.append(piece);
+      }
+    }
 
     responseOptions.forEach((option) => option.addEventListener('click', () => {
       selectedResponse = option.dataset.response;
@@ -1072,29 +1152,55 @@
       continueButton.disabled = false;
     }));
 
-    continueButton.addEventListener('click', () => {
-      rsvpDetails.classList.add('show');
-      stepTwo.classList.add('active');
-      continueButton.hidden = true;
-      document.getElementById('guest-name').focus();
-    });
+    dayOptions.forEach((option) => option.addEventListener('click', () => {
+      option.classList.toggle('selected');
+      const pressed = option.classList.contains('selected');
+      option.setAttribute('aria-pressed', String(pressed));
+      selectedDays = pressed
+        ? [...selectedDays, option.dataset.day]
+        : selectedDays.filter((day) => day !== option.dataset.day);
+    }));
+
+    document.querySelectorAll('.stepper-btn').forEach((btn) => btn.addEventListener('click', () => {
+      guestCount = Math.min(12, Math.max(1, guestCount + Number(btn.dataset.step)));
+      guestCountEl.textContent = guestCount;
+    }));
+
+    document.querySelectorAll('[data-next]').forEach((btn) => btn.addEventListener('click', () => {
+      showPage(btn.dataset.next);
+    }));
+
+    document.querySelectorAll('[data-back]').forEach((btn) => btn.addEventListener('click', () => {
+      const page = btn.closest('.rsvp-page').dataset.page;
+      showPage(pageOrder[pageOrder.indexOf(page) - 1]);
+    }));
 
     document.getElementById('rsvp-form').addEventListener('submit', (event) => {
       event.preventDefault();
       const name = document.getElementById('guest-name').value.trim();
-      stepThree.classList.add('active');
+      const phone = document.getElementById('guest-phone').value.trim();
+      const daysNote = selectedDays.length
+        ? ` for ${selectedDays.map((day) => day.split(' · ')[0]).join(', ')}`
+        : '';
+      setActiveSteps('blessing');
       document.getElementById('rsvp-response').textContent =
-        `Thank you${name ? `, ${name}` : ''}. ${selectedResponse} — your response has been noted.`;
+        `Thank you${name ? `, ${name}` : ''}. ${selectedResponse}. We have noted ${guestCount} guest${guestCount === 1 ? '' : 's'}${daysNote}${phone ? `, reachable on +91 ${phone}` : ''}.`;
+      launchConfetti();
       event.currentTarget.reset();
-      rsvpDetails.classList.remove('show');
-      continueButton.hidden = false;
+      rsvpPages.forEach((page) => page.classList.toggle('active', page.dataset.page === 'response'));
       continueButton.disabled = true;
-      stepTwo.classList.remove('active');
       responseOptions.forEach((item) => {
         item.classList.remove('selected');
         item.setAttribute('aria-checked', 'false');
       });
+      dayOptions.forEach((item) => {
+        item.classList.remove('selected');
+        item.setAttribute('aria-pressed', 'false');
+      });
       selectedResponse = '';
+      selectedDays = [];
+      guestCount = 1;
+      guestCountEl.textContent = '1';
     });
 
     /* ── Blessings ─────────────────────────────────────────────────────── */
@@ -1226,13 +1332,10 @@
         plates[i].classList.add('plateOn');
         active = i;
       };
-      document.querySelectorAll('[data-plate]').forEach((section) => {
-        const index = Number(section.dataset.plate);
-        // Prefetch a full viewport ahead so a crossfade never lands on a blank layer.
-        inView(section, () => loadPlate(index), { margin: '100% 0px 100% 0px' });
-        // Whichever section holds the middle band of the viewport owns the plate.
-        inView(section, () => setPlate(index), { margin: '-45% 0px -45% 0px' });
-      });
+      // Continuous ambient slideshow: cycle every plate on a timer instead of
+      // tying the image to whichever section is on screen.
+      plates.forEach((_, i) => loadPlate(i));
+      setInterval(() => setPlate((active + 1) % plates.length), 5000);
 
       /* ── The four scroll-scrubbed camera moves ────────────────────────── */
       const wide = matchMedia('(min-width: 701px)').matches;
@@ -1293,6 +1396,13 @@
             { opacity: [0, 1], y: [26, 0], clipPath: ['inset(100% 0 0 0)', 'inset(0% 0 0 0)'] },
             { duration: .85, ease: EASE, delay: stagger(.09, { startDelay: .05 }) });
         }, { amount });
+      });
+
+      /* ── Invocation line: settles inward from an oversize scale ─────────── */
+      document.querySelectorAll('.invocation-line').forEach((line) => {
+        inView(line, () => {
+          animate(line, { opacity: [0, 1], scale: [1.7, 1] }, { duration: 1, ease: EASE });
+        }, { amount: .6 });
       });
 
       document.querySelectorAll('[data-transition-title]').forEach((title) => {
