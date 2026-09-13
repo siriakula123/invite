@@ -1,630 +1,2913 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0e3d47">
   <title>Rishi &amp; Sirisha — Wedding Invitation</title>
-  <meta name="description" content="Rishi &amp; Sirisha invite you to their wedding on 5 December 2026 at Sai Priya Resorts, Visakhapatnam — by the Bay of Bengal.">
+  <meta name="description"
+    content="Rishi &amp; Sirisha invite you to their wedding on 5 December 2026 at Sai Priya Resorts, Visakhapatnam — by the Bay of Bengal.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Italiana&family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap"
+    rel="stylesheet">
   <style>
     /* ── Coastal palette: the reference theme's zari/ink structure, re-graded from
        Chennai terracotta to Bay-of-Bengal sand, sea and sunset. ─────────────── */
     :root {
-      --sand:#fdf6e9; --sand-deep:#f2e4c9; --shell:#fffaf0;
-      --ink:#14313a; --ink-soft:#4d6f76;
-      --coral:#c9543a; --zari:#c08b3e; --zari-lit:#e8c37c;
-      --sea:#1b6a72; --sea-deep:#0e3d47; --foam:#e8f1ee;
-      --line:rgb(192 139 62 / .55);
-      --display:"Italiana",Georgia,serif;
-      --body:"Lato","Segoe UI",system-ui,sans-serif;
-      --quote:"Playfair Display",Georgia,serif;
+      --sand: #fdf6e9;
+      --sand-deep: #f2e4c9;
+      --shell: #fffaf0;
+      --ink: #14313a;
+      --ink-soft: #4d6f76;
+      --coral: #c9543a;
+      --zari: #c08b3e;
+      --zari-lit: #e8c37c;
+      --sea: #1b6a72;
+      --sea-deep: #0e3d47;
+      --foam: #e8f1ee;
+      --line: rgb(192 139 62 / .55);
+      --display: "Italiana", Georgia, serif;
+      --body: "Lato", "Segoe UI", system-ui, sans-serif;
+      --quote: "Playfair Display", Georgia, serif;
+      --glass-bg: linear-gradient(180deg, rgba(255, 252, 245, 0.82), rgba(245, 234, 208, 0.76));
+      --glass-border: rgba(255, 247, 221, 0.9);
+      --glass-shadow: 0 18px 42px rgba(9, 38, 45, 0.18);
       /* Neutral warm-dark wash used for every legibility overlay on a photo —
          kept off the teal ink/sea hues so photos darken without a green cast. */
-      --veil:20 17 15;
-      --veil-ink:radial-gradient(ellipse 82% 76% at 50% 50%,rgb(var(--veil) / .56) 0%,rgb(var(--veil) / .46) 46%,rgb(var(--veil) / .2) 74%,rgb(var(--veil) / 0) 100%);
+      --veil: 20 17 15;
+      --veil-ink: radial-gradient(ellipse 82% 76% at 50% 50%, rgb(var(--veil) / .56) 0%, rgb(var(--veil) / .46) 46%, rgb(var(--veil) / .2) 74%, rgb(var(--veil) / 0) 100%);
       /* Keeps a floor of tint at the edges: a light panel sits over the middle, so
          without it only the bright untinted corners would show. */
-      --veil-ink-soft:radial-gradient(ellipse 88% 82% at 50% 50%,rgb(var(--veil) / .4) 0%,rgb(var(--veil) / .33) 46%,rgb(var(--veil) / .2) 74%,rgb(var(--veil) / .1) 100%);
+      --veil-ink-soft: radial-gradient(ellipse 88% 82% at 50% 50%, rgb(var(--veil) / .4) 0%, rgb(var(--veil) / .33) 46%, rgb(var(--veil) / .2) 74%, rgb(var(--veil) / .1) 100%);
       /* The cream "paper" gradient every card/box on the site shares. */
-      --card-gradient:linear-gradient(170deg,rgb(255 252 244 / .97),rgb(253 242 219 / .95));
+      --card-gradient: linear-gradient(170deg, rgb(255 252 244 / .97), rgb(253 242 219 / .95));
     }
-    * { box-sizing:border-box; }
-    html { scroll-behavior:smooth; background:var(--sand); -webkit-text-size-adjust:100%; }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--sand);
+      -webkit-text-size-adjust: 100%;
+    }
+
     /* overflow-x:clip, not hidden — `hidden` makes body a scroll container and
        silently breaks position:sticky, which the transitions depend on. */
-    body { margin:0; color:var(--ink); background:var(--sand); font-family:var(--body); font-weight:400; overflow-x:clip; }
-    body.locked { overflow:hidden; }
-    img { display:block; max-width:100%; }
-    h1,h2,h3 { margin:0; font-family:var(--display); font-weight:400; }
-    h2 { font-size:clamp(2.35rem,5vw,4rem); line-height:1.08; }
-    h3 { font-size:1.9rem; }
-    .amp { padding:0 .06em; font:italic 1.1em var(--quote); }
-    .mini-rule { position:relative; width:112px; height:1px; margin:2rem auto; background:linear-gradient(90deg,transparent,var(--zari),transparent); }
-    .section-label { margin:0 0 .8rem; color:var(--coral); font-size:.7rem; font-weight:700; letter-spacing:.23em; text-transform:uppercase; }
-    .center { text-align:center; }
-    .inner { position:relative; width:min(100%,1000px); margin:auto; }
-    button,.button { border:0; font:700 .73rem var(--body); letter-spacing:.18em; text-transform:uppercase; cursor:pointer; }
-    .button { display:inline-block; padding:1rem 1.5rem; border-radius:99px; color:#fff; background:var(--coral); text-decoration:none; transition:background .25s ease,transform .25s ease,box-shadow .25s ease; }
-    .button:hover { background:#b0442d; transform:translateY(-2px); box-shadow:0 10px 24px rgb(14 61 71 / .22); }
-    .button:disabled { cursor:not-allowed; opacity:.45; transform:none; }
-    [hidden] { display:none !important; }
-    :where(a,button,input,select,textarea):focus-visible { outline:2px solid var(--zari); outline-offset:3px; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--sand);
+      font-family: var(--body);
+      font-weight: 400;
+      overflow-x: clip;
+    }
+
+    body.locked {
+      overflow: hidden;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      font-family: var(--display);
+      font-weight: 400;
+    }
+
+    h2 {
+      font-size: clamp(2.35rem, 5vw, 4rem);
+      line-height: 1.08;
+    }
+
+    h3 {
+      font-size: 1.9rem;
+    }
+
+    .amp {
+      padding: 0 .06em;
+      font: italic 1.1em var(--quote);
+    }
+
+    .mini-rule {
+      position: relative;
+      width: 112px;
+      height: 1px;
+      margin: 2rem auto;
+      background: linear-gradient(90deg, transparent, var(--zari), transparent);
+    }
+
+    .glass-card {
+      position: relative;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      box-shadow: var(--glass-shadow);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+
+    .glass-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(180deg, rgb(255 255 255 / .18), rgb(255 255 255 / 0));
+      pointer-events: none;
+    }
+
+    .section-label {
+      margin: 0 0 .8rem;
+      color: var(--coral);
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .23em;
+      text-transform: uppercase;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .inner {
+      position: relative;
+      width: min(100%, 1000px);
+      margin: auto;
+    }
+
+    button,
+    .button {
+      border: 0;
+      font: 700 .73rem var(--body);
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 1rem 1.5rem;
+      border-radius: 99px;
+      color: #fff;
+      background: var(--coral);
+      text-decoration: none;
+      transition: background .25s ease, transform .25s ease, box-shadow .25s ease;
+    }
+
+    .button:hover {
+      background: #b0442d;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgb(14 61 71 / .22);
+    }
+
+    .button:disabled {
+      cursor: not-allowed;
+      opacity: .45;
+      transform: none;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    :where(a, button, input, select, textarea):focus-visible {
+      outline: 2px solid var(--zari);
+      outline-offset: 3px;
+    }
 
     /* ── Cover / gate ──────────────────────────────────────────────────────── */
     /* The gate is a pair of doors. They start closed (covering 102% between them),
        and tapping slides them apart to reveal the photograph behind, which is
        held blurred until that moment and resolves as the doors open. */
-    .cover { position:fixed; z-index:60; inset:0; display:grid; place-items:center; overflow:hidden; padding:1.5rem; background:var(--sea-deep); }
+    .cover {
+      position: fixed;
+      z-index: 60;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      padding: 1.5rem;
+      background: var(--sea-deep);
+    }
+
     /* A Bay-of-Bengal shoreline drawn in CSS — sky, sun, sea and sand. All the
        photography we have is courtyards, so the beach is built rather than shot. */
-    .cover-plate { position:absolute; z-index:0; inset:-4%; overflow:hidden; pointer-events:none; will-change:transform,filter;
-      transform:scale(1.1); filter:blur(9px) saturate(.82) brightness(.66);
-      background:linear-gradient(180deg,
-        #08283a 0%,#0e4257 15%,#1d6a7d 32%,#4a9aa4 47%,#93c9bf 56%,
-        #f0d49c 60.5%,#ffeabd 62%,
-        #2f8791 62.6%,#1c6a76 71%,#12505e 79%,
-        #b99f78 81.5%,#e2cda2 88%,#f6e8c6 100%); }
-    .cover-sun { position:absolute; left:50%; top:58%; width:clamp(64px,9vw,110px); aspect-ratio:1; border-radius:50%;
-      transform:translate(-50%,-50%);
-      background:radial-gradient(circle,#fff7e2 0 40%,#ffdfa4 58%,rgb(255 200 130 / .32) 74%,transparent 80%);
-      box-shadow:0 0 90px 42px rgb(255 214 150 / .34); }
-    .cover-glint { position:absolute; left:0; right:0; top:62.6%; height:19%;
-      background:linear-gradient(90deg,transparent 38%,rgb(255 230 176 / .5) 50%,transparent 62%);
-      -webkit-mask-image:linear-gradient(180deg,#000,transparent 88%); mask-image:linear-gradient(180deg,#000,transparent 88%); }
-    .cover-foam { position:absolute; left:-5%; right:-5%; top:78.5%; height:9%; filter:blur(3px);
-      background:radial-gradient(ellipse 55% 58% at 18% 50%,rgb(255 255 255 / .58),transparent 70%),
-        radial-gradient(ellipse 42% 52% at 55% 38%,rgb(255 255 255 / .46),transparent 70%),
-        radial-gradient(ellipse 58% 50% at 88% 56%,rgb(255 255 255 / .4),transparent 70%); }
-    .cover-seam { position:absolute; z-index:1; top:0; bottom:0; left:50%; width:5rem; margin-left:-2.5rem; opacity:.55;
-      pointer-events:none; filter:blur(12px); will-change:transform,opacity;
-      background:linear-gradient(90deg,transparent,rgb(255 232 176 / .85),transparent); }
-    .cover-panel { position:absolute; z-index:2; top:0; bottom:0; width:51%; pointer-events:none; will-change:transform;
-      background-color:var(--sand-deep);
-      background-image:linear-gradient(90deg,rgb(120 74 33 / .2),transparent 14%,rgb(255 253 244 / .7) 30%,transparent 46%,rgb(120 74 33 / .16) 62%,rgb(255 253 244 / .55) 78%,rgb(120 74 33 / .22)),
-        repeating-linear-gradient(90deg,rgb(140 92 44 / .13) 0 .6rem,rgb(255 252 240 / .4) 1.5rem,rgb(140 92 44 / .11) 2.7rem,transparent 4.2rem),
-        linear-gradient(rgb(255 250 235 / .5),transparent 22%,rgb(14 61 71 / .14)); }
-    .cover-left { left:0; border-right:3px solid var(--zari); box-shadow:inset -40px 0 60px rgb(96 53 20 / .3),14px 0 42px rgb(9 38 45 / .42); }
-    .cover-right { right:0; border-left:3px solid var(--zari); box-shadow:inset 40px 0 60px rgb(96 53 20 / .3),-14px 0 42px rgb(9 38 45 / .42); }
-    .cover-left::after,.cover-right::after { content:""; position:absolute; top:0; bottom:0; width:1.1rem; opacity:.55;
-      background:repeating-linear-gradient(rgb(192 139 62 / .85) 0 3px,rgb(255 240 197 / .75) 3px 7px); }
-    .cover-left::after { right:0; }
-    .cover-right::after { left:0; }
-    .cover-toran { position:absolute; z-index:5; top:0; left:0; right:0; height:clamp(3.2rem,7vh,5rem); pointer-events:none;
-      filter:drop-shadow(0 6px 10px rgb(9 38 45 / .45));
-      background:radial-gradient(circle at 50% 0,rgb(255 240 197 / .9) 22%,rgb(192 139 62 / .85) 23% 34%,transparent 35%) 0 .75rem/2.4rem 2.6rem repeat-x,
-        linear-gradient(var(--sea) 0 .5rem,rgb(27 106 114 / .55) .5rem .78rem,transparent .78rem); }
+    .cover-plate {
+      position: absolute;
+      z-index: 0;
+      inset: -4%;
+      overflow: hidden;
+      pointer-events: none;
+      will-change: transform, filter;
+      transform: scale(1.1);
+      filter: blur(9px) saturate(.82) brightness(.66);
+      background: linear-gradient(180deg,
+          #08283a 0%, #0e4257 15%, #1d6a7d 32%, #4a9aa4 47%, #93c9bf 56%,
+          #f0d49c 60.5%, #ffeabd 62%,
+          #2f8791 62.6%, #1c6a76 71%, #12505e 79%,
+          #b99f78 81.5%, #e2cda2 88%, #f6e8c6 100%);
+    }
+
+    .cover-sun {
+      position: absolute;
+      left: 50%;
+      top: 58%;
+      width: clamp(64px, 9vw, 110px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, #fff7e2 0 40%, #ffdfa4 58%, rgb(255 200 130 / .32) 74%, transparent 80%);
+      box-shadow: 0 0 90px 42px rgb(255 214 150 / .34);
+    }
+
+    .cover-glint {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 62.6%;
+      height: 19%;
+      background: linear-gradient(90deg, transparent 38%, rgb(255 230 176 / .5) 50%, transparent 62%);
+      -webkit-mask-image: linear-gradient(180deg, #000, transparent 88%);
+      mask-image: linear-gradient(180deg, #000, transparent 88%);
+    }
+
+    .cover-foam {
+      position: absolute;
+      left: -5%;
+      right: -5%;
+      top: 78.5%;
+      height: 9%;
+      filter: blur(3px);
+      background: radial-gradient(ellipse 55% 58% at 18% 50%, rgb(255 255 255 / .58), transparent 70%),
+        radial-gradient(ellipse 42% 52% at 55% 38%, rgb(255 255 255 / .46), transparent 70%),
+        radial-gradient(ellipse 58% 50% at 88% 56%, rgb(255 255 255 / .4), transparent 70%);
+    }
+
+    .cover-seam {
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 5rem;
+      margin-left: -2.5rem;
+      opacity: .55;
+      pointer-events: none;
+      filter: blur(12px);
+      will-change: transform, opacity;
+      background: linear-gradient(90deg, transparent, rgb(255 232 176 / .85), transparent);
+    }
+
+    .cover-panel {
+      position: absolute;
+      z-index: 2;
+      top: 0;
+      bottom: 0;
+      width: 51%;
+      pointer-events: none;
+      will-change: transform;
+      background-color: var(--sand-deep);
+      background-image: linear-gradient(90deg, rgb(120 74 33 / .2), transparent 14%, rgb(255 253 244 / .7) 30%, transparent 46%, rgb(120 74 33 / .16) 62%, rgb(255 253 244 / .55) 78%, rgb(120 74 33 / .22)),
+        repeating-linear-gradient(90deg, rgb(140 92 44 / .13) 0 .6rem, rgb(255 252 240 / .4) 1.5rem, rgb(140 92 44 / .11) 2.7rem, transparent 4.2rem),
+        linear-gradient(rgb(255 250 235 / .5), transparent 22%, rgb(14 61 71 / .14));
+    }
+
+    .cover-left {
+      left: 0;
+      border-right: 3px solid var(--zari);
+      box-shadow: inset -40px 0 60px rgb(96 53 20 / .3), 14px 0 42px rgb(9 38 45 / .42);
+    }
+
+    .cover-right {
+      right: 0;
+      border-left: 3px solid var(--zari);
+      box-shadow: inset 40px 0 60px rgb(96 53 20 / .3), -14px 0 42px rgb(9 38 45 / .42);
+    }
+
+    .cover-left::after,
+    .cover-right::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 1.1rem;
+      opacity: .55;
+      background: repeating-linear-gradient(rgb(192 139 62 / .85) 0 3px, rgb(255 240 197 / .75) 3px 7px);
+    }
+
+    .cover-left::after {
+      right: 0;
+    }
+
+    .cover-right::after {
+      left: 0;
+    }
+
+    .cover-toran {
+      position: absolute;
+      z-index: 5;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: clamp(3.2rem, 7vh, 5rem);
+      pointer-events: none;
+      filter: drop-shadow(0 6px 10px rgb(9 38 45 / .45));
+      background: radial-gradient(circle at 50% 0, rgb(255 240 197 / .9) 22%, rgb(192 139 62 / .85) 23% 34%, transparent 35%) 0 .75rem/2.4rem 2.6rem repeat-x,
+        linear-gradient(var(--sea) 0 .5rem, rgb(27 106 114 / .55) .5rem .78rem, transparent .78rem);
+    }
+
     /* Palms sit in FRONT of the doors (z 4). The doors cover the whole screen while
        closed, so anything behind them is invisible until you tap — and the gate is
        where the beach theme has to read first. */
-    .cover-palm { position:absolute; z-index:4; bottom:-3%; width:clamp(190px,34vw,420px); aspect-ratio:.78; pointer-events:none; opacity:.86;
-      transform-origin:bottom center; animation:palm-sway 9s ease-in-out infinite;
-      background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 340'%3E%3Cg fill='%230a2731'%3E%3Cpath d='M152 340c6-72 10-142 13-210l15 2c-4 68-9 138-11 208z'/%3E%3Cpath d='M170 110c35-38 88-42 126-18-38-10-84-4-120 28z'/%3E%3Cpath d='M170 110c44-14 96-2 126 30-34-20-82-26-122-12z'/%3E%3Cpath d='M170 110c40 18 74 58 84 110-20-44-52-80-92-96z'/%3E%3Cpath d='M170 110c18-34 52-58 92-66-34 16-62 38-80 74z'/%3E%3Cpath d='M166 110c-18-34-52-58-92-66 34 16 62 38 80 74z'/%3E%3Cpath d='M166 110c-35-38-88-42-126-18 38-10 84-4 120 28z'/%3E%3Cpath d='M166 110c-44-14-96-2-126 30 34-20 82-26 122-12z'/%3E%3Cpath d='M166 110c-40 18-74 58-84 110 20-44 52-80 92-96z'/%3E%3Cpath d='M166 110c-16 34-20 74-12 112-2-40 4-78 20-106z'/%3E%3Ccircle cx='159' cy='116' r='8'/%3E%3Ccircle cx='176' cy='124' r='6'/%3E%3Ccircle cx='143' cy='124' r='6'/%3E%3C/g%3E%3C/svg%3E") bottom center/contain no-repeat; }
-    .cover-palm-l { left:-9%; }
-    .cover-palm-r { right:-9%; transform:scaleX(-1); animation-name:palm-sway-flip; }
+    .cover-palm {
+      position: absolute;
+      z-index: 4;
+      bottom: -3%;
+      width: clamp(190px, 34vw, 420px);
+      aspect-ratio: .78;
+      pointer-events: none;
+      opacity: .86;
+      transform-origin: bottom center;
+      animation: palm-sway 9s ease-in-out infinite;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 340'%3E%3Cg fill='%230a2731'%3E%3Cpath d='M152 340c6-72 10-142 13-210l15 2c-4 68-9 138-11 208z'/%3E%3Cpath d='M170 110c35-38 88-42 126-18-38-10-84-4-120 28z'/%3E%3Cpath d='M170 110c44-14 96-2 126 30-34-20-82-26-122-12z'/%3E%3Cpath d='M170 110c40 18 74 58 84 110-20-44-52-80-92-96z'/%3E%3Cpath d='M170 110c18-34 52-58 92-66-34 16-62 38-80 74z'/%3E%3Cpath d='M166 110c-18-34-52-58-92-66 34 16 62 38 80 74z'/%3E%3Cpath d='M166 110c-35-38-88-42-126-18 38-10 84-4 120 28z'/%3E%3Cpath d='M166 110c-44-14-96-2-126 30 34-20 82-26 122-12z'/%3E%3Cpath d='M166 110c-40 18-74 58-84 110 20-44 52-80 92-96z'/%3E%3Cpath d='M166 110c-16 34-20 74-12 112-2-40 4-78 20-106z'/%3E%3Ccircle cx='159' cy='116' r='8'/%3E%3Ccircle cx='176' cy='124' r='6'/%3E%3Ccircle cx='143' cy='124' r='6'/%3E%3C/g%3E%3C/svg%3E") bottom center/contain no-repeat;
+    }
+
+    .cover-palm-l {
+      left: -9%;
+    }
+
+    .cover-palm-r {
+      right: -9%;
+      transform: scaleX(-1);
+      animation-name: palm-sway-flip;
+    }
+
     /* A line of foam along the foot of the gate, also in front of the doors. */
-    .cover-shore { position:absolute; z-index:3; left:0; right:0; bottom:0; height:clamp(48px,9vh,96px); pointer-events:none;
-      background:radial-gradient(ellipse 24% 78% at 12% 100%,rgb(255 252 244 / .72),transparent 70%),
-        radial-gradient(ellipse 20% 68% at 38% 100%,rgb(255 252 244 / .6),transparent 70%),
-        radial-gradient(ellipse 26% 74% at 66% 100%,rgb(255 252 244 / .66),transparent 70%),
-        radial-gradient(ellipse 22% 70% at 90% 100%,rgb(255 252 244 / .58),transparent 70%),
-        linear-gradient(180deg,transparent,rgb(233 209 160 / .5) 62%,rgb(226 199 146 / .78)); }
+    .cover-shore {
+      position: absolute;
+      z-index: 3;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: clamp(48px, 9vh, 96px);
+      pointer-events: none;
+      background: radial-gradient(ellipse 24% 78% at 12% 100%, rgb(255 252 244 / .72), transparent 70%),
+        radial-gradient(ellipse 20% 68% at 38% 100%, rgb(255 252 244 / .6), transparent 70%),
+        radial-gradient(ellipse 26% 74% at 66% 100%, rgb(255 252 244 / .66), transparent 70%),
+        radial-gradient(ellipse 22% 70% at 90% 100%, rgb(255 252 244 / .58), transparent 70%),
+        linear-gradient(180deg, transparent, rgb(233 209 160 / .5) 62%, rgb(226 199 146 / .78));
+    }
 
     /* The open sequence is driven entirely by CSS. Doing it with JS animations
        meant each one released its end state on finish and the element snapped
        back — the card reappeared and the doors slammed shut. A class-driven end
        state cannot revert, and it works even if the motion library never loads. */
-    .cover-panel { transition:transform 1.5s cubic-bezier(.22,1,.36,1); }
-    .cover.opening .cover-left { transform:translateX(-101%); }
-    .cover.opening .cover-right { transform:translateX(101%); }
-    .cover.opening .cover-plate { transform:scale(1); filter:blur(0) saturate(1) brightness(1);
-      transition:transform 1.9s cubic-bezier(.22,1,.36,1),filter 1.9s cubic-bezier(.22,1,.36,1); }
-    .cover.opening .cover-card { opacity:0; transform:translateY(-18px) scale(.97); animation:none;
-      transition:opacity .55s cubic-bezier(.22,1,.36,1),transform .55s cubic-bezier(.22,1,.36,1); }
-    .cover.opening .cover-seam { animation:seam-flare 1.5s cubic-bezier(.22,1,.36,1) forwards; }
-    .cover.opening .cover-toran { opacity:0; transition:opacity .55s cubic-bezier(.22,1,.36,1); }
-    .cover.opening { opacity:0; transition:opacity .5s cubic-bezier(.22,1,.36,1) 1.5s; }
-    @keyframes seam-flare {
-      0% { opacity:.55; transform:scaleX(1); }
-      55% { opacity:.95; transform:scaleX(4); }
-      100% { opacity:0; transform:scaleX(9); }
+    .cover-panel {
+      transition: transform 1.5s cubic-bezier(.22, 1, .36, 1);
     }
-    .cover-card { position:relative; z-index:6; width:min(100%,960px); padding:clamp(4.5rem,8vw,7rem) 2rem 3.2rem; border:1px solid var(--line); outline:1px solid var(--line); outline-offset:-17px;
-      background:var(--card-gradient); text-align:center; box-shadow:0 20px 45px rgb(9 38 45 / .3);
-      animation:cover-arrive 1.15s cubic-bezier(.22,1,.36,1) both; will-change:transform,opacity; }
-    .seal { position:absolute; top:-78px; left:50%; display:grid; place-items:center; width:150px; aspect-ratio:1; border:2px solid #b98a3b; border-radius:50%;
-      outline:1px solid #d7b776; outline-offset:-10px; background:radial-gradient(circle at 36% 26%,#fffaea,#f0dcb6); transform:translateX(-50%);
-      box-shadow:0 5px 18px rgb(9 38 45 / .26); }
-    .seal img { width:76%; aspect-ratio:1; object-fit:contain; }
-    .kicker { margin:0 0 1rem; color:var(--coral); font-size:.72rem; font-weight:700; letter-spacing:.31em; text-transform:uppercase; }
-    .cover h1,.hero h1 { font:clamp(3.1rem,8vw,6.2rem)/.98 var(--display); letter-spacing:-.035em; margin:0; }
-    .cover-place { margin:0 0 1.9rem; color:var(--ink-soft); font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; }
-    .open-button { display:inline-flex; align-items:center; gap:1.5rem; padding:.55rem .65rem .55rem 2rem; border:1px solid var(--zari); border-radius:99px;
-      color:var(--ink); background:rgb(255 252 244 / .55); transition:transform .25s ease,box-shadow .25s ease,color .25s ease,background .25s ease; }
-    .open-button b { display:grid; place-items:center; width:3.15rem; aspect-ratio:1; border-radius:50%; color:#fff; background:var(--coral); font-size:1.1rem;
-      transition:transform .35s cubic-bezier(.34,1.56,.64,1); }
-    .open-button:hover { color:#fff; background:var(--sea); box-shadow:0 9px 20px rgb(9 38 45 / .22); transform:translateY(-3px); }
-    .open-button:hover b { transform:translateX(.25rem); }
-    .open-button:active { transform:translateY(0) scale(.98); }
-    @keyframes cover-arrive { from { opacity:0; transform:translateY(1.5rem) scale(.98); } to { opacity:1; transform:translateY(0) scale(1); } }
+
+    .cover.opening .cover-left {
+      transform: translateX(-101%);
+    }
+
+    .cover.opening .cover-right {
+      transform: translateX(101%);
+    }
+
+    .cover.opening .cover-plate {
+      transform: scale(1);
+      filter: blur(0) saturate(1) brightness(1);
+      transition: transform 1.9s cubic-bezier(.22, 1, .36, 1), filter 1.9s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .cover.opening .cover-card {
+      opacity: 0;
+      transform: translateY(-18px) scale(.97);
+      animation: none;
+      transition: opacity .55s cubic-bezier(.22, 1, .36, 1), transform .55s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .cover.opening .cover-seam {
+      animation: seam-flare 1.5s cubic-bezier(.22, 1, .36, 1) forwards;
+    }
+
+    .cover.opening .cover-toran {
+      opacity: 0;
+      transition: opacity .55s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .cover.opening {
+      opacity: 0;
+      transition: opacity .5s cubic-bezier(.22, 1, .36, 1) 1.5s;
+    }
+
+    @keyframes seam-flare {
+      0% {
+        opacity: .55;
+        transform: scaleX(1);
+      }
+
+      55% {
+        opacity: .95;
+        transform: scaleX(4);
+      }
+
+      100% {
+        opacity: 0;
+        transform: scaleX(9);
+      }
+    }
+
+    .cover-card {
+      position: relative;
+      z-index: 6;
+      width: min(100%, 960px);
+      padding: clamp(4.5rem, 8vw, 7rem) 2rem 3.2rem;
+      border: 1px solid var(--line);
+      outline: 1px solid var(--line);
+      outline-offset: -17px;
+      background: var(--card-gradient);
+      text-align: center;
+      box-shadow: 0 20px 45px rgb(9 38 45 / .3);
+      animation: cover-arrive 1.15s cubic-bezier(.22, 1, .36, 1) both;
+      will-change: transform, opacity;
+    }
+
+    .seal {
+      position: absolute;
+      top: -78px;
+      left: 50%;
+      display: grid;
+      place-items: center;
+      width: 150px;
+      aspect-ratio: 1;
+      border: 2px solid #b98a3b;
+      border-radius: 50%;
+      outline: 1px solid #d7b776;
+      outline-offset: -10px;
+      background: radial-gradient(circle at 36% 26%, #fffaea, #f0dcb6);
+      transform: translateX(-50%);
+      box-shadow: 0 5px 18px rgb(9 38 45 / .26);
+    }
+
+    .seal img {
+      width: 76%;
+      aspect-ratio: 1;
+      object-fit: contain;
+    }
+
+    .kicker {
+      margin: 0 0 1rem;
+      color: var(--coral);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .31em;
+      text-transform: uppercase;
+    }
+
+    .cover h1,
+    .hero h1 {
+      font: clamp(3.1rem, 8vw, 6.2rem)/.98 var(--display);
+      letter-spacing: -.035em;
+      margin: 0;
+    }
+
+    .cover-place {
+      margin: 0 0 1.9rem;
+      color: var(--ink-soft);
+      font-size: .72rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+
+    .open-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: .55rem .65rem .55rem 2rem;
+      border: 1px solid var(--zari);
+      border-radius: 99px;
+      color: var(--ink);
+      background: rgb(255 252 244 / .55);
+      transition: transform .25s ease, box-shadow .25s ease, color .25s ease, background .25s ease;
+    }
+
+    .open-button b {
+      display: grid;
+      place-items: center;
+      width: 3.15rem;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--coral);
+      font-size: 1.1rem;
+      transition: transform .35s cubic-bezier(.34, 1.56, .64, 1);
+    }
+
+    .open-button:hover {
+      color: #fff;
+      background: var(--sea);
+      box-shadow: 0 9px 20px rgb(9 38 45 / .22);
+      transform: translateY(-3px);
+    }
+
+    .open-button:hover b {
+      transform: translateX(.25rem);
+    }
+
+    .open-button:active {
+      transform: translateY(0) scale(.98);
+    }
+
+    @keyframes cover-arrive {
+      from {
+        opacity: 0;
+        transform: translateY(1.5rem) scale(.98);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
 
     /* ── Floating nav ──────────────────────────────────────────────────────── */
-    nav { position:fixed; z-index:40; top:1rem; left:50%; display:flex; align-items:center; justify-content:space-between; gap:1.2rem;
-      width:min(94%,760px); padding:.55rem .8rem .55rem 1.25rem; border:1px solid rgb(232 195 124 / .42); border-radius:99px;
-      background:rgb(14 49 58 / .62); backdrop-filter:blur(12px); transform:translateX(-50%) translateY(-150%);
-      transition:transform .5s cubic-bezier(.22,1,.36,1),opacity .4s ease; opacity:0; }
-    nav.show { transform:translateX(-50%) translateY(0); opacity:1; }
-    .nav-logo { color:var(--zari-lit); font:1.35rem var(--display); letter-spacing:.06em; text-decoration:none; }
-    .nav-links { display:flex; gap:1.15rem; min-width:0; overflow-x:auto; scrollbar-width:none; }
-    .nav-links::-webkit-scrollbar { display:none; }
-    .nav-links a { white-space:nowrap; }
-    .nav-links a { color:#fdf6e9; padding:.45rem 0; font-size:.6rem; font-weight:700; letter-spacing:.15em; text-decoration:none; text-transform:uppercase; opacity:.85; transition:color .2s ease,opacity .2s ease; }
-    .nav-links a:hover { color:var(--zari-lit); opacity:1; }
+    nav {
+      position: fixed;
+      z-index: 40;
+      top: 1rem;
+      left: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.2rem;
+      width: min(94%, 760px);
+      padding: .55rem .8rem .55rem 1.25rem;
+      border: 1px solid rgb(232 195 124 / .42);
+      border-radius: 99px;
+      background: rgb(14 49 58 / .62);
+      backdrop-filter: blur(12px);
+      transform: translateX(-50%) translateY(-150%);
+      transition: transform .5s cubic-bezier(.22, 1, .36, 1), opacity .4s ease;
+      opacity: 0;
+    }
+
+    nav.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    .nav-logo {
+      color: var(--zari-lit);
+      font: 1.35rem var(--display);
+      letter-spacing: .06em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.15rem;
+      min-width: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .nav-links::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-links a {
+      white-space: nowrap;
+    }
+
+    .nav-links a {
+      color: #fdf6e9;
+      padding: .45rem 0;
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-decoration: none;
+      text-transform: uppercase;
+      opacity: .85;
+      transition: color .2s ease, opacity .2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--zari-lit);
+      opacity: 1;
+    }
 
     /* ── The plate: ONE fixed backdrop shared by the whole page. Scenes claim a
        plate as they reach mid-viewport and it crossfades; the layer drifts with
        page scroll. This is what makes the page feel like one continuous space. ─ */
-    .plate { position:fixed; z-index:0; inset:0; overflow:hidden; pointer-events:none; background:var(--sea-deep); }
-    .plateTravel { position:absolute; inset:-4% -3%; will-change:transform; }
-    .plateImage { position:absolute; inset:0; opacity:0; background-size:cover; background-repeat:no-repeat;
-      background-position:var(--plate-focus,50% 50%); transition:opacity 1.15s cubic-bezier(.22,1,.36,1); }
-    .plateOn { opacity:1; }
-    .plateAir { position:absolute; inset:0;
-      background:linear-gradient(rgb(255 246 222 / .16),transparent 26% 72%,rgb(var(--veil) / .22)),
-                 radial-gradient(transparent 52%,rgb(var(--veil) / .18) 100%); }
+    .plate {
+      position: fixed;
+      z-index: 0;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      background: var(--sea-deep);
+    }
+
+    .plateTravel {
+      position: absolute;
+      inset: -4% -3%;
+      will-change: transform;
+    }
+
+    .plateImage {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: var(--plate-focus, 50% 50%);
+      transition: opacity 1.15s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .plateOn {
+      opacity: 1;
+    }
+
+    .plateAir {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(rgb(255 246 222 / .16), transparent 26% 72%, rgb(var(--veil) / .22)),
+        radial-gradient(transparent 52%, rgb(var(--veil) / .18) 100%);
+    }
 
     /* ── Scenes: content riding over the plate ─────────────────────────────── */
-    main { position:relative; z-index:1; }
+    main {
+      position: relative;
+      z-index: 1;
+    }
+
     /* minmax(0,1fr) stops a wide overflowing child (the gallery rail) from
        inflating the column and shoving the centred content off to one side. */
-    .scene { position:relative; z-index:1; min-height:100svh; display:grid; grid-template-columns:minmax(0,1fr); place-items:center; padding:6rem 1.5rem; }
-    .scene::after { content:""; position:absolute; z-index:0; inset:0; background:var(--veil-ink); pointer-events:none; }
+    .scene {
+      position: relative;
+      z-index: 1;
+      min-height: 100svh;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      place-items: center;
+      padding: 6rem 1.5rem;
+    }
+
+    .scene::after {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      inset: 0;
+      background: var(--veil-ink);
+      pointer-events: none;
+    }
+
     /* Every scene fades to dark. A pale veil washed the photograph out and made
        the cream cards sitting on it disappear into the background. */
-    .scene.light::after { background:var(--veil-ink-soft); }
+    .scene.light::after {
+      background: var(--veil-ink-soft);
+    }
+
     /* The gallery is the one light scene whose text sits on the veil rather than
        inside a card, so it needs to invert with it. */
-    #gallery h2, #gallery .swipe-hint { color:#fff8ea; text-shadow:0 2px 14px rgb(0 0 0 / .45); }
-    #gallery .section-label { color:var(--zari-lit); }
+    #gallery h2,
+    #gallery .swipe-hint {
+      color: #fff8ea;
+      text-shadow: 0 2px 14px rgb(0 0 0 / .45);
+    }
+
+    #gallery .section-label {
+      color: var(--zari-lit);
+    }
+
     /* figcaption is NOT on the veil — it sits inside the cream figure card, so it
        stays dark. */
-    .scene > * { position:relative; z-index:1; }
+    .scene>* {
+      position: relative;
+      z-index: 1;
+    }
 
-    .paper-section { position:relative; z-index:1; padding:clamp(4.5rem,9vw,8rem) 1.5rem; background:var(--sand); overflow:hidden; }
-    .paper-section::before { content:""; position:absolute; inset:0; opacity:.22; pointer-events:none;
-      background:repeating-linear-gradient(0deg,transparent 0 4px,rgb(27 106 114 / .1) 5px); }
+    .paper-section {
+      position: relative;
+      z-index: 1;
+      padding: clamp(4.5rem, 9vw, 8rem) 1.5rem;
+      background: var(--sand);
+      overflow: hidden;
+    }
+
+    .paper-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: .22;
+      pointer-events: none;
+      background: repeating-linear-gradient(0deg, transparent 0 4px, rgb(27 106 114 / .1) 5px);
+    }
 
     /* These four sit directly over the shared plate photo, like the .scene
        sections, instead of the flat opaque paper backdrop. */
-    .invitation-section::after,#events::after,.blessing::after,#people::after { content:""; position:absolute; z-index:0; inset:0; pointer-events:none; background:var(--veil-ink-soft); }
-    .invitation-section > .inner,#events > .inner,.blessing > .inner,#people > .inner { position:relative; z-index:1; }
+    .invitation-section::after,
+    #events::after,
+    .blessing::after,
+    #people::after {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      inset: 0;
+      pointer-events: none;
+      background: var(--veil-ink-soft);
+    }
+
+    .invitation-section>.inner,
+    #events>.inner,
+    .blessing>.inner,
+    #people>.inner {
+      position: relative;
+      z-index: 1;
+    }
 
     /* Entrance states apply ONLY once the motion library has loaded, so a CDN
        failure leaves a fully readable page. */
-    html.motion .scene > *:not(.scroll-note):not(.foam):not(.sun-glow),
-    html.motion .paper-section > .inner { opacity:0; }
+    html.motion .scene>*:not(.scroll-note):not(.foam):not(.sun-glow),
+    html.motion .paper-section>.inner {
+      opacity: 0;
+    }
 
     /* ── Beach motifs: waves, sun glow, drifting foam, palm silhouette ─────── */
-    .wave-divider { display:block; width:100%; height:clamp(42px,6vw,80px); color:var(--sand); }
-    .wave-divider.flip { transform:rotate(180deg); }
-    .sun-glow { position:absolute; z-index:-1; top:12%; left:50%; width:min(80vw,720px); aspect-ratio:1; transform:translateX(-50%); pointer-events:none;
-      background:radial-gradient(circle,rgb(232 195 124 / .38) 0%,rgb(232 195 124 / .12) 38%,transparent 68%); animation:sun-breathe 11s ease-in-out infinite; }
-    @keyframes sun-breathe { 50% { opacity:.62; transform:translateX(-50%) scale(1.09); } }
-    .foam { position:absolute; z-index:-1; inset:0; overflow:hidden; pointer-events:none; }
-    .foam span { position:absolute; bottom:-12%; width:6px; height:6px; border-radius:50%; background:rgb(255 250 238 / .55);
-      box-shadow:0 0 10px rgb(255 250 238 / .5); animation:foam-drift linear infinite; }
-    @keyframes foam-drift { from { transform:translate3d(0,0,0) scale(.5); opacity:0; } 15% { opacity:.85; } 85% { opacity:.6; } to { transform:translate3d(38px,-102vh,0) scale(1.25); opacity:0; } }
-    @keyframes palm-sway { 50% { transform:rotate(2.6deg); } }
-    @keyframes palm-sway-flip { 0%,100% { transform:scaleX(-1) rotate(0); } 50% { transform:scaleX(-1) rotate(2.6deg); } }
+    .wave-divider {
+      display: block;
+      width: 100%;
+      height: clamp(42px, 6vw, 80px);
+      color: var(--sand);
+    }
+
+    .wave-divider.flip {
+      transform: rotate(180deg);
+    }
+
+    .sun-glow {
+      position: absolute;
+      z-index: -1;
+      top: 12%;
+      left: 50%;
+      width: min(80vw, 720px);
+      aspect-ratio: 1;
+      transform: translateX(-50%);
+      pointer-events: none;
+      background: radial-gradient(circle, rgb(232 195 124 / .38) 0%, rgb(232 195 124 / .12) 38%, transparent 68%);
+      animation: sun-breathe 11s ease-in-out infinite;
+    }
+
+    @keyframes sun-breathe {
+      50% {
+        opacity: .62;
+        transform: translateX(-50%) scale(1.09);
+      }
+    }
+
+    .foam {
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .foam span {
+      position: absolute;
+      bottom: -12%;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgb(255 250 238 / .55);
+      box-shadow: 0 0 10px rgb(255 250 238 / .5);
+      animation: foam-drift linear infinite;
+    }
+
+    @keyframes foam-drift {
+      from {
+        transform: translate3d(0, 0, 0) scale(.5);
+        opacity: 0;
+      }
+
+      15% {
+        opacity: .85;
+      }
+
+      85% {
+        opacity: .6;
+      }
+
+      to {
+        transform: translate3d(38px, -102vh, 0) scale(1.25);
+        opacity: 0;
+      }
+    }
+
+    @keyframes palm-sway {
+      50% {
+        transform: rotate(2.6deg);
+      }
+    }
+
+    @keyframes palm-sway-flip {
+
+      0%,
+      100% {
+        transform: scaleX(-1) rotate(0);
+      }
+
+      50% {
+        transform: scaleX(-1) rotate(2.6deg);
+      }
+    }
 
     /* ── Hero ──────────────────────────────────────────────────────────────── */
-    .hero { color:#fff6e4; text-align:center; text-shadow:0 2px 18px rgb(0 0 0 / .45); }
-    .hero .section-label { color:var(--zari-lit); }
-    .hero-monogram { display:block; width:clamp(110px,22vw,165px); aspect-ratio:1; margin:1.6rem auto; object-fit:contain;
-      filter:drop-shadow(0 8px 18px rgb(9 38 45 / .45)); }
-    .hero-place { margin:2.1rem 0 0; font-size:.76rem; letter-spacing:.12em; text-transform:uppercase; }
-    .hero-sub { margin:.9rem 0 0; color:#e8f1ee; font:italic 1rem var(--quote); text-transform:none; letter-spacing:.02em; }
-    .scroll-note { position:absolute; bottom:1.7rem; left:50%; color:#fff4d8; font-size:.62rem; letter-spacing:.2em; text-decoration:none;
-      text-transform:uppercase; transform:translateX(-50%); opacity:1 !important; }
-    .scroll-note::after { content:""; display:block; width:1px; height:30px; margin:.7rem auto 0; background:linear-gradient(180deg,var(--zari-lit),transparent); animation:cue 1.9s ease-in-out infinite; }
-    @keyframes cue { 50% { transform:scaleY(.42); transform-origin:top; } }
+    .hero {
+      color: #fff6e4;
+      text-align: center;
+      text-shadow: 0 2px 18px rgb(0 0 0 / .45);
+    }
+
+    .hero .section-label {
+      color: var(--zari-lit);
+    }
+
+    .hero-monogram {
+      display: block;
+      width: clamp(110px, 22vw, 165px);
+      aspect-ratio: 1;
+      margin: 1.6rem auto;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 18px rgb(9 38 45 / .45));
+    }
+
+    .hero-place {
+      margin: 2.1rem 0 0;
+      font-size: .76rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .hero-sub {
+      margin: .9rem 0 0;
+      color: #e8f1ee;
+      font: italic 1rem var(--quote);
+      text-transform: none;
+      letter-spacing: .02em;
+    }
+
+    .scroll-note {
+      position: absolute;
+      bottom: 1.7rem;
+      left: 50%;
+      color: #fff4d8;
+      font-size: .62rem;
+      letter-spacing: .2em;
+      text-decoration: none;
+      text-transform: uppercase;
+      transform: translateX(-50%);
+      opacity: 1 !important;
+    }
+
+    .scroll-note::after {
+      content: "";
+      display: block;
+      width: 1px;
+      height: 30px;
+      margin: .7rem auto 0;
+      background: linear-gradient(180deg, var(--zari-lit), transparent);
+      animation: cue 1.9s ease-in-out infinite;
+    }
+
+    @keyframes cue {
+      50% {
+        transform: scaleY(.42);
+        transform-origin: top;
+      }
+    }
 
     /* ── The four scroll-scrubbed transitions. Each is a sticky full-bleed frame
        pushed through a different camera move: iris, pan, focus-pull. The
        oversized picture box gives the pan its travel room. ─────────────────── */
     /* No background: the push variant masks a hole through the frame and the fixed
        plate behind must show through it. */
-    .transition { position:relative; z-index:2; height:200svh; }
-    .transition.pan { height:220svh; }
-    .transition.focus { height:165svh; }
-    .transitionSticky { position:sticky; top:0; height:100svh; overflow:hidden; }
-    .transitionPic { position:absolute; display:block; width:108%; height:112svh; top:-6svh; left:-4%; will-change:transform,filter; }
-    .pan .transitionPic { width:170%; height:110svh; top:-5svh; left:0; }
-    .transitionPic img { display:block; width:100%; height:100%; object-fit:cover; }
-    .transitionWash { position:absolute; inset:0; pointer-events:none; }
-    .push .transitionWash { background:radial-gradient(transparent 30%,rgb(var(--veil) / .42) 100%); }
-    .pan .transitionWash { background:linear-gradient(transparent 54%,rgb(var(--veil) / .46)); }
-    .focus .transitionWash { background:radial-gradient(circle at 68% 32%,rgb(255 247 193 / .34),transparent 38%),linear-gradient(transparent 56%,rgb(var(--veil) / .26)); }
-    .transitionTitle { position:absolute; inset:auto 0 13%; margin:0; padding:0 1.5rem; text-align:center; color:#fff8ea;
-      font:clamp(2.6rem,8vw,6.5rem)/1 var(--display); text-shadow:0 2px 26px rgb(9 38 45 / .62); }
+    .transition {
+      position: relative;
+      z-index: 2;
+      height: 200svh;
+    }
+
+    .transition.pan {
+      height: 220svh;
+    }
+
+    .transition.focus {
+      height: 165svh;
+    }
+
+    .transitionSticky {
+      position: sticky;
+      top: 0;
+      height: 100svh;
+      overflow: hidden;
+    }
+
+    .transitionPic {
+      position: absolute;
+      display: block;
+      width: 108%;
+      height: 112svh;
+      top: -6svh;
+      left: -4%;
+      will-change: transform, filter;
+    }
+
+    .pan .transitionPic {
+      width: 170%;
+      height: 110svh;
+      top: -5svh;
+      left: 0;
+    }
+
+    .transitionPic img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .transitionWash {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .push .transitionWash {
+      background: radial-gradient(transparent 30%, rgb(var(--veil) / .42) 100%);
+    }
+
+    .pan .transitionWash {
+      background: linear-gradient(transparent 54%, rgb(var(--veil) / .46));
+    }
+
+    .focus .transitionWash {
+      background: radial-gradient(circle at 68% 32%, rgb(255 247 193 / .34), transparent 38%), linear-gradient(transparent 56%, rgb(var(--veil) / .26));
+    }
+
+    .transitionTitle {
+      position: absolute;
+      inset: auto 0 13%;
+      margin: 0;
+      padding: 0 1.5rem;
+      text-align: center;
+      color: #fff8ea;
+      font: clamp(2.6rem, 8vw, 6.5rem)/1 var(--display);
+      text-shadow: 0 2px 26px rgb(9 38 45 / .62);
+    }
 
     /* ── Date reveal ───────────────────────────────────────────────────────── */
-    .date-card { width:min(100%,620px); padding:clamp(2rem,5vw,3.5rem) 1.5rem; border:1px solid rgb(255 247 221 / .62);
-      background:var(--card-gradient); color:var(--ink); text-align:center; box-shadow:0 14px 44px rgb(9 38 45 / .26); backdrop-filter:blur(6px); }
-    .date-card > p { margin:0; font-size:.75rem; font-weight:700; letter-spacing:.19em; text-transform:uppercase; }
-    .date-seal { position:relative; display:grid; place-items:center; width:clamp(150px,33vw,205px); aspect-ratio:1; margin:2.2rem auto; border:2px solid #e9d8ad;
-      border-radius:50%; outline:1px solid var(--zari); outline-offset:-11px; color:var(--ink);
-      background:radial-gradient(circle at 35% 25%,#fffbe8,#e8cf96); box-shadow:0 8px 24px rgb(9 38 45 / .26); cursor:pointer;
-      transition:transform .45s ease,box-shadow .45s ease; }
-    .date-seal::before { content:""; position:absolute; inset:16%; border-radius:50%; border:1px dashed rgb(27 106 114 / .3); animation:seal-turn 24s linear infinite; }
-    @keyframes seal-turn { to { transform:rotate(360deg); } }
-    .date-seal:hover { transform:scale(1.04); box-shadow:0 12px 30px rgb(9 38 45 / .3); }
-    .date-seal[disabled] { cursor:default; }
+    .date-card {
+      width: min(100%, 620px);
+      padding: clamp(2rem, 5vw, 3.5rem) 1.5rem;
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      background: var(--glass-bg);
+      box-shadow: var(--glass-shadow);
+      color: var(--ink);
+      text-align: center;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    .date-card>p {
+      margin: 0;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .19em;
+      text-transform: uppercase;
+    }
+
+    .date-seal {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: clamp(150px, 33vw, 205px);
+      aspect-ratio: 1;
+      margin: 2.2rem auto;
+      border: 2px solid #e9d8ad;
+      border-radius: 50%;
+      outline: 1px solid var(--zari);
+      outline-offset: -11px;
+      color: var(--ink);
+      background: radial-gradient(circle at 35% 25%, #fffbe8, #e8cf96);
+      box-shadow: 0 8px 24px rgb(9 38 45 / .26);
+      cursor: pointer;
+      transition: transform .45s ease, box-shadow .45s ease;
+    }
+
+    .date-seal::before {
+      content: "";
+      position: absolute;
+      inset: 16%;
+      border-radius: 50%;
+      border: 1px dashed rgb(27 106 114 / .3);
+      animation: seal-turn 24s linear infinite;
+    }
+
+    @keyframes seal-turn {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .date-seal:hover {
+      transform: scale(1.04);
+      box-shadow: 0 12px 30px rgb(9 38 45 / .3);
+    }
+
+    .date-seal[disabled] {
+      cursor: default;
+    }
+
     /* The seal shrinks back to make room for the date it was hiding. Class-driven
        so the end state holds instead of snapping back. */
     .date-card.revealed .date-seal,
-    .date-card.revealed .date-seal[disabled]:hover { transform:scale(.62); transition:transform 1s cubic-bezier(.22,1,.36,1); }
-    .date-value.show > div { animation:date-reveal .95s cubic-bezier(.22,1,.36,1) .18s both; }
-    @keyframes date-reveal {
-      from { opacity:0; clip-path:inset(100% 0 0 0); transform:translateY(18px); }
-      to { opacity:1; clip-path:inset(0% 0 0 0); transform:none; }
+    .date-card.revealed .date-seal[disabled]:hover {
+      transform: scale(.62);
+      transition: transform 1s cubic-bezier(.22, 1, .36, 1);
     }
-    .seal-mark { position:relative; font:clamp(2.1rem,6vw,3.3rem) var(--display); }
-    .date-seal span { position:relative; font-size:.66rem; font-weight:700; letter-spacing:.17em; text-transform:uppercase; }
-    .date-value { display:grid; grid-template-rows:0fr; opacity:0; overflow:hidden; transition:grid-template-rows .75s ease,opacity .45s ease; }
-    .date-value > div { min-height:0; }
-    .date-value.show { grid-template-rows:1fr; opacity:1; }
-    .date-rule { width:112px; height:1px; margin:0 auto 1.35rem; background:linear-gradient(90deg,transparent,var(--zari),transparent); }
-    .date-value h2 { font-size:clamp(3rem,9vw,5rem); line-height:.95; }
-    .date-venue { margin:1.25rem 0 1.8rem; color:var(--ink-soft); font:1.05rem/1.45 var(--body); letter-spacing:.08em; }
-    .countdown { display:grid; grid-template-columns:repeat(4,1fr); gap:.45rem; }
-    .countdown div { padding:.85rem .25rem .65rem; border:1px solid rgb(192 139 62 / .55); background:rgb(255 251 238 / .35); }
-    .countdown b { display:block; font:clamp(1.65rem,5vw,2.5rem) var(--display); font-variant-numeric:tabular-nums; }
-    .countdown span { display:block; margin-top:.25rem; font-size:.58rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
-    .date-prompt { color:var(--coral); }
-    .date-card.revealed .date-prompt { display:none; }
+
+    .date-value.show>div {
+      animation: date-reveal .95s cubic-bezier(.22, 1, .36, 1) .18s both;
+    }
+
+    @keyframes date-reveal {
+      from {
+        opacity: 0;
+        clip-path: inset(100% 0 0 0);
+        transform: translateY(18px);
+      }
+
+      to {
+        opacity: 1;
+        clip-path: inset(0% 0 0 0);
+        transform: none;
+      }
+    }
+
+    .seal-mark {
+      position: relative;
+      font: clamp(2.1rem, 6vw, 3.3rem) var(--display);
+    }
+
+    .date-seal span {
+      position: relative;
+      font-size: .66rem;
+      font-weight: 700;
+      letter-spacing: .17em;
+      text-transform: uppercase;
+    }
+
+    .date-value {
+      display: grid;
+      grid-template-rows: 0fr;
+      opacity: 0;
+      overflow: hidden;
+      transition: grid-template-rows .75s ease, opacity .45s ease;
+    }
+
+    .date-value>div {
+      min-height: 0;
+    }
+
+    .date-value.show {
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
+
+    .date-rule {
+      width: 112px;
+      height: 1px;
+      margin: 0 auto 1.35rem;
+      background: linear-gradient(90deg, transparent, var(--zari), transparent);
+    }
+
+    .date-value h2 {
+      font-size: clamp(3rem, 9vw, 5rem);
+      line-height: .95;
+    }
+
+    .date-venue {
+      margin: 1.25rem 0 1.8rem;
+      color: var(--ink-soft);
+      font: 1.05rem/1.45 var(--body);
+      letter-spacing: .08em;
+    }
+
+    .countdown {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: .45rem;
+    }
+
+    .countdown div {
+      padding: .85rem .25rem .65rem;
+      border: 1px solid rgb(192 139 62 / .55);
+      background: rgb(255 251 238 / .35);
+    }
+
+    .countdown b {
+      display: block;
+      font: clamp(1.65rem, 5vw, 2.5rem) var(--display);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .countdown span {
+      display: block;
+      margin-top: .25rem;
+      font-size: .58rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .date-prompt {
+      color: var(--coral);
+    }
+
+    .date-card.revealed .date-prompt {
+      display: none;
+    }
 
     /* ── Invitation ────────────────────────────────────────────────────────── */
-    .invitation-section { background:transparent; }
-    .invitation { max-width:720px; margin:auto; padding:clamp(2.8rem,7vw,5rem); border:1px solid rgb(255 247 221 / .62); outline:1px solid var(--line); outline-offset:-11px;
-      background:var(--card-gradient); text-align:center; box-shadow:0 16px 42px rgb(9 38 45 / .2); backdrop-filter:blur(6px); }
-    .invitation blockquote { max-width:570px; margin:1.8rem auto; font:italic 1.2rem/1.75 var(--quote); }
-    .invocation-line { margin:0 0 1.7rem; color:var(--coral); font:italic 1.3rem var(--quote); letter-spacing:.07em; }
-    html.motion .invocation-line { opacity:0; transform:scale(1.7); }
+    .invitation-section {
+      background: transparent;
+    }
+
+    .invitation {
+      max-width: 760px;
+      margin: auto;
+      padding: clamp(2.8rem, 7vw, 5rem) clamp(1.2rem, 4vw, 3rem);
+      border: 1px solid var(--glass-border);
+      border-radius: 22px;
+      background: var(--glass-bg);
+      outline: 1px solid var(--line);
+      outline-offset: -11px;
+      box-shadow: var(--glass-shadow);
+      text-align: center;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .invitation blockquote {
+      max-width: 570px;
+      margin: 1.8rem auto;
+      font: italic 1.2rem/1.75 var(--quote);
+    }
+
+    .invocation-line {
+      margin: 0 0 1.7rem;
+      color: var(--coral);
+      font: italic 1.3rem var(--quote);
+      letter-spacing: .07em;
+    }
+
+    html.motion .invocation-line {
+      opacity: 0;
+      transform: scale(1.7);
+    }
 
     /* ── Couple ────────────────────────────────────────────────────────────── */
-    .couple-section .section-label,.couple-section h2 { color:#fff8e9; text-shadow:0 2px 12px rgb(0 0 0 / .4); }
-    .couple-photo { width:min(100%,480px); aspect-ratio:1.05; margin:3rem auto 0; overflow:hidden; padding:1.35rem; border:1px solid rgb(255 247 221 / .86); background:var(--card-gradient); box-shadow:0 10px 28px rgb(9 38 45 / .26); backdrop-filter:blur(4px); }
-    .couple-photo img { width:100%; height:100%; object-fit:cover; object-position:50% 18%; }
-    .couple-note { max-width:560px; margin:2rem auto 0; padding:1.8rem 2.1rem; color:var(--ink); font:italic 1.05rem/1.75 var(--quote); background:var(--card-gradient); box-shadow:0 8px 24px rgb(9 38 45 / .14); backdrop-filter:blur(6px); }
-
-    /* ── Journey: two cities converging on Vizag, built from the watercolor
-       cutouts in assets/journey/. Grid rows (not absolute placement) so the
-       arrows and destination card reflow naturally at every width. ────────── */
-    .journey-sky { display:flex; justify-content:space-between; align-items:flex-start; max-width:760px; margin:0 auto; padding:0 1.5rem; }
-    .journey-cloud,.journey-birds { width:clamp(70px,14vw,140px); opacity:.8; will-change:transform; }
-    .journey-birds { width:clamp(56px,10vw,105px); margin-top:1.2rem; }
-    .journey-cloud { animation:journey-drift 15s ease-in-out infinite; }
-    .journey-birds { animation:journey-fly 12s ease-in-out infinite; }
-    @keyframes journey-drift { 0%,100% { transform:translateX(0) } 50% { transform:translateX(3%) } }
-    @keyframes journey-fly { 0%,100% { transform:translate(0,0) } 50% { transform:translate(-4%,-8%) } }
-    .journey-map { display:grid; grid-template-columns:1fr 1fr; column-gap:clamp(1rem,4vw,2.5rem); row-gap:.4rem; max-width:760px; margin:.5rem auto 0; align-items:start; }
-    .journey-origin { display:grid; justify-items:center; gap:.5rem; grid-row:1; }
-    .journey-origin--her { grid-column:1; }
-    .journey-origin--him { grid-column:2; }
-    .journey-origin img:first-child { width:min(78%,230px); }
-    .journey-caption { width:min(92%,235px); }
-    .journey-arrow { grid-row:2; width:min(60%,175px); margin-top:.25rem; }
-    .journey-arrow--her { grid-column:1; justify-self:end; margin-right:8%; }
-    .journey-arrow--him { grid-column:2; justify-self:start; margin-left:8%; }
-    .journey-destination { grid-column:1/-1; grid-row:3; justify-self:center; margin-top:.5rem; }
-    .journey-destination img { width:min(100%,340px); }
-    .journey-landscape { position:relative; width:100%; max-width:1120px; margin:3.5rem auto 0; }
-    .journey-landscape-photo { width:100%; height:auto; display:block; }
-    .journey-deco { position:absolute; width:min(22vw,150px); pointer-events:none; filter:drop-shadow(0 10px 18px rgb(9 38 45 / .16)); animation:journey-sway 9s ease-in-out infinite; }
-    .journey-deco--pink { left:-3%; bottom:-16%; }
-    .journey-deco--white { right:-2%; bottom:-18%; width:min(20vw,135px); animation-duration:11s; animation-direction:reverse; }
-    .journey-deco--leaves { left:1%; top:-12%; width:min(17vw,110px); animation-duration:8s; }
-    .journey-deco--hibiscus { right:2%; top:-11%; width:min(17vw,110px); animation-duration:10s; animation-direction:reverse; }
-    @keyframes journey-sway { 50% { transform:rotate(3deg) translateY(-5px); } }
-    @media (max-width:640px) {
-      .journey-map { grid-template-columns:1fr; max-width:280px; }
-      .journey-origin--her,.journey-origin--him,.journey-arrow--her,.journey-arrow--him,.journey-destination { grid-column:1; justify-self:center; margin:0; }
-      .journey-origin--her { grid-row:1; } .journey-arrow--her { grid-row:2; }
-      .journey-origin--him { grid-row:3; } .journey-arrow--him { grid-row:4; }
-      .journey-destination { grid-row:5; margin-top:.75rem; }
-      .journey-arrow { width:110px; }
-      .journey-arrow--him { transform:scaleX(-1); }
-      .journey-deco { width:min(30vw,105px); }
-      .journey-deco--pink { bottom:-9%; } .journey-deco--white { bottom:-10%; }
-      .journey-deco--leaves,.journey-deco--hibiscus { display:none; }
+    .couple-section .section-label,
+    .couple-section h2 {
+      color: #fff8e9;
+      text-shadow: 0 2px 12px rgb(0 0 0 / .4);
     }
+
+    .couple-photo {
+      width: min(100%, 480px);
+      aspect-ratio: 1.05;
+      margin: 3rem auto 0;
+      overflow: hidden;
+      padding: 1.35rem;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      box-shadow: var(--glass-shadow);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+
+    .couple-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 18%;
+    }
+
+    .couple-note {
+      max-width: 560px;
+      margin: 2rem auto 0;
+      padding: 1.8rem 2.1rem;
+      color: var(--ink);
+      font: italic 1.05rem/1.75 var(--quote);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    /* ── Journey: the two cities meet at Vizag ───────────────────────────── */
+    .journey-sky {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .journey-cloud,
+    .journey-birds {
+      width: clamp(70px, 14vw, 140px);
+      opacity: .8;
+      will-change: transform;
+    }
+
+    .journey-birds {
+      width: clamp(56px, 10vw, 105px);
+      margin-top: 1.2rem;
+    }
+
+    .journey-cloud {
+      animation: journey-drift 15s ease-in-out infinite;
+    }
+
+    .journey-birds {
+      animation: journey-fly 12s ease-in-out infinite;
+    }
+
+    @keyframes journey-drift {
+
+      0%,
+      100% {
+        transform: translateX(0)
+      }
+
+      50% {
+        transform: translateX(3%)
+      }
+    }
+
+    @keyframes journey-fly {
+
+      0%,
+      100% {
+        transform: translate(0, 0)
+      }
+
+      50% {
+        transform: translate(-4%, -8%)
+      }
+    }
+
+    .journey-map {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-rows: repeat(3, 1fr);
+      max-width: 840px;
+      min-height: clamp(440px, 58vw, 590px);
+      margin: .5rem auto 0;
+      align-items: center;
+      isolation: isolate;
+    }
+
+    .journey-origin {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      justify-items: center;
+      gap: .5rem;
+    }
+
+    .journey-origin--her {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .journey-origin--him {
+      grid-column: 3;
+      grid-row: 3;
+    }
+
+    .journey-origin img:first-child {
+      width: min(100%, 230px);
+    }
+
+    .journey-caption {
+      width: min(92%, 235px);
+    }
+
+    .journey-destination {
+      position: relative;
+      z-index: 3;
+      grid-column: 2;
+      grid-row: 2;
+      justify-self: center;
+    }
+
+    .journey-destination img {
+      width: min(100%, 300px);
+    }
+
+    .journey-routes {
+      position: absolute;
+      z-index: 1;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      pointer-events: none;
+    }
+
+    .journey-route-mask {
+      fill: none;
+      stroke: #fff;
+      stroke-width: 4.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 0;
+    }
+
+    .journey-route {
+      fill: none;
+      stroke: #26363a;
+      stroke-width: 1.35;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 1.8 6.2;
+      stroke-dashoffset: 0;
+      vector-effect: non-scaling-stroke;
+      opacity: .9;
+      animation: journey-dash-flow 2.6s linear infinite;
+    }
+
+    @keyframes journey-dash-flow {
+      to {
+        stroke-dashoffset: -7.8;
+      }
+    }
+
+    .journey-arrowhead {
+      fill: none;
+      stroke: #26363a;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: 1;
+      vector-effect: non-scaling-stroke;
+    }
+
+    .journey-landscape {
+      position: relative;
+      width: 100%;
+      max-width: 1120px;
+      margin: 3.5rem auto 0;
+    }
+
+    .journey-landscape-photo {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .journey-destination .journey-landscape {
+      width: min(100%, 215px);
+      margin: .65rem auto 0;
+      overflow: hidden;
+      border: 1px solid rgb(192 139 62 / .38);
+      box-shadow: 0 7px 18px rgb(9 38 45 / .12);
+    }
+
+    .journey-destination .journey-deco {
+      display: none;
+    }
+
+    .journey-deco {
+      position: absolute;
+      width: min(22vw, 150px);
+      pointer-events: none;
+      filter: drop-shadow(0 10px 18px rgb(9 38 45 / .16));
+      animation: journey-sway 9s ease-in-out infinite;
+    }
+
+    .journey-deco--pink {
+      left: -3%;
+      bottom: -16%;
+    }
+
+    .journey-deco--white {
+      right: -2%;
+      bottom: -18%;
+      width: min(20vw, 135px);
+      animation-duration: 11s;
+      animation-direction: reverse;
+    }
+
+    .journey-deco--leaves {
+      left: 1%;
+      top: -12%;
+      width: min(17vw, 110px);
+      animation-duration: 8s;
+    }
+
+    .journey-deco--hibiscus {
+      right: 2%;
+      top: -11%;
+      width: min(17vw, 110px);
+      animation-duration: 10s;
+      animation-direction: reverse;
+    }
+
+    @keyframes journey-sway {
+      50% {
+        transform: rotate(3deg) translateY(-5px);
+      }
+    }
+
+    /* Initial states exist only after the optional motion layer loads. */
+    html.motion .journey .journey-origin,
+    html.motion .journey .journey-destination,
+    html.motion .journey .journey-landscape {
+      opacity: 0;
+    }
+
+    html.motion .journey .journey-sky {
+      opacity: 0;
+      transform: translateY(.8rem);
+    }
+
+    html.motion .journey .journey-origin--her {
+      transform: translate(-1rem, .8rem) scale(.96);
+    }
+
+    html.motion .journey .journey-origin--him {
+      transform: translate(1rem, .8rem) scale(.96);
+    }
+
+    html.motion .journey .journey-route-mask {
+      stroke-dashoffset: 100;
+    }
+
+    html.motion .journey .journey-arrowhead {
+      opacity: 0;
+    }
+
+    html.motion .journey .journey-destination {
+      transform: translateY(.8rem) scale(.9);
+      filter: blur(3px);
+    }
+
+    html.motion .journey .journey-landscape {
+      transform: translateY(1.4rem) scale(1.015);
+      clip-path: inset(100% 0 0 0);
+    }
+
+    html.motion .journey.journey-is-told .journey-sky {
+      animation: journey-sky-arrive .8s cubic-bezier(.22, 1, .36, 1) forwards;
+    }
+
+    html.motion .journey.journey-is-told .journey-origin--her {
+      animation: journey-origin-arrive .8s cubic-bezier(.22, 1, .36, 1) .14s forwards;
+    }
+
+    html.motion .journey.journey-is-told .journey-origin--him {
+      animation: journey-origin-arrive .8s cubic-bezier(.22, 1, .36, 1) .34s forwards;
+    }
+
+    html.motion .journey.journey-is-told .journey-route-mask--her {
+      animation: journey-route-draw 1.6s cubic-bezier(.45, 0, .2, 1) .72s forwards;
+    }
+
+    html.motion .journey.journey-is-told .journey-route-mask--him {
+      animation: journey-route-draw 1.6s cubic-bezier(.45, 0, .2, 1) .92s forwards;
+    }
+
+    html.motion .journey.journey-is-told .journey-arrowhead--her {
+      animation: journey-arrowhead-arrive .3s ease-out 2.27s forwards;
+    }
+
+    html.motion .journey.journey-is-told .journey-arrowhead--him {
+      animation: journey-arrowhead-arrive .3s ease-out 2.47s forwards;
+    }
+
+    html.motion .journey.journey-is-told .journey-destination {
+      animation: journey-destination-arrive .8s cubic-bezier(.22, 1, .36, 1) .42s forwards;
+    }
+
+    html.motion .journey.journey-is-told .journey-landscape {
+      animation: journey-shore-reveal 1.15s cubic-bezier(.22, 1, .36, 1) 3.1s forwards;
+    }
+
+    @keyframes journey-sky-arrive {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes journey-origin-arrive {
+      72% {
+        opacity: 1;
+        transform: translate(0, -.18rem) scale(1.025);
+      }
+
+      to {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+      }
+    }
+
+    @keyframes journey-route-draw {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    @keyframes journey-arrowhead-arrive {
+      from {
+        opacity: 0;
+        transform: scale(.4);
+        transform-origin: center;
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+        transform-origin: center;
+      }
+    }
+
+    @keyframes journey-destination-arrive {
+      68% {
+        opacity: 1;
+        transform: translateY(0) scale(1.06);
+        filter: blur(0);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes journey-shore-reveal {
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        clip-path: inset(0);
+      }
+    }
+
+    @media (max-width:640px) {
+      .journey-map {
+        min-height: 390px;
+      }
+
+      .journey-origin {
+        gap: .25rem;
+      }
+
+      .journey-origin img:first-child {
+        width: min(100%, 110px);
+      }
+
+      .journey-caption {
+        width: 100%;
+      }
+
+      .journey-destination img {
+        width: 150px;
+      }
+
+      .journey-destination .journey-landscape {
+        width: 130px;
+        margin-top: .35rem;
+      }
+
+      .journey-deco {
+        width: min(30vw, 105px);
+      }
+
+      .journey-deco--pink {
+        bottom: -9%;
+      }
+
+      .journey-deco--white {
+        bottom: -10%;
+      }
+
+      .journey-deco--leaves,
+      .journey-deco--hibiscus {
+        display: none;
+      }
+    }
+
     @media (prefers-reduced-motion:reduce) {
-      .journey-cloud,.journey-birds,.journey-deco { animation:none; }
+
+      .journey-cloud,
+      .journey-birds,
+      .journey-deco {
+        animation: none;
+      }
     }
 
     /* ── Events ────────────────────────────────────────────────────────────── */
-    #events { background:transparent; }
-    #events .section-label,#events h2 { color:#fff8e9; text-shadow:0 2px 12px rgb(0 0 0 / .4); }
-    .day-schedule { display:grid; gap:2rem; margin-top:3rem; }
-    .day-heading { margin:0; padding:.9rem 1.2rem; color:#fff8e6; background:var(--sea); font:1.1rem var(--quote); letter-spacing:.08em; text-align:left; }
-    .schedule { display:grid; gap:1px; background:var(--line); }
-    .event { position:relative; display:grid; grid-template-columns:50px 1fr; gap:1rem; padding:1.6rem; background:var(--shell); text-align:left; transition:background .25s ease; }
-    .event:hover { background:#fff4dd; }
-    .number { color:var(--coral); font:1.7rem var(--display); }
-    .event time,.event .location { display:block; margin:.3rem 0; color:var(--ink-soft); font-size:.72rem; letter-spacing:.06em; }
-    .event p { margin:.6rem 0 0; font-size:.84rem; line-height:1.7; color:var(--ink-soft); }
-    .dress-chip { display:inline-block; margin-top:.7rem; padding:.3rem .7rem; border:1px solid var(--line); border-radius:99px; color:var(--sea); font-size:.6rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
+    #events {
+      background: transparent;
+    }
+
+    #events .section-label,
+    #events h2 {
+      color: #fff8e9;
+      text-shadow: 0 2px 12px rgb(0 0 0 / .4);
+    }
+
+    .day-schedule {
+      display: grid;
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .day-heading {
+      margin: 0;
+      padding: .9rem 1.2rem;
+      color: #fff8e6;
+      background: var(--sea);
+      font: 1.1rem var(--quote);
+      letter-spacing: .08em;
+      text-align: left;
+    }
+
+    .schedule {
+      display: grid;
+      gap: 1px;
+      background: var(--line);
+    }
+
+    .event {
+      position: relative;
+      display: grid;
+      grid-template-columns: 50px 1fr;
+      gap: 1rem;
+      padding: 1.6rem;
+      background: var(--shell);
+      text-align: left;
+      transition: background .25s ease;
+    }
+
+    .event:hover {
+      background: #fff4dd;
+    }
+
+    .number {
+      color: var(--coral);
+      font: 1.7rem var(--display);
+    }
+
+    .event time,
+    .event .location {
+      display: block;
+      margin: .3rem 0;
+      color: var(--ink-soft);
+      font-size: .72rem;
+      letter-spacing: .06em;
+    }
+
+    .event p {
+      margin: .6rem 0 0;
+      font-size: .84rem;
+      line-height: 1.7;
+      color: var(--ink-soft);
+    }
+
+    .dress-chip {
+      display: inline-block;
+      margin-top: .7rem;
+      padding: .3rem .7rem;
+      border: 1px solid var(--line);
+      border-radius: 99px;
+      color: var(--sea);
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
 
     /* ── Gallery ───────────────────────────────────────────────────────────── */
     /* scroll-behavior:auto — the page sets smooth globally, which would animate the
        rail's reset and its loop back to the start. */
-    .gallery-strip { display:flex; gap:1.4rem; margin-top:2.6rem; padding:0 0 2rem; overflow:auto hidden; scroll-behavior:auto;
-      mask-image:linear-gradient(90deg,transparent,#000 4% 96%,transparent); scrollbar-width:none; }
-    .gallery-strip::-webkit-scrollbar { display:none; }
-    .gallery-strip figure { flex:0 0 min(72vw,24rem); margin:0; padding:.7rem; background:rgb(255 250 237 / .92); box-shadow:0 20px 54px rgb(9 38 45 / .24); }
-    .gallery-strip img { width:100%; aspect-ratio:4/5; object-fit:cover; }
-    .gallery-strip figcaption { margin-top:.7rem; color:var(--ink-soft); font-size:.64rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; }
-    .swipe-hint { margin:1rem 0 0; color:var(--ink-soft); font:italic .9rem var(--quote); }
+    .gallery-strip {
+      display: flex;
+      gap: 1.4rem;
+      margin-top: 2.6rem;
+      padding: 0 0 2rem;
+      overflow: auto hidden;
+      scroll-behavior: auto;
+      mask-image: linear-gradient(90deg, transparent, #000 4% 96%, transparent);
+      scrollbar-width: none;
+    }
+
+    .gallery-strip::-webkit-scrollbar {
+      display: none;
+    }
+
+    .gallery-strip figure {
+      flex: 0 0 min(72vw, 24rem);
+      margin: 0;
+      padding: .7rem;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+    }
+
+    .gallery-strip img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+    }
+
+    .gallery-strip figcaption {
+      margin-top: .7rem;
+      color: var(--ink-soft);
+      font-size: .64rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .swipe-hint {
+      margin: 1rem 0 0;
+      color: var(--ink-soft);
+      font: italic .9rem var(--quote);
+    }
 
     /* ── Travel / stay / dress code ────────────────────────────────────────── */
-    .panel { width:min(100%,1080px); padding:clamp(2rem,6vw,4.5rem); border:1px solid rgb(255 247 221 / .62);
-      background:var(--card-gradient); box-shadow:0 14px 44px rgb(9 38 45 / .22); text-align:center; backdrop-filter:blur(6px); }
-    .panel-intro { max-width:580px; margin:.8rem auto 2rem; color:var(--ink-soft); font:1rem/1.65 var(--quote); }
-    .tile-grid { display:grid; gap:1px; background:rgb(192 139 62 / .42); text-align:left; }
-    .tile { padding:1.5rem; background:rgb(255 251 238 / .72); }
-    .tile-kind { display:block; margin-bottom:.4rem; color:var(--coral); font-size:.62rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; }
-    .tile h3 { font-size:1.55rem; }
-    .tile p { margin:.5rem 0 0; color:var(--ink-soft); font:.9rem/1.65 var(--body); }
-    .weather-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1px; margin:0 auto 2rem; background:rgb(192 139 62 / .42); }
-    .weather-grid div { padding:1rem .65rem; background:rgb(255 251 238 / .66); }
-    .weather-grid strong { display:block; color:var(--coral); font:clamp(1.3rem,3vw,1.85rem) var(--display); }
-    .weather-grid span { display:block; margin-top:.25rem; color:var(--ink-soft); font-size:.62rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; }
-    .event-swatches { position:absolute; top:1.2rem; right:1.2rem; display:flex; gap:.35rem; }
-    .event-swatches i { width:1rem; aspect-ratio:1; border:1px solid rgb(255 255 255 / .8); border-radius:50%; box-shadow:0 2px 5px rgb(9 38 45 / .18); }
+    .panel {
+      width: min(100%, 1080px);
+      padding: clamp(2rem, 6vw, 4.5rem);
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      box-shadow: var(--glass-shadow);
+      text-align: center;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    .panel-intro {
+      max-width: 580px;
+      margin: .8rem auto 2rem;
+      color: var(--ink-soft);
+      font: 1rem/1.65 var(--quote);
+    }
+
+    .tile-grid {
+      display: grid;
+      gap: 1px;
+      background: rgb(192 139 62 / .42);
+      text-align: left;
+    }
+
+    .tile {
+      padding: 1.5rem;
+      background: rgb(255 251 238 / .72);
+    }
+
+    .tile-kind {
+      display: block;
+      margin-bottom: .4rem;
+      color: var(--coral);
+      font-size: .62rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .tile h3 {
+      font-size: 1.55rem;
+    }
+
+    .tile p {
+      margin: .5rem 0 0;
+      color: var(--ink-soft);
+      font: .9rem/1.65 var(--body);
+    }
+
+    .weather-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      margin: 0 auto 2rem;
+      background: rgb(192 139 62 / .42);
+    }
+
+    .weather-grid div {
+      padding: 1rem .65rem;
+      background: rgb(255 251 238 / .66);
+    }
+
+    .weather-grid strong {
+      display: block;
+      color: var(--coral);
+      font: clamp(1.3rem, 3vw, 1.85rem) var(--display);
+    }
+
+    .weather-grid span {
+      display: block;
+      margin-top: .25rem;
+      color: var(--ink-soft);
+      font-size: .62rem;
+      font-weight: 700;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+
+    .event-swatches {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.2rem;
+      display: flex;
+      gap: .35rem;
+    }
+
+    .event-swatches i {
+      width: 1rem;
+      aspect-ratio: 1;
+      border: 1px solid rgb(255 255 255 / .8);
+      border-radius: 50%;
+      box-shadow: 0 2px 5px rgb(9 38 45 / .18);
+    }
 
     /* ── Performances ──────────────────────────────────────────────────────── */
-    .performance-empty { margin:1.8rem auto; padding:1.1rem; border-top:1px solid rgb(192 139 62 / .42); border-bottom:1px solid rgb(192 139 62 / .42); color:var(--ink-soft); font:italic .95rem var(--quote); }
-    .performance-heading { margin:0 0 1rem; color:var(--coral); font-size:.68rem; font-weight:700; letter-spacing:.17em; text-transform:uppercase; font-family:var(--body); }
-    .stack-form { display:grid; gap:.8rem; max-width:520px; margin:0 auto; text-align:left; }
-    .stack-form label { display:grid; gap:.35rem; color:var(--ink-soft); font-size:.62rem; font-weight:700; letter-spacing:.13em; text-transform:uppercase; }
-    .stack-form input,.stack-form textarea { width:100%; padding:.9rem; border:1px solid var(--line); color:var(--ink); background:rgb(255 255 255 / .78); font:inherit; }
-    .stack-form button { justify-self:center; margin-top:.45rem; }
-    .performance-list { display:grid; gap:.6rem; max-width:520px; margin:1.5rem auto 0; text-align:left; }
-    .performance-item { display:grid; grid-template-columns:1.6rem 1fr; gap:.75rem; padding:.85rem; border:1px solid rgb(192 139 62 / .35); background:rgb(255 251 238 / .64); }
-    .performance-item b { display:grid; place-items:center; width:1.6rem; aspect-ratio:1; border-radius:50%; color:#fff; background:var(--coral); font-size:.7rem; }
-    .performance-item strong { display:block; font-size:.86rem; }
-    .performance-item span { display:block; margin-top:.16rem; color:var(--ink-soft); font:italic .85rem var(--quote); }
+    .performance-empty {
+      margin: 1.8rem auto;
+      padding: 1.1rem;
+      border-top: 1px solid rgb(192 139 62 / .42);
+      border-bottom: 1px solid rgb(192 139 62 / .42);
+      color: var(--ink-soft);
+      font: italic .95rem var(--quote);
+    }
+
+    .performance-heading {
+      margin: 0 0 1rem;
+      color: var(--coral);
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .17em;
+      text-transform: uppercase;
+      font-family: var(--body);
+    }
+
+    .stack-form {
+      display: grid;
+      gap: .8rem;
+      max-width: 520px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .stack-form label {
+      display: grid;
+      gap: .35rem;
+      color: var(--ink-soft);
+      font-size: .62rem;
+      font-weight: 700;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .stack-form input,
+    .stack-form textarea {
+      width: 100%;
+      padding: .9rem;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      background: rgb(255 255 255 / .78);
+      font: inherit;
+    }
+
+    .stack-form button {
+      justify-self: center;
+      margin-top: .45rem;
+    }
+
+    .performance-list {
+      display: grid;
+      gap: .6rem;
+      max-width: 520px;
+      margin: 1.5rem auto 0;
+      text-align: left;
+    }
+
+    .performance-item {
+      display: grid;
+      grid-template-columns: 1.6rem 1fr;
+      gap: .75rem;
+      padding: .85rem;
+      border: 1px solid rgb(192 139 62 / .35);
+      background: rgb(255 251 238 / .64);
+    }
+
+    .performance-item b {
+      display: grid;
+      place-items: center;
+      width: 1.6rem;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--coral);
+      font-size: .7rem;
+    }
+
+    .performance-item strong {
+      display: block;
+      font-size: .86rem;
+    }
+
+    .performance-item span {
+      display: block;
+      margin-top: .16rem;
+      color: var(--ink-soft);
+      font: italic .85rem var(--quote);
+    }
 
     /* ── RSVP ──────────────────────────────────────────────────────────────── */
-    .rsvp-box { width:min(100%,860px); padding:clamp(2.5rem,6vw,5rem) clamp(1.5rem,7vw,6rem); border:1px solid rgb(192 139 62 / .55);
-      background:var(--card-gradient); text-align:center; box-shadow:0 18px 52px rgb(9 38 45 / .24); backdrop-filter:blur(7px); }
-    .rsvp-box .section-label { margin-bottom:1.4rem; }
-    .rsvp-kicker { max-width:490px; margin:1rem auto 1.6rem; color:var(--ink-soft); font:italic 1.05rem/1.65 var(--quote); }
-    .steps { display:flex; flex-wrap:wrap; justify-content:center; gap:2.5rem 2.2rem; margin:1.8rem 0 2.9rem; }
-    .step { position:relative; display:grid; place-items:center; width:1.9rem; height:1.9rem; border:1px solid var(--zari); border-radius:50%; color:var(--ink-soft); font-size:.75rem; transition:background .3s ease,color .3s ease; }
-    .step::before { position:absolute; top:2.35rem; color:var(--ink-soft); font:700 .56rem var(--body); letter-spacing:.11em; text-transform:uppercase; white-space:nowrap; }
-    .step:nth-child(1)::before { content:"Response"; } .step:nth-child(2)::before { content:"Days"; } .step:nth-child(3)::before { content:"Guests"; } .step:nth-child(4)::before { content:"Details"; } .step:nth-child(5)::before { content:"Blessing"; }
-    .step:not(:last-child)::after { content:""; position:absolute; left:100%; width:2.2rem; height:1px; background:rgb(192 139 62 / .65); }
-    .step.active { color:#fff; background:var(--coral); border-color:var(--coral); }
-    .rsvp-question { margin:0 0 1.35rem; color:var(--ink); font:clamp(1.35rem,3vw,2rem) var(--display); }
-    .attendance-options { display:grid; grid-template-columns:repeat(3,1fr); gap:.7rem; }
+    .rsvp-box {
+      width: min(100%, 860px);
+      padding: clamp(2.5rem, 6vw, 5rem) clamp(1.5rem, 7vw, 6rem);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      background: var(--glass-bg);
+      text-align: center;
+      box-shadow: var(--glass-shadow);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .rsvp-box .section-label {
+      margin-bottom: 1.4rem;
+    }
+
+    .rsvp-kicker {
+      max-width: 490px;
+      margin: 1rem auto 1.6rem;
+      color: var(--ink-soft);
+      font: italic 1.05rem/1.65 var(--quote);
+    }
+
+    .steps {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2.5rem 2.2rem;
+      margin: 1.8rem 0 2.9rem;
+    }
+
+    .step {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 1.9rem;
+      height: 1.9rem;
+      border: 1px solid var(--zari);
+      border-radius: 50%;
+      color: var(--ink-soft);
+      font-size: .75rem;
+      transition: background .3s ease, color .3s ease;
+    }
+
+    .step::before {
+      position: absolute;
+      top: 2.35rem;
+      color: var(--ink-soft);
+      font: 700 .56rem var(--body);
+      letter-spacing: .11em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .step:nth-child(1)::before {
+      content: "Response";
+    }
+
+    .step:nth-child(2)::before {
+      content: "Days";
+    }
+
+    .step:nth-child(3)::before {
+      content: "Guests";
+    }
+
+    .step:nth-child(4)::before {
+      content: "Details";
+    }
+
+    .step:nth-child(5)::before {
+      content: "Blessing";
+    }
+
+    .step:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      left: 100%;
+      width: 2.2rem;
+      height: 1px;
+      background: rgb(192 139 62 / .65);
+    }
+
+    .step.active {
+      color: #fff;
+      background: var(--coral);
+      border-color: var(--coral);
+    }
+
+    .rsvp-question {
+      margin: 0 0 1.35rem;
+      color: var(--ink);
+      font: clamp(1.35rem, 3vw, 2rem) var(--display);
+    }
+
+    .attendance-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .7rem;
+    }
+
     /* Only two choices here (Yes/No) — a 3-column grid would leave them
        stranded on the left with an empty third slot, so give this one its
        own narrower, centred track count instead. */
-    #response-options { grid-template-columns:repeat(2,1fr); max-width:480px; margin:0 auto; }
-    .attendance-option { display:grid; grid-template-columns:1fr; align-items:center; min-height:135px; padding:1.1rem .55rem; border:1px solid rgb(192 139 62 / .48); border-radius:.5rem;
-      color:var(--ink); background:rgb(255 255 255 / .55); font:inherit; letter-spacing:normal; text-align:center; text-transform:none;
-      transition:background .2s ease,color .2s ease,transform .2s ease,border-color .2s ease; }
-    .attendance-option:hover,.attendance-option.selected { color:#fff9eb; background:var(--coral); border-color:var(--coral); transform:translateY(-2px); }
-    .attendance-symbol { font:1.8rem var(--display); }
-    .attendance-copy { display:grid; gap:.2rem; }
-    .attendance-copy strong { font-size:.8rem; }
-    .attendance-copy small { font-size:.66rem; letter-spacing:.04em; }
-    .rsvp-box .button { margin-top:1.6rem; }
-    .button.ghost { color:var(--ink); background:transparent; border:1px solid var(--zari); }
-    .button.ghost:hover { color:#fff; background:var(--ink-soft); box-shadow:none; }
-    .rsvp-nav { display:flex; justify-content:center; gap:1rem; margin-top:1.6rem; }
-    .rsvp-nav .button { margin-top:0; }
-    .rsvp-page { display:none; }
-    .rsvp-page.active { display:block; }
-    .rsvp-page[data-page="details"].active { display:grid; max-width:520px; gap:.9rem; margin:0 auto; text-align:left; }
-    .rsvp-page[data-page="details"] label { color:var(--ink-soft); font-size:.65rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
-    .rsvp-page[data-page="details"] input { width:100%; padding:.85rem; border:1px solid rgb(192 139 62 / .48); color:var(--ink); background:rgb(255 255 255 / .78); font:inherit; }
-    .rsvp-page[data-page="details"] .rsvp-question { text-align:center; }
-    .rsvp-page .rsvp-question,.rsvp-page .attendance-options { text-align:center; }
-    #day-options .attendance-option { grid-template-columns:1fr; text-align:center; }
-    .guest-stepper { display:flex; align-items:center; justify-content:center; gap:1.2rem; }
-    .stepper-btn { display:grid; place-items:center; width:2.6rem; aspect-ratio:1; border:1px solid var(--zari); border-radius:50%; color:var(--coral); background:rgb(255 255 255 / .7); font-size:1.2rem; transition:background .2s ease,color .2s ease; }
-    .stepper-btn:hover { color:#fff; background:var(--coral); }
-    .stepper-value { min-width:3rem; color:var(--ink); font:700 1.6rem var(--body); text-align:center; }
-    .stepper-note { margin:.8rem 0 0; color:var(--ink-soft); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; text-align:center; }
-    .phone-field { display:flex; }
-    .phone-field .phone-code { display:grid; place-items:center; padding:0 .9rem; border:1px solid rgb(192 139 62 / .48); border-right:0; color:var(--ink-soft); background:rgb(253 240 214 / .6); font-weight:700; }
-    .phone-field input { border-left:0; }
-    .response { min-height:1rem; margin:1.2rem 0 0; color:var(--coral); font-size:.82rem; }
-    .confetti-piece { position:fixed; top:-12px; z-index:200; border-radius:2px; pointer-events:none; animation:confetti-fall linear forwards; }
-    @keyframes confetti-fall { to { transform:translateY(105vh) rotate(540deg); opacity:.85; } }
+    #response-options {
+      grid-template-columns: repeat(2, 1fr);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .attendance-option {
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: center;
+      min-height: 135px;
+      padding: 1.1rem .55rem;
+      border: 1px solid rgb(192 139 62 / .48);
+      border-radius: .5rem;
+      color: var(--ink);
+      background: rgb(255 255 255 / .55);
+      font: inherit;
+      letter-spacing: normal;
+      text-align: center;
+      text-transform: none;
+      transition: background .2s ease, color .2s ease, transform .2s ease, border-color .2s ease;
+    }
+
+    .attendance-option:hover,
+    .attendance-option.selected {
+      color: #fff9eb;
+      background: var(--coral);
+      border-color: var(--coral);
+      transform: translateY(-2px);
+    }
+
+    .attendance-symbol {
+      font: 1.8rem var(--display);
+    }
+
+    .attendance-copy {
+      display: grid;
+      gap: .2rem;
+    }
+
+    .attendance-copy strong {
+      font-size: .8rem;
+    }
+
+    .attendance-copy small {
+      font-size: .66rem;
+      letter-spacing: .04em;
+    }
+
+    .rsvp-box .button {
+      margin-top: 1.6rem;
+    }
+
+    .button.ghost {
+      color: var(--ink);
+      background: transparent;
+      border: 1px solid var(--zari);
+    }
+
+    .button.ghost:hover {
+      color: #fff;
+      background: var(--ink-soft);
+      box-shadow: none;
+    }
+
+    .rsvp-nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.6rem;
+    }
+
+    .rsvp-nav .button {
+      margin-top: 0;
+    }
+
+    .rsvp-page {
+      display: none;
+    }
+
+    .rsvp-page.active {
+      display: block;
+    }
+
+    .rsvp-page[data-page="details"].active {
+      display: grid;
+      max-width: 520px;
+      gap: .9rem;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .rsvp-page[data-page="details"] label {
+      color: var(--ink-soft);
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .rsvp-page[data-page="details"] input {
+      width: 100%;
+      padding: .85rem;
+      border: 1px solid rgb(192 139 62 / .48);
+      color: var(--ink);
+      background: rgb(255 255 255 / .78);
+      font: inherit;
+    }
+
+    .rsvp-page[data-page="details"] .rsvp-question {
+      text-align: center;
+    }
+
+    .rsvp-page .rsvp-question,
+    .rsvp-page .attendance-options {
+      text-align: center;
+    }
+
+    #day-options .attendance-option {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .guest-stepper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+    }
+
+    .stepper-btn {
+      display: grid;
+      place-items: center;
+      width: 2.6rem;
+      aspect-ratio: 1;
+      border: 1px solid var(--zari);
+      border-radius: 50%;
+      color: var(--coral);
+      background: rgb(255 255 255 / .7);
+      font-size: 1.2rem;
+      transition: background .2s ease, color .2s ease;
+    }
+
+    .stepper-btn:hover {
+      color: #fff;
+      background: var(--coral);
+    }
+
+    .stepper-value {
+      min-width: 3rem;
+      color: var(--ink);
+      font: 700 1.6rem var(--body);
+      text-align: center;
+    }
+
+    .stepper-note {
+      margin: .8rem 0 0;
+      color: var(--ink-soft);
+      font-size: .72rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .phone-field {
+      display: flex;
+    }
+
+    .phone-field .phone-code {
+      display: grid;
+      place-items: center;
+      padding: 0 .9rem;
+      border: 1px solid rgb(192 139 62 / .48);
+      border-right: 0;
+      color: var(--ink-soft);
+      background: rgb(253 240 214 / .6);
+      font-weight: 700;
+    }
+
+    .phone-field input {
+      border-left: 0;
+    }
+
+    .response {
+      min-height: 1rem;
+      margin: 1.2rem 0 0;
+      color: var(--coral);
+      font-size: .82rem;
+    }
+
+    .confetti-piece {
+      position: fixed;
+      top: -12px;
+      z-index: 200;
+      border-radius: 2px;
+      pointer-events: none;
+      animation: confetti-fall linear forwards;
+    }
+
+    @keyframes confetti-fall {
+      to {
+        transform: translateY(105vh) rotate(540deg);
+        opacity: .85;
+      }
+    }
 
     /* ── Watch live ────────────────────────────────────────────────────────── */
-    .watch-intro { max-width:510px; margin:.8rem auto 2rem; color:var(--ink-soft); font:italic 1rem/1.65 var(--quote); }
-    .watch-grid { display:grid; gap:1px; background:rgb(192 139 62 / .42); text-align:left; }
-    .watch-card { padding:1.7rem; background:rgb(255 251 238 / .66); }
-    .watch-card h3 { font-size:clamp(1.8rem,4vw,2.4rem); }
-    .watch-card time { display:block; margin:.55rem 0 1.2rem; color:var(--ink-soft); font-size:.72rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; }
-    .watch-card a { color:var(--coral); font-size:.72rem; font-weight:700; letter-spacing:.12em; text-decoration:none; text-transform:uppercase; }
-    .watch-card a:hover { text-decoration:underline; }
-    .watch-card p { margin:1rem 0 0; color:var(--ink-soft); font:italic .88rem/1.5 var(--quote); }
+    .watch-intro {
+      max-width: 510px;
+      margin: .8rem auto 2rem;
+      color: var(--ink-soft);
+      font: italic 1rem/1.65 var(--quote);
+    }
+
+    .watch-grid {
+      display: grid;
+      gap: 1px;
+      background: rgb(192 139 62 / .42);
+      text-align: left;
+    }
+
+    .watch-card {
+      padding: 1.7rem;
+      background: rgb(255 251 238 / .66);
+    }
+
+    .watch-card h3 {
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+    }
+
+    .watch-card time {
+      display: block;
+      margin: .55rem 0 1.2rem;
+      color: var(--ink-soft);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+
+    .watch-card a {
+      color: var(--coral);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .watch-card a:hover {
+      text-decoration: underline;
+    }
+
+    .watch-card p {
+      margin: 1rem 0 0;
+      color: var(--ink-soft);
+      font: italic .88rem/1.5 var(--quote);
+    }
 
     /* ── Blessings ─────────────────────────────────────────────────────────── */
-    .blessing { background:transparent; }
-    .blessing .inner { max-width:1180px; padding:clamp(2rem,6vw,4.5rem); border:1px solid rgb(255 247 221 / .62);
-      background:var(--card-gradient); box-shadow:0 15px 42px rgb(9 38 45 / .2); backdrop-filter:blur(6px); }
-    .blessings-layout { display:grid; gap:2.4rem; max-width:1000px; margin:0 auto; text-align:left; }
-    .blessing-intro { margin:.8rem 0 2rem; color:var(--ink-soft); font:1rem/1.65 var(--quote); }
-    .live-title { display:flex; align-items:center; gap:.5rem; margin:0 0 1rem; color:var(--coral); font-size:.68rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; }
-    .live-title::before { content:""; width:6px; height:6px; border-radius:50%; background:var(--coral); animation:livePulse 1.4s ease-in-out infinite; }
-    @keyframes livePulse { 50% { opacity:.3; transform:scale(.7); } }
-    .blessing-list { display:flex; flex-direction:column; gap:.7rem; max-height:365px; padding:.2rem .2rem .9rem; overflow-y:auto; scroll-behavior:auto; scrollbar-color:var(--zari) transparent; }
-    .blessing-card { display:grid; grid-template-columns:2.35rem 1fr; gap:.75rem; align-items:start; flex:0 0 auto; padding:1rem; border:1px solid rgb(192 139 62 / .35);
-      background:linear-gradient(135deg,rgb(255 255 255 / .9),rgb(255 246 224 / .7)); box-shadow:0 6px 15px rgb(9 38 45 / .08); text-align:left;
-      animation:card-in .5s cubic-bezier(.22,1,.36,1) both; }
-    @keyframes card-in { from { opacity:0; transform:translateY(-.6rem); } }
-    .blessing-avatar { display:grid; place-items:center; width:2.35rem; aspect-ratio:1; border:1px solid rgb(192 139 62 / .7); border-radius:50%; color:var(--coral); background:#fff8e8; font:1.1rem var(--display); }
-    .blessing-card strong { display:block; margin:.1rem 0 .25rem; font-size:.78rem; letter-spacing:.04em; }
-    .blessing-card p { margin:0; color:var(--ink-soft); font:italic .87rem/1.35 var(--quote); }
-    .wish-form { display:grid; gap:.9rem; max-width:650px; margin:0; text-align:left; }
-    .wish-field { display:grid; gap:.35rem; }
-    .wish-field label { color:var(--ink-soft); font-size:.62rem; font-weight:700; letter-spacing:.13em; text-transform:uppercase; }
-    .wish-form input,.wish-form textarea { width:100%; min-width:0; padding:.9rem; border:1px solid var(--line); color:var(--ink); background:rgb(255 255 255 / .8); font:inherit; }
-    .wish-form textarea { min-height:92px; resize:vertical; }
-    .wish-form button { justify-self:start; padding:.9rem 1.4rem; border-radius:99px; color:#fff; background:var(--coral); }
-    .wish-output { margin:1.3rem 0 0; color:var(--coral); font:italic 1rem var(--quote); }
+    .blessing {
+      background: transparent;
+    }
+
+    .blessing .inner {
+      max-width: 1180px;
+      padding: clamp(2rem, 6vw, 4.5rem);
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      box-shadow: var(--glass-shadow);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    .blessings-layout {
+      display: grid;
+      gap: 2.4rem;
+      max-width: 1000px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .blessing-intro {
+      margin: .8rem 0 2rem;
+      color: var(--ink-soft);
+      font: 1rem/1.65 var(--quote);
+    }
+
+    .live-title {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      margin: 0 0 1rem;
+      color: var(--coral);
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .live-title::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--coral);
+      animation: livePulse 1.4s ease-in-out infinite;
+    }
+
+    @keyframes livePulse {
+      50% {
+        opacity: .3;
+        transform: scale(.7);
+      }
+    }
+
+    .blessing-list {
+      display: flex;
+      flex-direction: column;
+      gap: .7rem;
+      max-height: 365px;
+      padding: .2rem .2rem .9rem;
+      overflow-y: auto;
+      scroll-behavior: auto;
+      scrollbar-color: var(--zari) transparent;
+    }
+
+    .blessing-card {
+      display: grid;
+      grid-template-columns: 2.35rem 1fr;
+      gap: .75rem;
+      align-items: start;
+      flex: 0 0 auto;
+      padding: 1rem;
+      border: 1px solid rgb(192 139 62 / .35);
+      background: linear-gradient(135deg, rgb(255 255 255 / .9), rgb(255 246 224 / .7));
+      box-shadow: 0 6px 15px rgb(9 38 45 / .08);
+      text-align: left;
+      animation: card-in .5s cubic-bezier(.22, 1, .36, 1) both;
+    }
+
+    @keyframes card-in {
+      from {
+        opacity: 0;
+        transform: translateY(-.6rem);
+      }
+    }
+
+    .blessing-avatar {
+      display: grid;
+      place-items: center;
+      width: 2.35rem;
+      aspect-ratio: 1;
+      border: 1px solid rgb(192 139 62 / .7);
+      border-radius: 50%;
+      color: var(--coral);
+      background: #fff8e8;
+      font: 1.1rem var(--display);
+    }
+
+    .blessing-card strong {
+      display: block;
+      margin: .1rem 0 .25rem;
+      font-size: .78rem;
+      letter-spacing: .04em;
+    }
+
+    .blessing-card p {
+      margin: 0;
+      color: var(--ink-soft);
+      font: italic .87rem/1.35 var(--quote);
+    }
+
+    .wish-form {
+      display: grid;
+      gap: .9rem;
+      max-width: 650px;
+      margin: 0;
+      text-align: left;
+    }
+
+    .wish-field {
+      display: grid;
+      gap: .35rem;
+    }
+
+    .wish-field label {
+      color: var(--ink-soft);
+      font-size: .62rem;
+      font-weight: 700;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .wish-form input,
+    .wish-form textarea {
+      width: 100%;
+      min-width: 0;
+      padding: .9rem;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      background: rgb(255 255 255 / .8);
+      font: inherit;
+    }
+
+    .wish-form textarea {
+      min-height: 92px;
+      resize: vertical;
+    }
+
+    .wish-form button {
+      justify-self: start;
+      padding: .9rem 1.4rem;
+      border-radius: 99px;
+      color: #fff;
+      background: var(--coral);
+    }
+
+    .wish-output {
+      margin: 1.3rem 0 0;
+      color: var(--coral);
+      font: italic 1rem var(--quote);
+    }
 
     /* ── Our people ────────────────────────────────────────────────────────── */
-    #people { background:transparent; }
-    #people .section-label,#people h2 { color:#fff8e9; text-shadow:0 2px 12px rgb(0 0 0 / .4); }
-    .contact-grid { display:grid; gap:1px; background:rgb(192 139 62 / .42); text-align:left; }
-    .contact { padding:1.4rem 1.5rem; background:rgb(255 251 238 / .72); }
-    .contact strong { display:block; font-size:.95rem; }
-    .contact span { display:block; margin-top:.2rem; color:var(--ink-soft); font-size:.68rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
-    .contact a { display:inline-block; margin-top:.6rem; color:var(--coral); font-size:.8rem; text-decoration:none; }
-    .contact a:hover { text-decoration:underline; }
+    #people {
+      background: transparent;
+    }
+
+    #people .section-label,
+    #people h2 {
+      color: #fff8e9;
+      text-shadow: 0 2px 12px rgb(0 0 0 / .4);
+    }
+
+    .contact-grid {
+      display: grid;
+      gap: 1px;
+      background: rgb(192 139 62 / .42);
+      text-align: left;
+    }
+
+    .contact {
+      padding: 1.4rem 1.5rem;
+      background: rgb(255 251 238 / .72);
+    }
+
+    .contact strong {
+      display: block;
+      font-size: .95rem;
+    }
+
+    .contact span {
+      display: block;
+      margin-top: .2rem;
+      color: var(--ink-soft);
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .contact a {
+      display: inline-block;
+      margin-top: .6rem;
+      color: var(--coral);
+      font-size: .8rem;
+      text-decoration: none;
+    }
+
+    .contact a:hover {
+      text-decoration: underline;
+    }
 
     /* ── Footer ────────────────────────────────────────────────────────────── */
-    footer { position:relative; display:grid; min-height:100svh; place-items:center; overflow:hidden; padding:3rem 1.5rem; color:#fff8e8;
-      background:url('assets/chennai-env-08-golden-terrace.webp') center/cover no-repeat; text-align:center; isolation:isolate; }
+    footer {
+      position: relative;
+      display: grid;
+      min-height: 100svh;
+      place-items: center;
+      overflow: hidden;
+      padding: 3rem 1.5rem;
+      color: #fff8e8;
+      background: url('assets/chennai-env-08-golden-terrace.webp') center/cover no-repeat;
+      text-align: center;
+      isolation: isolate;
+    }
+
     /* The inset has to shrink with the viewport — a fixed 5rem left the backdrop a
        narrow strip on a phone while the text spilled out either side of it. */
-    footer::before { content:""; position:absolute; z-index:-1; inset:7% clamp(.5rem,4vw,5rem); background:linear-gradient(180deg,rgb(var(--veil) / .5),rgb(var(--veil) / .68)); backdrop-filter:blur(2px); }
-    .closing-content { max-width:860px; }
-    .closing-message { max-width:850px; margin:0 auto 1.2rem; color:#f8dfaa; font:clamp(.72rem,1.2vw,.82rem)/1.7 var(--body); letter-spacing:.11em; text-transform:uppercase; }
-    .closing-names { margin:0; color:#fffaf0; font:clamp(4.2rem,11vw,8.5rem)/.85 var(--display); text-shadow:0 3px 20px rgb(0 0 0 / .3); }
-    .closing-names .amp { display:block; padding:0; color:var(--zari-lit); font-size:.42em; line-height:.85; }
-    .closing-note { margin:1.6rem 0 .55rem; font:1rem var(--quote); }
-    .closing-date { margin:0; color:#f8dfaa; font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; }
-    .closing-rule { width:84px; height:1px; margin:1.5rem auto 0; background:linear-gradient(90deg,transparent,var(--zari-lit),transparent); }
+    footer::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: 7% clamp(.5rem, 4vw, 5rem);
+      background: linear-gradient(180deg, rgb(var(--veil) / .5), rgb(var(--veil) / .68));
+      backdrop-filter: blur(2px);
+    }
+
+    .closing-content {
+      max-width: 860px;
+    }
+
+    .closing-message {
+      max-width: 850px;
+      margin: 0 auto 1.2rem;
+      color: #f8dfaa;
+      font: clamp(.72rem, 1.2vw, .82rem)/1.7 var(--body);
+      letter-spacing: .11em;
+      text-transform: uppercase;
+    }
+
+    .closing-names {
+      margin: 0;
+      color: #fffaf0;
+      font: clamp(4.2rem, 11vw, 8.5rem)/.85 var(--display);
+      text-shadow: 0 3px 20px rgb(0 0 0 / .3);
+    }
+
+    .closing-names .amp {
+      display: block;
+      padding: 0;
+      color: var(--zari-lit);
+      font-size: .42em;
+      line-height: .85;
+    }
+
+    .closing-note {
+      margin: 1.6rem 0 .55rem;
+      font: 1rem var(--quote);
+    }
+
+    .closing-date {
+      margin: 0;
+      color: #f8dfaa;
+      font-size: .72rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .closing-rule {
+      width: 84px;
+      height: 1px;
+      margin: 1.5rem auto 0;
+      background: linear-gradient(90deg, transparent, var(--zari-lit), transparent);
+    }
 
     /* ── Responsive ────────────────────────────────────────────────────────── */
     @media (min-width:700px) {
-      .event { grid-template-columns:65px 1fr; padding:2rem; }
-      .weather-grid { grid-template-columns:repeat(4,1fr); }
-      .tile-grid { grid-template-columns:repeat(2,1fr); }
-      .watch-grid { grid-template-columns:1fr 1fr; }
-      .watch-card { min-height:260px; }
-      .contact-grid { grid-template-columns:repeat(3,1fr); }
+      .event {
+        grid-template-columns: 65px 1fr;
+        padding: 2rem;
+      }
+
+      .weather-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .tile-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .watch-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .watch-card {
+        min-height: 260px;
+      }
+
+      .contact-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
     }
+
     @media (min-width:900px) {
-      .blessings-layout { grid-template-columns:1fr 1fr; align-items:start; gap:3.5rem; }
+      .blessings-layout {
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+        gap: 3.5rem;
+      }
     }
+
     @media (max-width:560px) {
-      .steps { gap:2.3rem; }
-      .step:not(:last-child)::after { width:2.3rem; }
-      .attendance-options { grid-template-columns:1fr; }
-      #response-options { grid-template-columns:1fr; max-width:none; }
-      .attendance-option { grid-template-columns:3.2rem 1fr; min-height:0; text-align:left; }
-      .nav-links { gap:.5rem; }
-      .nav-links a { font-size:.58rem; letter-spacing:.08em; }
+      .steps {
+        gap: 2.3rem;
+      }
+
+      .step:not(:last-child)::after {
+        width: 2.3rem;
+      }
+
+      .attendance-options {
+        grid-template-columns: 1fr;
+      }
+
+      #response-options {
+        grid-template-columns: 1fr;
+        max-width: none;
+      }
+
+      .attendance-option {
+        grid-template-columns: 3.2rem 1fr;
+        min-height: 0;
+        text-align: left;
+      }
+
+      .nav-links {
+        gap: .5rem;
+      }
+
+      .nav-links a {
+        font-size: .58rem;
+        letter-spacing: .08em;
+      }
     }
+
     @media (max-width:480px) {
-      .cover-card { outline-offset:-10px; padding-top:4rem; }
-      .cover h1 { font-size:2.7rem; }
-      .seal { width:118px; top:-60px; }
+      .cover-card {
+        outline-offset: -10px;
+        padding-top: 4rem;
+      }
+
+      .cover h1 {
+        font-size: 2.7rem;
+      }
+
+      .seal {
+        width: 118px;
+        top: -60px;
+      }
+
       /* Keep the monogram on phones — tighten the type so it and the six links
          both fit rather than dropping it. */
-      .nav-logo { font-size:1.05rem; }
-      .nav-links { gap:.38rem; }
-      .nav-links a { font-size:.55rem; letter-spacing:.05em; }
-      nav { gap:.5rem; padding:.35rem .6rem .35rem .85rem; }
+      .nav-logo {
+        font-size: 1.05rem;
+      }
+
+      .nav-links {
+        gap: .38rem;
+      }
+
+      .nav-links a {
+        font-size: .55rem;
+        letter-spacing: .05em;
+      }
+
+      nav {
+        gap: .5rem;
+        padding: .35rem .6rem .35rem .85rem;
+      }
     }
 
     /* Tablets are touch devices too — the same floors apply, just gentler. */
     @media (max-width:1024px) {
-      .dress-chip { font-size:.64rem; }
-      .tile-kind, .place-kind { font-size:.66rem; }
-      label, .rsvp-page[data-page="details"] label, .wish-field label { font-size:.66rem; }
-      .gallery-strip figcaption { font-size:.68rem; }
-      .attendance-copy small, .live-title { font-size:.7rem; }
-      .watch-card a, .contact a { display:inline-block; padding:.5rem 0; }
+      .dress-chip {
+        font-size: .64rem;
+      }
+
+      .tile-kind,
+      .place-kind {
+        font-size: .66rem;
+      }
+
+      label,
+      .rsvp-page[data-page="details"] label,
+      .wish-field label {
+        font-size: .66rem;
+      }
+
+      .gallery-strip figcaption {
+        font-size: .68rem;
+      }
+
+      .attendance-copy small,
+      .live-title {
+        font-size: .7rem;
+      }
+
+      .watch-card a,
+      .contact a {
+        display: inline-block;
+        padding: .5rem 0;
+      }
     }
 
     /* Touch-size and legibility floors. Several labels sat under 11px, which is
        below what is comfortable on a phone. */
     @media (max-width:700px) {
-      .date-seal { width:clamp(176px,46vw,205px); }
-      .date-seal span { max-width:82%; font-size:.58rem; letter-spacing:.07em; line-height:1.35; }
-      .dress-chip { font-size:.66rem; }
-      .tile-kind, .place-kind, .performance-heading { font-size:.68rem; }
-      label, .rsvp-page[data-page="details"] label, .wish-field label { font-size:.68rem; }
-      .gallery-strip figcaption { font-size:.7rem; }
-      .attendance-copy small { font-size:.72rem; }
-      .live-title { font-size:.72rem; }
-      .event time, .event .location { font-size:.76rem; }
-      .weather-grid span, .countdown span { font-size:.66rem; }
-      .step::before { font-size:.6rem; }
-      .closing-date { font-size:.74rem; }
-      .watch-card time { font-size:.76rem; }
-      .hero-place { font-size:.8rem; }
-      .section-label { font-size:.74rem; }
-      .hero .section-label { font-size:1.6rem; letter-spacing:.12em; }
-      .hero-sub { font-size:1.45rem; }
-      .scroll-note { padding:.5rem 1rem; font-size:.68rem; }
-      .watch-card a, .contact a { display:inline-block; padding:.5rem 0; font-size:.78rem; }
+      .date-seal {
+        width: clamp(176px, 46vw, 205px);
+      }
+
+      .date-seal span {
+        max-width: 82%;
+        font-size: .58rem;
+        letter-spacing: .07em;
+        line-height: 1.35;
+      }
+
+      .dress-chip {
+        font-size: .66rem;
+      }
+
+      .tile-kind,
+      .place-kind,
+      .performance-heading {
+        font-size: .68rem;
+      }
+
+      label,
+      .rsvp-page[data-page="details"] label,
+      .wish-field label {
+        font-size: .68rem;
+      }
+
+      .gallery-strip figcaption {
+        font-size: .7rem;
+      }
+
+      .attendance-copy small {
+        font-size: .72rem;
+      }
+
+      .live-title {
+        font-size: .72rem;
+      }
+
+      .event time,
+      .event .location {
+        font-size: .76rem;
+      }
+
+      .weather-grid span,
+      .countdown span {
+        font-size: .66rem;
+      }
+
+      .step::before {
+        font-size: .6rem;
+      }
+
+      .closing-date {
+        font-size: .74rem;
+      }
+
+      .watch-card time {
+        font-size: .76rem;
+      }
+
+      .hero-place {
+        font-size: .8rem;
+      }
+
+      .section-label {
+        font-size: .74rem;
+      }
+
+      .hero .section-label {
+        font-size: 1.6rem;
+        letter-spacing: .12em;
+      }
+
+      .hero-sub {
+        font-size: 1.45rem;
+      }
+
+      .scroll-note {
+        padding: .5rem 1rem;
+        font-size: .68rem;
+      }
+
+      .watch-card a,
+      .contact a {
+        display: inline-block;
+        padding: .5rem 0;
+        font-size: .78rem;
+      }
     }
+
     /* Mobile gets shorter scroll tracks and a larger oversize factor, so the pan
        still reads as travel on a narrow screen. */
     @media (max-width:700px) {
-      .transition { height:175svh; }
-      .transition.pan { height:195svh; }
-      .transition.focus { height:150svh; }
-      .pan .transitionPic { width:245%; }
+      .transition {
+        height: 175svh;
+      }
+
+      .transition.pan {
+        height: 195svh;
+      }
+
+      .transition.focus {
+        height: 150svh;
+      }
+
+      .pan .transitionPic {
+        width: 245%;
+      }
     }
+
     @media (prefers-reduced-motion:reduce) {
-      *,*::before,*::after { scroll-behavior:auto !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
-      html.motion .scene > *:not(.scroll-note):not(.foam):not(.sun-glow),
-      html.motion .paper-section > .inner { opacity:1; }
-      .plateImage { transition:none; }
-      .transition,.transition.pan,.transition.focus { height:100svh; }
-      .transitionPic { width:100%; height:100%; top:0; left:0; }
+
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+
+      html.motion .scene>*:not(.scroll-note):not(.foam):not(.sun-glow),
+      html.motion .paper-section>.inner {
+        opacity: 1;
+      }
+
+      .plateImage {
+        transition: none;
+      }
+
+      .transition,
+      .transition.pan,
+      .transition.focus {
+        height: 100svh;
+      }
+
+      .transitionPic {
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+      }
     }
   </style>
 </head>
-<body class="locked">
 
-  <!-- ══ Cover / gate ══════════════════════════════════════════════════════ -->
-  <section class="cover" id="cover" aria-label="Invitation cover">
-    <span class="cover-plate" id="cover-plate" aria-hidden="true">
-      <span class="cover-sun"></span>
-      <span class="cover-glint"></span>
-      <span class="cover-foam"></span>
-    </span>
-    <span class="cover-seam" id="cover-seam" aria-hidden="true"></span>
-    <span class="cover-panel cover-left" id="cover-left" aria-hidden="true"></span>
-    <span class="cover-panel cover-right" id="cover-right" aria-hidden="true"></span>
-    <span class="cover-toran" aria-hidden="true"></span>
-    <span class="cover-shore" aria-hidden="true"></span>
-    <span class="cover-palm cover-palm-l" aria-hidden="true"></span>
-    <span class="cover-palm cover-palm-r" aria-hidden="true"></span>
-    <div class="cover-card" id="cover-card">
-      <span class="seal" aria-hidden="true"><img src="assets/sr-monogram.webp" alt=""></span>
-      <p class="kicker">Together with their families</p>
-      <h1>Rishi <span class="amp">&amp;</span> Sirisha</h1>
-      <div class="mini-rule"></div>
-      <p class="cover-place">By the Bay of Bengal · Visakhapatnam</p>
-      <button class="open-button" id="open-invitation" type="button">Tap to open <b>↔</b></button>
-    </div>
-  </section>
+<body>
 
   <!-- ══ The plate: one fixed backdrop the whole page shares ═══════════════ -->
   <div class="plate" aria-hidden="true">
     <div class="plateTravel" id="plate-travel">
-      <div class="plateImage plateOn" style="--plate-focus:50% 46%; background-image:url('assets/chennai-env-01-heritage-entrance.webp')"></div>
+      <div class="plateImage plateOn"
+        style="--plate-focus:50% 46%; background-image:url('assets/chennai-env-01-heritage-entrance.webp')"></div>
       <div class="plateImage" style="--plate-focus:50% 50%" data-src="assets/chennai-env-02-kolam-threshold.webp"></div>
       <div class="plateImage" style="--plate-focus:50% 62%" data-src="assets/chennai-env-03-open-courtyard.webp"></div>
-      <div class="plateImage" style="--plate-focus:50% 54%" data-src="assets/chennai-env-04-pillared-verandah.webp"></div>
-      <div class="plateImage" style="--plate-focus:50% 48%" data-src="assets/chennai-env-05-jasmine-courtyard.webp"></div>
+      <div class="plateImage" style="--plate-focus:50% 54%" data-src="assets/chennai-env-04-pillared-verandah.webp">
+      </div>
+      <div class="plateImage" style="--plate-focus:50% 48%" data-src="assets/chennai-env-05-jasmine-courtyard.webp">
+      </div>
       <div class="plateImage" style="--plate-focus:50% 32%" data-src="assets/lotus-pond-colonnade.webp"></div>
       <div class="plateImage" style="--plate-focus:50% 62%" data-src="assets/pond-mandap-sunset.webp"></div>
     </div>
@@ -659,9 +2942,11 @@
     </section>
 
     <!-- ── Transition 1 · push: the frame opens through an expanding iris ──── -->
-    <section class="transition push" data-transition="push" data-plate="1" aria-label="Through the doorway, toward the sea">
+    <section class="transition push" data-transition="push" data-plate="1"
+      aria-label="Through the doorway, toward the sea">
       <div class="transitionSticky">
-        <picture class="transitionPic"><img src="assets/chennai-trans-01-entrance-to-courtyard.webp" alt="" loading="lazy"></picture>
+        <picture class="transitionPic"><img src="assets/chennai-trans-01-entrance-to-courtyard.webp" alt=""
+            loading="lazy"></picture>
         <div class="transitionWash"></div>
         <p class="transitionTitle" data-transition-title>Through the doorway</p>
       </div>
@@ -670,7 +2955,7 @@
     <!-- ── Date reveal ───────────────────────────────────────────────────── -->
     <section class="scene" id="date" data-scene data-plate="1">
       <div class="foam" aria-hidden="true"></div>
-      <div class="date-card" id="date-card">
+      <div class="date-card glass-card" id="date-card">
         <p>A date held between the tides</p>
         <button class="date-seal" id="date-seal" type="button" aria-expanded="false" aria-controls="date-value">
           <b class="seal-mark">శ్రీ</b>
@@ -695,12 +2980,14 @@
 
     <!-- ── Invitation ────────────────────────────────────────────────────── -->
     <section class="paper-section invitation-section" data-scene>
-      <div class="inner invitation">
+      <div class="inner invitation glass-card">
         <p class="section-label">With the blessings of our families</p>
         <h2>You are warmly invited</h2>
         <div class="mini-rule"></div>
         <p class="invocation-line">Srirastu Subhamastu Avignamastu</p>
-        <blockquote>“Together with our families, we joyfully invite you to join us as we begin this new chapter — with the sea at our side and every person we love on the shore. Your presence, blessings, and love will make our celebration complete.”</blockquote>
+        <blockquote>“Together with our families, we joyfully invite you to join us as we begin this new chapter — with
+          the sea at our side and every person we love on the shore. Your presence, blessings, and love will make our
+          celebration complete.”</blockquote>
         <p>Sai Priya Resorts · Visakhapatnam</p>
       </div>
     </section>
@@ -711,9 +2998,13 @@
         <p class="section-label">The two of us</p>
         <h2>The Bride &amp; Groom</h2>
         <figure class="couple-photo">
-          <img src="WhatsApp%20Image%202026-09-12%20at%2010.17.18%20PM.jpeg" alt="Rishi and Sirisha together" loading="lazy">
+          <img src="WhatsApp%20Image%202026-09-12%20at%2010.17.18%20PM.jpeg" alt="Rishi and Sirisha together"
+            loading="lazy">
         </figure>
-        <p class="couple-note">One brings the punctuality, the other brings the playlists — somehow they've never missed a flight, a deadline, or a chance to dance in the kitchen. They debate everything from movie endings to who makes the better filter coffee, and agree on exactly one thing: neither of them is changing a bit, and neither would want them to.</p>
+        <p class="couple-note">One brings the punctuality, the other brings the playlists — somehow they've never missed
+          a flight, a deadline, or a chance to dance in the kitchen. They debate everything from movie endings to who
+          makes the better filter coffee, and agree on exactly one thing: neither of them is changing a bit, and neither
+          would want them to.</p>
       </div>
     </section>
 
@@ -730,25 +3021,41 @@
         <div class="journey-map">
           <div class="journey-origin journey-origin--her">
             <img src="assets/journey/01_qutub_minar_delhi.webp" alt="Qutub Minar, Delhi" loading="lazy">
-            <img class="journey-caption" src="assets/journey/02_her_city_text.webp" alt="She began her journey from Her City" loading="lazy">
+            <img class="journey-caption" src="assets/journey/02_her_city_text.webp"
+              alt="She began her journey from Her City" loading="lazy">
           </div>
           <div class="journey-origin journey-origin--him">
             <img src="assets/journey/03_charminar_hyderabad.webp" alt="Charminar, Hyderabad" loading="lazy">
-            <img class="journey-caption" src="assets/journey/04_his_city_text.webp" alt="He began his journey from His City" loading="lazy">
+            <img class="journey-caption" src="assets/journey/04_his_city_text.webp"
+              alt="He began his journey from His City" loading="lazy">
           </div>
-          <img class="journey-arrow journey-arrow--her" src="assets/journey/05_delhi_to_vizag_arrow.webp" alt="" aria-hidden="true" loading="lazy">
-          <img class="journey-arrow journey-arrow--him" src="assets/journey/06_hyderabad_to_vizag_arrow.webp" alt="" aria-hidden="true" loading="lazy">
+          <svg class="journey-routes" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <mask id="journey-route-reveal-her" maskUnits="userSpaceOnUse">
+                <path class="journey-route-mask journey-route-mask--her" pathLength="100"
+                  d="M 18,30 C 22,42 27,52 35,59 C 41,64 47,66 50,64"></path>
+              </mask>
+              <mask id="journey-route-reveal-him" maskUnits="userSpaceOnUse">
+                <path class="journey-route-mask journey-route-mask--him" pathLength="100"
+                  d="M 82,68 C 78,56 73,47 65,40 C 59,35 54,34 50,36"></path>
+              </mask>
+            </defs>
+            <path class="journey-route" mask="url(#journey-route-reveal-her)" pathLength="100"
+              d="M 18,30 C 22,42 27,52 35,59 C 41,64 47,66 50,64"></path>
+            <path class="journey-route" mask="url(#journey-route-reveal-him)" pathLength="100"
+              d="M 82,68 C 78,56 73,47 65,40 C 59,35 54,34 50,36"></path>
+            <path class="journey-arrowhead journey-arrowhead--her" d="M 49.9,63.8 L 50.7,64.2 L 50.1,65.1"></path>
+            <path class="journey-arrowhead journey-arrowhead--him" d="M 50.1,36.2 L 49.3,35.8 L 49.9,34.9"></path>
+          </svg>
           <div class="journey-destination">
-            <img src="assets/journey/07_vizag_destination_text.webp" alt="To our destination: Vizag, Visakhapatnam, Andhra Pradesh" loading="lazy">
+            <img src="assets/journey/07_vizag_destination_text.webp"
+              alt="To our destination: Vizag, Visakhapatnam, Andhra Pradesh" loading="lazy">
+            <figure class="journey-landscape">
+              <img class="journey-landscape-photo" src="assets/journey/08_vizag_landscape.webp"
+                alt="RK Beach coastline, Visakhapatnam" loading="lazy">
+            </figure>
           </div>
         </div>
-        <figure class="journey-landscape">
-          <img class="journey-landscape-photo" src="assets/journey/08_vizag_landscape.webp" alt="RK Beach coastline, Visakhapatnam" loading="lazy">
-          <img class="journey-deco journey-deco--leaves" src="assets/journey/11_tropical_leaves.webp" alt="" aria-hidden="true" loading="lazy">
-          <img class="journey-deco journey-deco--hibiscus" src="assets/journey/12_hibiscus.webp" alt="" aria-hidden="true" loading="lazy">
-          <img class="journey-deco journey-deco--pink" src="assets/journey/09_pink_florals.webp" alt="" aria-hidden="true" loading="lazy">
-          <img class="journey-deco journey-deco--white" src="assets/journey/10_white_florals.webp" alt="" aria-hidden="true" loading="lazy">
-        </figure>
       </div>
     </section>
 
@@ -762,23 +3069,75 @@
           <section>
             <h3 class="day-heading">Day 1 · 3 December 2026</h3>
             <div class="schedule">
-              <article class="event"><span class="number">01</span><div><time datetime="2026-12-03T09:30">9:30 AM</time><h3>Ite Pellikuturu</h3><p>The first of the rituals, as the morning light comes off the water.</p><span class="dress-chip">Pastels · Traditional</span><span class="event-swatches" aria-hidden="true"><i style="background:#f4c9c9"></i><i style="background:#cfe8d9"></i><i style="background:#ddd3ef"></i></span></div></article>
-              <article class="event"><span class="number">02</span><div><time datetime="2026-12-03T12:00">12:00 PM</time><h3>Pellikudu</h3><p>Family, food, and the old songs — the celebration properly begins.</p><span class="dress-chip">Pastels · Traditional</span><span class="event-swatches" aria-hidden="true"><i style="background:#f4c9c9"></i><i style="background:#cfe8d9"></i><i style="background:#ddd3ef"></i></span></div></article>
-              <article class="event"><span class="number">03</span><div><time datetime="2026-12-03T19:30">7:30 PM</time><h3>Cocktail Night</h3><p>An evening by the shore with music, the sea breeze, and dancing.</p><span class="dress-chip">Black, gold &amp; silver shimmer</span><span class="event-swatches" aria-hidden="true"><i style="background:#1c1c1c"></i><i style="background:#c9a227"></i><i style="background:#c9c9ce"></i></span></div></article>
+              <article class="event"><span class="number">01</span>
+                <div><time datetime="2026-12-03T09:30">9:30 AM</time>
+                  <h3>Ite Pellikuturu</h3>
+                  <p>The first of the rituals, as the morning light comes off the water.</p><span
+                    class="dress-chip">Pastels · Traditional</span><span class="event-swatches" aria-hidden="true"><i
+                      style="background:#f4c9c9"></i><i style="background:#cfe8d9"></i><i
+                      style="background:#ddd3ef"></i></span>
+                </div>
+              </article>
+              <article class="event"><span class="number">02</span>
+                <div><time datetime="2026-12-03T12:00">12:00 PM</time>
+                  <h3>Pellikudu</h3>
+                  <p>Family, food, and the old songs — the celebration properly begins.</p><span
+                    class="dress-chip">Pastels · Traditional</span><span class="event-swatches" aria-hidden="true"><i
+                      style="background:#f4c9c9"></i><i style="background:#cfe8d9"></i><i
+                      style="background:#ddd3ef"></i></span>
+                </div>
+              </article>
+              <article class="event"><span class="number">03</span>
+                <div><time datetime="2026-12-03T19:30">7:30 PM</time>
+                  <h3>Cocktail Night</h3>
+                  <p>An evening by the shore with music, the sea breeze, and dancing.</p><span class="dress-chip">Black,
+                    gold &amp; silver shimmer</span><span class="event-swatches" aria-hidden="true"><i
+                      style="background:#1c1c1c"></i><i style="background:#c9a227"></i><i
+                      style="background:#c9c9ce"></i></span>
+                </div>
+              </article>
             </div>
           </section>
           <section>
             <h3 class="day-heading">Day 2 · 4 December 2026</h3>
             <div class="schedule">
-              <article class="event"><span class="number">01</span><div><time datetime="2026-12-04T10:00">10:00 AM</time><h3>Haldi</h3><p>Turmeric, laughter, and a great deal of yellow — outdoors, in the sun.</p><span class="dress-chip">Yellow · easy to wash</span><span class="event-swatches" aria-hidden="true"><i style="background:#e8a93d"></i><i style="background:#f2c14e"></i><i style="background:#d98e04"></i></span></div></article>
-              <article class="event"><span class="number">02</span><div><time datetime="2026-12-04T15:30">3:30 PM</time><h3>Pradhanam</h3><p>The formal blessing of the union by both families.</p><span class="dress-chip">Pastels · Traditional</span><span class="event-swatches" aria-hidden="true"><i style="background:#f4c9c9"></i><i style="background:#cfe8d9"></i><i style="background:#ddd3ef"></i></span></div></article>
-              <article class="event"><span class="number">03</span><div><time datetime="2026-12-04T19:30">7:30 PM</time><h3>Grand Reception</h3><p>The big evening — dinner, performances, and celebration under the stars.</p><span class="dress-chip">Formal</span></div></article>
+              <article class="event"><span class="number">01</span>
+                <div><time datetime="2026-12-04T10:00">10:00 AM</time>
+                  <h3>Haldi</h3>
+                  <p>Turmeric, laughter, and a great deal of yellow — outdoors, in the sun.</p><span
+                    class="dress-chip">Yellow · easy to wash</span><span class="event-swatches" aria-hidden="true"><i
+                      style="background:#e8a93d"></i><i style="background:#f2c14e"></i><i
+                      style="background:#d98e04"></i></span>
+                </div>
+              </article>
+              <article class="event"><span class="number">02</span>
+                <div><time datetime="2026-12-04T15:30">3:30 PM</time>
+                  <h3>Pradhanam</h3>
+                  <p>The formal blessing of the union by both families.</p><span class="dress-chip">Pastels ·
+                    Traditional</span><span class="event-swatches" aria-hidden="true"><i
+                      style="background:#f4c9c9"></i><i style="background:#cfe8d9"></i><i
+                      style="background:#ddd3ef"></i></span>
+                </div>
+              </article>
+              <article class="event"><span class="number">03</span>
+                <div><time datetime="2026-12-04T19:30">7:30 PM</time>
+                  <h3>Grand Reception</h3>
+                  <p>The big evening — dinner, performances, and celebration under the stars.</p><span
+                    class="dress-chip">Formal</span>
+                </div>
+              </article>
             </div>
           </section>
           <section>
             <h3 class="day-heading">Day 3 · 5 December 2026</h3>
             <div class="schedule">
-              <article class="event"><span class="number">01</span><div><time datetime="2026-12-05T04:30">4:30 AM</time><h3>Wedding Ceremony</h3><p>The muhurtham, in the quiet hours before sunrise over the Bay of Bengal.</p><span class="dress-chip">Traditional</span></div></article>
+              <article class="event"><span class="number">01</span>
+                <div><time datetime="2026-12-05T04:30">4:30 AM</time>
+                  <h3>Wedding Ceremony</h3>
+                  <p>The muhurtham, in the quiet hours before sunrise over the Bay of Bengal.</p><span
+                    class="dress-chip">Traditional</span>
+                </div>
+              </article>
             </div>
           </section>
         </div>
@@ -791,11 +3150,22 @@
         <p class="section-label">Moments we carry with us</p>
         <h2>Swipe to wander</h2>
         <div class="gallery-strip">
-          <figure><img src="WhatsApp%20Image%202026-09-12%20at%2010.17.18%20PM.jpeg" alt="Rishi and Sirisha together" loading="lazy"><figcaption>The two of us</figcaption></figure>
-          <figure><img src="assets/chennai-env-05-jasmine-courtyard.webp" alt="Jasmine courtyard" loading="lazy"><figcaption>Jasmine courtyard</figcaption></figure>
-          <figure><img src="assets/chennai-env-08-golden-terrace.webp" alt="Golden terrace at sunset" loading="lazy"><figcaption>Golden hour</figcaption></figure>
-          <figure><img src="assets/chennai-env-06-ceremony-courtyard.webp" alt="Ceremony courtyard" loading="lazy"><figcaption>Where we marry</figcaption></figure>
-          <figure><img src="assets/chennai-env-02-kolam-threshold.webp" alt="Decorated threshold" loading="lazy"><figcaption>The threshold</figcaption></figure>
+          <figure><img src="WhatsApp%20Image%202026-09-12%20at%2010.17.18%20PM.jpeg" alt="Rishi and Sirisha together"
+              loading="lazy">
+            <figcaption>The two of us</figcaption>
+          </figure>
+          <figure><img src="assets/chennai-env-05-jasmine-courtyard.webp" alt="Jasmine courtyard" loading="lazy">
+            <figcaption>Jasmine courtyard</figcaption>
+          </figure>
+          <figure><img src="assets/chennai-env-08-golden-terrace.webp" alt="Golden terrace at sunset" loading="lazy">
+            <figcaption>Golden hour</figcaption>
+          </figure>
+          <figure><img src="assets/chennai-env-06-ceremony-courtyard.webp" alt="Ceremony courtyard" loading="lazy">
+            <figcaption>Where we marry</figcaption>
+          </figure>
+          <figure><img src="assets/chennai-env-02-kolam-threshold.webp" alt="Decorated threshold" loading="lazy">
+            <figcaption>The threshold</figcaption>
+          </figure>
         </div>
         <p class="swipe-hint">Drag, swipe, or scroll sideways through the frames.</p>
       </div>
@@ -804,7 +3174,8 @@
     <!-- ── Transition 3 · pan: the camera tracks sideways. The one titled beat. -->
     <section class="transition pan" data-transition="pan" data-plate="5" aria-label="A garden walk toward the ceremony">
       <div class="transitionSticky">
-        <picture class="transitionPic"><img src="assets/chennai-trans-03-garden-to-ceremony.webp" alt="" loading="lazy"></picture>
+        <picture class="transitionPic"><img src="assets/chennai-trans-03-garden-to-ceremony.webp" alt="" loading="lazy">
+        </picture>
         <div class="transitionWash"></div>
         <p class="transitionTitle" data-transition-title>The celebrations</p>
       </div>
@@ -815,10 +3186,18 @@
       <div class="panel">
         <p class="section-label">Finding your way to us</p>
         <h2>Getting here</h2>
-        <p class="panel-intro">Visakhapatnam is well connected by air and rail, and the resort sits a short drive up the coast road.</p>
+        <p class="panel-intro">Visakhapatnam is well connected by air and rail, and the resort sits a short drive up the
+          coast road.</p>
         <div class="tile-grid">
-          <article class="tile"><span class="tile-kind">By air</span><h3>Visakhapatnam Airport</h3><p>VTZ is roughly 40 minutes from the resort. Direct flights from Hyderabad, Bengaluru, Chennai, Delhi and Mumbai.</p></article>
-          <article class="tile"><span class="tile-kind">By rail</span><h3>Visakhapatnam Junction</h3><p>About 30 minutes away, on the Howrah–Chennai line with frequent services.</p></article>
+          <article class="tile"><span class="tile-kind">By air</span>
+            <h3>Visakhapatnam Airport</h3>
+            <p>VTZ is roughly 40 minutes from the resort. Direct flights from Hyderabad, Bengaluru, Chennai, Delhi and
+              Mumbai.</p>
+          </article>
+          <article class="tile"><span class="tile-kind">By rail</span>
+            <h3>Visakhapatnam Junction</h3>
+            <p>About 30 minutes away, on the Howrah–Chennai line with frequent services.</p>
+          </article>
         </div>
       </div>
     </section>
@@ -828,7 +3207,8 @@
       <div class="panel">
         <p class="section-label">For our out-of-town guests</p>
         <h2>Exploring Vizag</h2>
-        <p class="panel-intro">Make a little time to discover the coast, hills, and heritage of Visakhapatnam while you are here.</p>
+        <p class="panel-intro">Make a little time to discover the coast, hills, and heritage of Visakhapatnam while you
+          are here.</p>
         <div class="weather-grid" aria-label="Visakhapatnam weather guide">
           <div><strong>24–29°C</strong><span>Average temp</span></div>
           <div><strong>65%</strong><span>Humidity</span></div>
@@ -836,12 +3216,30 @@
           <div><strong>Light layers</strong><span>What to pack</span></div>
         </div>
         <div class="tile-grid">
-          <article class="tile"><span class="tile-kind">Beach</span><h3>RK Beach</h3><p>The city's iconic promenade — best at sunrise with a filter coffee in hand.</p></article>
-          <article class="tile"><span class="tile-kind">Viewpoint</span><h3>Kailasagiri</h3><p>Take the ropeway up for a sweeping sunset view over the city and coast.</p></article>
-          <article class="tile"><span class="tile-kind">Temple</span><h3>Simhachalam Temple</h3><p>An ancient hilltop temple dedicated to Lord Narasimha, a short drive from the city.</p></article>
-          <article class="tile"><span class="tile-kind">Day trip</span><h3>Araku Valley</h3><p>A scenic train or drive through the Eastern Ghats, known for coffee plantations.</p></article>
-          <article class="tile"><span class="tile-kind">Landmark</span><h3>Submarine Museum</h3><p>A decommissioned INS Kurusura submarine turned museum, right on the beach road.</p></article>
-          <article class="tile"><span class="tile-kind">Beach</span><h3>Rushikonda Beach</h3><p>Quieter than RK Beach, popular for its golden sand and calmer waters.</p></article>
+          <article class="tile"><span class="tile-kind">Beach</span>
+            <h3>RK Beach</h3>
+            <p>The city's iconic promenade — best at sunrise with a filter coffee in hand.</p>
+          </article>
+          <article class="tile"><span class="tile-kind">Viewpoint</span>
+            <h3>Kailasagiri</h3>
+            <p>Take the ropeway up for a sweeping sunset view over the city and coast.</p>
+          </article>
+          <article class="tile"><span class="tile-kind">Temple</span>
+            <h3>Simhachalam Temple</h3>
+            <p>An ancient hilltop temple dedicated to Lord Narasimha, a short drive from the city.</p>
+          </article>
+          <article class="tile"><span class="tile-kind">Day trip</span>
+            <h3>Araku Valley</h3>
+            <p>A scenic train or drive through the Eastern Ghats, known for coffee plantations.</p>
+          </article>
+          <article class="tile"><span class="tile-kind">Landmark</span>
+            <h3>Submarine Museum</h3>
+            <p>A decommissioned INS Kurusura submarine turned museum, right on the beach road.</p>
+          </article>
+          <article class="tile"><span class="tile-kind">Beach</span>
+            <h3>Rushikonda Beach</h3>
+            <p>Quieter than RK Beach, popular for its golden sand and calmer waters.</p>
+          </article>
         </div>
       </div>
     </section>
@@ -851,7 +3249,8 @@
       <div class="panel">
         <p class="section-label">The celebrations</p>
         <h2>Performances &amp; Songs</h2>
-        <p class="panel-intro">Share who is taking the stage, what they are performing, and the song that will get everyone dancing.</p>
+        <p class="panel-intro">Share who is taking the stage, what they are performing, and the song that will get
+          everyone dancing.</p>
         <p class="performance-empty" id="performance-empty">The performance lineup will be announced soon.</p>
         <h3 class="performance-heading">Add a performance</h3>
         <form class="stack-form" id="performance-form">
@@ -866,7 +3265,7 @@
 
     <!-- ── RSVP ──────────────────────────────────────────────────────────── -->
     <section class="scene" id="rsvp" data-scene data-plate="7">
-      <div class="rsvp-box">
+      <div class="rsvp-box glass-card">
         <p class="section-label">A place is waiting for you</p>
         <h2>We request your presence</h2>
         <p class="rsvp-kicker">Kindly confirm your attendance so the families can prepare every detail with care.</p>
@@ -881,16 +3280,23 @@
           <div class="rsvp-page active" data-page="response">
             <p class="rsvp-question">How would you like to RSVP?</p>
             <div class="attendance-options" id="response-options" role="radiogroup" aria-label="Attendance response">
-              <button class="attendance-option" type="button" data-response="Yes, joyfully we will be there" role="radio" aria-checked="false"><span class="attendance-symbol">Yes</span><span class="attendance-copy"><strong>Joyfully</strong><small>We will be there</small></span></button>
-              <button class="attendance-option" type="button" data-response="No, regretfully declining" role="radio" aria-checked="false"><span class="attendance-symbol">No</span><span class="attendance-copy"><strong>Regretfully decline</strong><small>Sending love</small></span></button>
+              <button class="attendance-option" type="button" data-response="Yes, joyfully we will be there"
+                role="radio" aria-checked="false"><span class="attendance-symbol">Yes</span><span
+                  class="attendance-copy"><strong>Joyfully</strong><small>We will be there</small></span></button>
+              <button class="attendance-option" type="button" data-response="No, regretfully declining" role="radio"
+                aria-checked="false"><span class="attendance-symbol">No</span><span
+                  class="attendance-copy"><strong>Regretfully decline</strong><small>Sending
+                    love</small></span></button>
             </div>
             <button class="button" id="rsvp-continue" type="button" data-next="days" disabled>Continue</button>
           </div>
           <div class="rsvp-page" data-page="days">
             <p class="rsvp-question">Which days will you join?</p>
             <div class="attendance-options" id="day-options" role="group" aria-label="Days attending">
-              <button class="attendance-option" type="button" data-day="Day 1 · 3 December" aria-pressed="false"><span class="attendance-copy"><strong>Day 1</strong><small>3 December</small></span></button>
-              <button class="attendance-option" type="button" data-day="Day 2 · 4 December" aria-pressed="false"><span class="attendance-copy"><strong>Day 2</strong><small>4 December</small></span></button>
+              <button class="attendance-option" type="button" data-day="Day 1 · 3 December" aria-pressed="false"><span
+                  class="attendance-copy"><strong>Day 1</strong><small>3 December</small></span></button>
+              <button class="attendance-option" type="button" data-day="Day 2 · 4 December" aria-pressed="false"><span
+                  class="attendance-copy"><strong>Day 2</strong><small>4 December</small></span></button>
             </div>
             <div class="rsvp-nav">
               <button class="button ghost" type="button" data-back>Back</button>
@@ -915,7 +3321,8 @@
             <label for="guest-name">Full name</label>
             <input id="guest-name" autocomplete="name" placeholder="Enter your full name">
             <label for="guest-phone">Phone (WhatsApp)</label>
-            <div class="phone-field"><span class="phone-code">+91</span><input id="guest-phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="98765 43210"></div>
+            <div class="phone-field"><span class="phone-code">+91</span><input id="guest-phone" type="tel"
+                inputmode="numeric" autocomplete="tel" placeholder="98765 43210"></div>
             <div class="rsvp-nav">
               <button class="button ghost" type="button" data-back>Back</button>
               <button class="button" type="submit">Send RSVP</button>
@@ -952,9 +3359,11 @@
     </section>
 
     <!-- ── Transition 4 · focus: blur pulls into sharp as the frame settles ── -->
-    <section class="transition focus" data-transition="focus" data-plate="7" aria-label="A golden settle onto the shore">
+    <section class="transition focus" data-transition="focus" data-plate="7"
+      aria-label="A golden settle onto the shore">
       <div class="transitionSticky">
-        <picture class="transitionPic"><img src="assets/chennai-trans-04-ceremony-to-closing.webp" alt="" loading="lazy"></picture>
+        <picture class="transitionPic"><img src="assets/chennai-trans-04-ceremony-to-closing.webp" alt=""
+            loading="lazy"></picture>
         <div class="transitionWash"></div>
         <p class="transitionTitle" data-transition-title>The golden hour</p>
       </div>
@@ -967,10 +3376,13 @@
           <div class="blessing-copy">
             <p class="section-label">Words carried home</p>
             <h2>Blessings &amp; Wishes</h2>
-            <p class="blessing-intro">Leave a heartfelt wish for the couple — your blessing appears here for everyone to read.</p>
+            <p class="blessing-intro">Leave a heartfelt wish for the couple — your blessing appears here for everyone to
+              read.</p>
             <form class="wish-form" id="wish-form">
-              <div class="wish-field"><label for="wish-name">Your name</label><input id="wish-name" maxlength="120" autocomplete="name" required></div>
-              <div class="wish-field"><label for="wish">Your blessing</label><textarea id="wish" maxlength="2000" rows="3" required></textarea></div>
+              <div class="wish-field"><label for="wish-name">Your name</label><input id="wish-name" maxlength="120"
+                  autocomplete="name" required></div>
+              <div class="wish-field"><label for="wish">Your blessing</label><textarea id="wish" maxlength="2000"
+                  rows="3" required></textarea></div>
               <button type="submit">Leave a blessing</button>
             </form>
             <p class="wish-output" id="wish-output" aria-live="polite"></p>
@@ -978,7 +3390,11 @@
           <div class="blessings-wall">
             <p class="live-title">Live blessings</p>
             <div class="blessing-list" id="blessing-list" aria-label="Live guest blessings">
-              <article class="blessing-card"><span class="blessing-avatar">S</span><div><strong>Siri</strong><p>Bless you</p></div></article>
+              <article class="blessing-card"><span class="blessing-avatar">S</span>
+                <div><strong>Siri</strong>
+                  <p>Bless you</p>
+                </div>
+              </article>
             </div>
           </div>
         </div>
@@ -992,9 +3408,12 @@
         <h2>Who to call</h2>
         <div class="mini-rule"></div>
         <div class="contact-grid">
-          <article class="contact"><strong>The Groom's family</strong><span>For Rishi's side</span><a href="tel:+910000000000">+91 00000 00000</a></article>
-          <article class="contact"><strong>The Bride's family</strong><span>For Sirisha's side</span><a href="tel:+910000000000">+91 00000 00000</a></article>
-          <article class="contact"><strong>Travel &amp; stay</strong><span>Transfers and rooms</span><a href="tel:+910000000000">+91 00000 00000</a></article>
+          <article class="contact"><strong>The Groom's family</strong><span>For Rishi's side</span><a
+              href="tel:+910000000000">+91 00000 00000</a></article>
+          <article class="contact"><strong>The Bride's family</strong><span>For Sirisha's side</span><a
+              href="tel:+910000000000">+91 00000 00000</a></article>
+          <article class="contact"><strong>Travel &amp; stay</strong><span>Transfers and rooms</span><a
+              href="tel:+910000000000">+91 00000 00000</a></article>
         </div>
       </div>
     </section>
@@ -1003,7 +3422,8 @@
   <!-- ══ Footer ═══════════════════════════════════════════════════════════ -->
   <footer>
     <div class="closing-content">
-      <p class="closing-message">We cannot wait to celebrate this special day with you. Thank you for being part of our story and for blessing us as we begin forever.</p>
+      <p class="closing-message">We cannot wait to celebrate this special day with you. Thank you for being part of our
+        story and for blessing us as we begin forever.</p>
       <p class="closing-names">Rishi <span class="amp">&amp;</span> Sirisha</p>
       <p class="closing-note">With love, gratitude, and blessings.</p>
       <p class="closing-date">5 December 2026 · Sai Priya Resorts, Visakhapatnam</p>
@@ -1014,18 +3434,7 @@
   <script>
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    /* ── The gate ──────────────────────────────────────────────────────── */
-    /* Pure CSS, so it never depends on the motion library loading. */
-    const cover = document.getElementById('cover');
     const nav = document.getElementById('nav');
-    const openButton = document.getElementById('open-invitation');
-    openButton.addEventListener('click', () => {
-      document.body.classList.remove('locked');
-      openButton.disabled = true;
-      cover.classList.add('opening');
-      // Doors take 1.5s, then the gate fades over 0.5s.
-      setTimeout(() => cover.remove(), 2100);
-    }, { once: true });
 
     /* ── Nav reveal past the hero ──────────────────────────────────────── */
     const hero = document.getElementById('home');
@@ -1326,7 +3735,7 @@
           const x = variant === 'pan' ? reach * p : 0;
           const scale = variant === 'push' ? 1 + .55 * p
             : variant === 'focus' ? 1.09 - .09 * p
-            : 1 + .035 * p;
+              : 1 + .035 * p;
 
           pic.style.transform = `translateX(${x.toFixed(3)}%) scale(${scale.toFixed(4)})`;
 
@@ -1384,6 +3793,12 @@
         }, { amount: .6 });
       });
 
+      /* ── Journey: let the two illustrated routes meet at Vizag ───────── */
+      const journey = document.querySelector('.journey');
+      if (journey) {
+        inView(journey, () => journey.classList.add('journey-is-told'), { amount: .18 });
+      }
+
       /* ── Self-scrolling rails ─────────────────────────────────────────── */
       function autoRail(el, axis, speed, trigger) {
         if (!el) return;
@@ -1414,4 +3829,5 @@
     }
   </script>
 </body>
+
 </html>
