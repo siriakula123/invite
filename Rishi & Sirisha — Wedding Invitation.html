@@ -190,22 +190,19 @@
     @keyframes cue { 50% { transform:scaleY(.42); transform-origin:top; } }
 
     /* ── The four scroll-scrubbed transitions. Each is a sticky full-bleed frame
-       pushed through a different camera move: iris, crane, pan, focus-pull. The
-       oversized picture boxes give the crane/pan their travel room. ─────────── */
+       pushed through a different camera move: iris, pan, focus-pull. The
+       oversized picture box gives the pan its travel room. ─────────────────── */
     /* No background: the push variant masks a hole through the frame and the fixed
        plate behind must show through it. */
     .transition { position:relative; z-index:2; height:200svh; }
-    .transition.crane { height:190svh; }
     .transition.pan { height:220svh; }
     .transition.focus { height:165svh; }
     .transitionSticky { position:sticky; top:0; height:100svh; overflow:hidden; }
     .transitionPic { position:absolute; display:block; width:108%; height:112svh; top:-6svh; left:-4%; will-change:transform,filter; }
-    .crane .transitionPic { width:100%; height:135svh; top:0; left:0; }
     .pan .transitionPic { width:170%; height:110svh; top:-5svh; left:0; }
     .transitionPic img { display:block; width:100%; height:100%; object-fit:cover; }
     .transitionWash { position:absolute; inset:0; pointer-events:none; }
     .push .transitionWash { background:radial-gradient(transparent 30%,rgb(14 61 71 / .42) 100%); }
-    .crane .transitionWash { background:linear-gradient(rgb(255 250 231 / .24),transparent 42%,rgb(14 61 71 / .22)); }
     .pan .transitionWash { background:linear-gradient(transparent 54%,rgb(9 38 45 / .46)); }
     .focus .transitionWash { background:radial-gradient(circle at 68% 32%,rgb(255 247 193 / .34),transparent 38%),linear-gradient(transparent 56%,rgb(14 61 71 / .26)); }
     .transitionTitle { position:absolute; inset:auto 0 13%; margin:0; padding:0 1.5rem; text-align:center; color:#fff8ea;
@@ -455,14 +452,12 @@
       .seal { width:118px; top:-60px; font-size:2.1rem; }
       .nav-logo { display:none; }
     }
-    /* Mobile gets shorter scroll tracks and larger oversize factors, so the crane
-       and pan still read as travel on a narrow screen. */
+    /* Mobile gets shorter scroll tracks and a larger oversize factor, so the pan
+       still reads as travel on a narrow screen. */
     @media (max-width:700px) {
       .transition { height:175svh; }
-      .transition.crane { height:165svh; }
       .transition.pan { height:195svh; }
       .transition.focus { height:150svh; }
-      .crane .transitionPic { height:160svh; }
       .pan .transitionPic { width:245%; }
     }
     @media (prefers-reduced-motion:reduce) {
@@ -470,7 +465,7 @@
       html.motion .scene > *:not(.scroll-note):not(.foam):not(.sun-glow),
       html.motion .paper-section > .inner { opacity:1; }
       .plateImage { transition:none; }
-      .transition,.transition.crane,.transition.pan,.transition.focus { height:100svh; }
+      .transition,.transition.pan,.transition.focus { height:100svh; }
       .transitionPic { width:100%; height:100%; top:0; left:0; }
     }
   </style>
@@ -543,6 +538,7 @@
       <div class="transitionSticky">
         <picture class="transitionPic"><img src="assets/chennai-trans-01-entrance-to-courtyard.webp" alt="" loading="lazy"></picture>
         <div class="transitionWash"></div>
+        <p class="transitionTitle" data-transition-title>Through the doorway</p>
       </div>
     </section>
 
@@ -606,14 +602,6 @@
             </div>
           </article>
         </div>
-      </div>
-    </section>
-
-    <!-- ── Transition 2 · crane: the camera lifts vertically ───────────────── -->
-    <section class="transition crane" data-transition="crane" data-plate="3" aria-label="A walk along the jasmine shore">
-      <div class="transitionSticky">
-        <picture class="transitionPic"><img src="assets/chennai-trans-02-courtyard-to-jasmine.webp" alt="" loading="lazy"></picture>
-        <div class="transitionWash"></div>
       </div>
     </section>
 
@@ -867,6 +855,7 @@
       <div class="transitionSticky">
         <picture class="transitionPic"><img src="assets/chennai-trans-04-ceremony-to-closing.webp" alt="" loading="lazy"></picture>
         <div class="transitionWash"></div>
+        <p class="transitionTitle" data-transition-title>The golden hour</p>
       </div>
     </section>
 
@@ -1177,20 +1166,17 @@
         scroll((progress) => sp.set(progress),
           { target: section, offset: ['start start', 'end end'] });
 
-        const oversize = variant === 'pan' ? (wide ? 1.7 : 2.45)
-          : variant === 'crane' ? (wide ? 1.35 : 1.6) : 1;
+        const oversize = variant === 'pan' ? (wide ? 1.7 : 2.45) : 1;
         const reach = -((oversize - 1) / oversize * 100);
 
         writers.push((dt) => {
           const p = sp.step(dt);
           const x = variant === 'pan' ? reach * p : 0;
-          const y = variant === 'crane' ? reach * p : 0;
           const scale = variant === 'push' ? 1 + .55 * p
             : variant === 'focus' ? 1.09 - .09 * p
             : 1 + .035 * p;
 
-          pic.style.transform =
-            `translate(${x.toFixed(3)}%, ${y.toFixed(3)}%) scale(${scale.toFixed(4)})`;
+          pic.style.transform = `translateX(${x.toFixed(3)}%) scale(${scale.toFixed(4)})`;
 
           if (variant === 'focus') {
             const blur = p <= .72 ? 11 - 10 * (p / .72) : 1 - (p - .72) / .28;
@@ -1208,11 +1194,13 @@
 
       /* ── Staggered content entrance ───────────────────────────────────── */
       document.querySelectorAll('[data-scene]').forEach((section) => {
-        // A section taller than the viewport can never reach a high visibility
-        // threshold, and would silently stay at opacity 0 forever. Clamp to what
-        // is actually reachable.
-        const reachable = innerHeight / section.offsetHeight;
-        const amount = Math.min(Number(section.dataset.amount ?? .4), reachable * .8);
+        // `amount` is a fraction of the element, so on a section taller than the
+        // viewport it needs a huge absolute area on screen — the entrance then
+        // fires only once you are deep inside, long after the heading appeared
+        // (and never at all if the fraction is unreachable). Scale it by how much
+        // of the section can actually be shown, making it viewport-relative.
+        const desired = Number(section.dataset.amount ?? .4);
+        const amount = desired * Math.min(1, innerHeight / section.offsetHeight);
         const targets = section.matches('.paper-section')
           ? section.querySelectorAll(':scope > .inner')
           : section.querySelectorAll(':scope > *:not(.scroll-note):not(.foam):not(.sun-glow)');
@@ -1224,14 +1212,13 @@
         }, { amount });
       });
 
-      const title = document.querySelector('[data-transition-title]');
-      if (title) {
+      document.querySelectorAll('[data-transition-title]').forEach((title) => {
         inView(title, () => {
           animate(title,
             { opacity: [0, 1], clipPath: ['inset(100% 0 0 0)', 'inset(0% 0 0 0)'] },
             { duration: 1.1, ease: EASE });
         }, { amount: .6 });
-      }
+      });
 
       /* ── Self-scrolling rails ─────────────────────────────────────────── */
       function autoRail(el, axis, speed, trigger) {
