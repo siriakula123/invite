@@ -22,7 +22,9 @@
       --body:"Lato","Segoe UI",system-ui,sans-serif;
       --quote:"Playfair Display",Georgia,serif;
       --veil-ink:radial-gradient(ellipse 82% 76% at 50% 50%,rgb(8 32 38 / .74) 0%,rgb(8 32 38 / .6) 46%,rgb(8 32 38 / .26) 74%,rgb(8 32 38 / 0) 100%);
-      --veil-sand:radial-gradient(ellipse 78% 74% at 50% 50%,rgb(255 250 238 / .97) 0%,rgb(255 249 235 / .94) 44%,rgb(255 247 230 / .66) 72%,rgb(255 247 230 / 0) 100%);
+      /* Keeps a floor of tint at the edges: a light panel sits over the middle, so
+         without it only the bright untinted corners would show. */
+      --veil-ink-soft:radial-gradient(ellipse 88% 82% at 50% 50%,rgb(8 32 38 / .54) 0%,rgb(8 32 38 / .44) 46%,rgb(8 32 38 / .26) 74%,rgb(8 32 38 / .12) 100%);
     }
     * { box-sizing:border-box; }
     html { scroll-behavior:smooth; background:var(--sand); -webkit-text-size-adjust:100%; }
@@ -138,7 +140,14 @@
     main { position:relative; z-index:1; }
     .scene { position:relative; z-index:1; min-height:100svh; display:grid; place-items:center; padding:6rem 1.5rem; }
     .scene::after { content:""; position:absolute; z-index:0; inset:0; background:var(--veil-ink); pointer-events:none; }
-    .scene.light::after { background:var(--veil-sand); }
+    /* Every scene fades to dark. A pale veil washed the photograph out and made
+       the cream cards sitting on it disappear into the background. */
+    .scene.light::after { background:var(--veil-ink-soft); }
+    /* The gallery is the one light scene whose text sits on the veil rather than
+       inside a card, so it needs to invert with it. */
+    #gallery h2, #gallery .swipe-hint { color:#fff8ea; text-shadow:0 2px 14px rgb(0 0 0 / .45); }
+    #gallery .section-label { color:var(--zari-lit); }
+    #gallery figcaption { color:rgb(255 248 234 / .82); }
     .scene > * { position:relative; z-index:1; }
 
     .paper-section { position:relative; z-index:1; padding:clamp(4.5rem,9vw,8rem) 1.5rem; background:var(--sand); overflow:hidden; }
@@ -618,7 +627,7 @@
     </section>
 
     <!-- ── Events ────────────────────────────────────────────────────────── -->
-    <section class="paper-section" id="events" data-scene data-amount=".5">
+    <section class="paper-section" id="events" data-scene>
       <div class="inner center">
         <p class="section-label">Come, celebrate with us</p>
         <h2>Across these beautiful days</h2>
@@ -1192,7 +1201,11 @@
 
       /* ── Staggered content entrance ───────────────────────────────────── */
       document.querySelectorAll('[data-scene]').forEach((section) => {
-        const amount = Number(section.dataset.amount ?? .4);
+        // A section taller than the viewport can never reach a high visibility
+        // threshold, and would silently stay at opacity 0 forever. Clamp to what
+        // is actually reachable.
+        const reachable = innerHeight / section.offsetHeight;
+        const amount = Math.min(Number(section.dataset.amount ?? .4), reachable * .8);
         const targets = section.matches('.paper-section')
           ? section.querySelectorAll(':scope > .inner')
           : section.querySelectorAll(':scope > *:not(.scroll-note):not(.foam):not(.sun-glow)');
