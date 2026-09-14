@@ -841,6 +841,12 @@
       letter-spacing: .02em;
     }
 
+    /* On the cover card the backdrop is the pale paper gradient, not the
+       dark hero photo — the light hero-sub colour is invisible there. */
+    .cover-card .hero-sub {
+      color: var(--ink-soft);
+    }
+
     .scroll-note {
       position: absolute;
       bottom: 1.7rem;
@@ -2397,7 +2403,7 @@
       }
 
       .contact-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 
@@ -2775,6 +2781,7 @@
       <span class="seal" aria-hidden="true"><img src="assets/sr-monogram-ivory.png" alt=""></span>
       <!-- <p class="kicker">With the blessings of our families</p> -->
       <h1>Rishi <span class="amp">&amp;</span> Sirisha</h1>
+      <p class="hero-sub">In the City of Destiny, Visakhapatnam.</p>
       <div class="mini-rule"></div>
       <button class="open-button" id="open-invitation" type="button">Tap to open <b>↔</b></button>
     </div>
@@ -2819,7 +2826,8 @@
         <p class="section-label">With the blessings of our families</p>
         <img class="hero-monogram" src="assets/sr-monogram-ivory.png?v=transparent-2" alt="Sirisha and Rishi monogram">
         <h1>Rishi <span class="amp">&amp;</span> Sirisha</h1>
-        <p class="hero-sub">In the City of Destiny, Visakhapatnam.</p>
+        <p class="hero-place">Sai Priya Beach Resorts &middot; Visakhapatnam</p>
+        <!-- <p class="hero-sub">In the City of Destiny, Visakhapatnam.</p> -->
       </div>
       <a class="scroll-note" href="#date">Scroll toward the shore</a>
     </section>
@@ -2848,7 +2856,7 @@
           <div>
             <div class="date-rule"></div>
             <h2>5 December<br>2026</h2>
-            <p class="date-venue">Sai Priya Resorts ·<br>Visakhapatnam</p>
+            <p class="date-venue">Sai Priya Beach Resorts ·<br>Visakhapatnam</p>
             <div class="countdown" aria-label="Countdown to the wedding">
               <div><b id="days">00</b><span>Days</span></div>
               <div><b id="hours">00</b><span>Hours</span></div>
@@ -3283,12 +3291,11 @@
         <div class="mini-rule"></div>
         <div class="contact-grid">
           <article class="contact"><strong>The Bride's family</strong><span>For Sirisha's side</span><a
-              href="tel:+910000000000">+91 7979816066</a></article>
+              href="tel:+910000000000">+91 7979816066</a><br><a
+              href="tel:+910000000000">+91 9835138810</a></article>
           <article class="contact"><strong>The Groom's family</strong><span>For Rishi's side</span><a
-              href="tel:+910000000000">+91 9380959306</a></article>
-          <article class="contact"><strong>Bride & Groom</strong><a
-              href="tel:+910000000000">+91 7352305473</a><br><a
-              href="tel:+910000000000">+91 8056256841</a></article>
+              href="tel:+910000000000">+91 9380959306</a><br><a
+              href="tel:+910000000000">+91 9789066175</a></article>
         </div>
       </div>
     </section>
