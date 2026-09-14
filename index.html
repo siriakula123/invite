@@ -809,6 +809,9 @@
 
     .hero .section-label {
       color: var(--zari-lit);
+      font-family: var(--quote);
+      font-weight: 400;
+      font-style: italic;
     }
 
     .hero-monogram {
@@ -2773,7 +2776,6 @@
         <p class="section-label">With the blessings of our families</p>
         <img class="hero-monogram" src="assets/sr-monogram-ivory.png?v=transparent-2" alt="Sirisha and Rishi monogram">
         <h1>Rishi <span class="amp">&amp;</span> Sirisha</h1>
-        <p class="hero-place">Sai Priya Resorts · Visakhapatnam</p>
         <p class="hero-sub">In the City of Destiny, Visakhapatnam.</p>
       </div>
       <a class="scroll-note" href="#date">Scroll toward the shore</a>
@@ -3777,26 +3779,31 @@
       const iconSound = toggle.querySelector('.icon-sound');
       const iconMuted = toggle.querySelector('.icon-muted');
       function updateIcon() {
-        iconSound.toggleAttribute('hidden', player.muted);
-        iconMuted.toggleAttribute('hidden', !player.muted);
-        toggle.setAttribute('aria-pressed', String(player.muted));
-        toggle.setAttribute('aria-label', player.muted ? 'Unmute music' : 'Mute music');
+        const playing = !player.paused && !player.muted;
+        iconSound.toggleAttribute('hidden', !playing);
+        iconMuted.toggleAttribute('hidden', playing);
+        toggle.setAttribute('aria-pressed', String(playing));
+        toggle.setAttribute('aria-label', playing ? 'Mute music' : 'Play music');
       }
-      function tryPlay() {
-        const attempt = player.play();
-        if (attempt && attempt.catch) {
-          attempt.catch(() => {
-            const resume = () => { player.play(); };
-            document.addEventListener('pointerdown', resume, { once: true });
-            document.addEventListener('keydown', resume, { once: true });
-          });
-        }
-      }
-      tryPlay();
+      // Best-effort only — most mobile browsers block unmuted autoplay
+      // outright, so this silently does nothing there. The button below is
+      // the reliable control and always works, since a click is a genuine
+      // user gesture.
+      player.play().catch(() => {});
+      player.addEventListener('play', updateIcon);
+      player.addEventListener('pause', updateIcon);
       updateIcon();
+      // A single click either starts playback (if autoplay never kicked in)
+      // or toggles mute — never both, so a guest's first-ever tap landing on
+      // this button can't start the music and immediately mute it again.
       toggle.addEventListener('click', () => {
-        player.muted = !player.muted;
-        updateIcon();
+        if (player.paused) {
+          player.muted = false;
+          player.play();
+        } else {
+          player.muted = !player.muted;
+          updateIcon();
+        }
       });
     })();
   </script>
