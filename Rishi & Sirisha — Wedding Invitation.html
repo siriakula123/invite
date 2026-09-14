@@ -379,56 +379,16 @@
       transition: transform 1.5s cubic-bezier(.22, 1, .36, 1);
     }
 
-    .cover.opening .cover-left {
-      transform: translateX(-101%);
-    }
-
-    .cover.opening .cover-right {
-      transform: translateX(101%);
-    }
-
-    .cover.opening .cover-plate {
-      transform: scale(1);
-      filter: blur(0) saturate(1) brightness(1);
-      transition: transform 1.9s cubic-bezier(.22, 1, .36, 1), filter 1.9s cubic-bezier(.22, 1, .36, 1);
-    }
-
     .cover.opening .cover-card {
       opacity: 0;
       transform: translateY(-18px) scale(.97);
       animation: none;
-      transition: opacity .55s cubic-bezier(.22, 1, .36, 1), transform .55s cubic-bezier(.22, 1, .36, 1);
-    }
-
-    .cover.opening .cover-seam {
-      animation: seam-flare 1.5s cubic-bezier(.22, 1, .36, 1) forwards;
-    }
-
-    .cover.opening .cover-toran {
-      opacity: 0;
-      transition: opacity .55s cubic-bezier(.22, 1, .36, 1);
+      transition: opacity .4s cubic-bezier(.22, 1, .36, 1), transform .4s cubic-bezier(.22, 1, .36, 1);
     }
 
     .cover.opening {
       opacity: 0;
-      transition: opacity .5s cubic-bezier(.22, 1, .36, 1) 1.5s;
-    }
-
-    @keyframes seam-flare {
-      0% {
-        opacity: .55;
-        transform: scaleX(1);
-      }
-
-      55% {
-        opacity: .95;
-        transform: scaleX(4);
-      }
-
-      100% {
-        opacity: 0;
-        transform: scaleX(9);
-      }
+      transition: opacity .55s cubic-bezier(.22, 1, .36, 1);
     }
 
     .cover-card {
@@ -458,7 +418,7 @@
       border-radius: 50%;
       outline: 1px solid #d7b776;
       outline-offset: -10px;
-      background: radial-gradient(circle at 36% 26%, #fffaea, #f0dcb6);
+      background: radial-gradient(circle at 36% 26%, var(--sea), var(--sea-deep));
       transform: translateX(-50%);
       box-shadow: 0 5px 18px rgb(9 38 45 / .26);
     }
@@ -1298,13 +1258,13 @@
     #journey .journey-destination img { width: 100%; height: auto; display: block; border-radius: 16px; }
     #journey.journey-ready .journey-place, #journey.journey-ready .journey-name, #journey.journey-ready .journey-destination, #journey.journey-ready .journey-arrowhead { opacity: 0; }
     #journey.journey-ready .journey-route-mask { stroke-dashoffset: 100; }
-    #journey.journey-ready.journey-is-told .journey-place { animation: journey-art-arrive .85s ease-out both; }
-    #journey.journey-ready.journey-is-told .journey-place--hyderabad { animation-delay: .15s; }
-    #journey.journey-ready.journey-is-told .journey-name { animation: journey-name-arrive .65s ease-out 1.05s both; }
-    #journey.journey-ready.journey-is-told .journey-name--him { animation-delay: 1.2s; }
-    #journey.journey-ready.journey-is-told .journey-route-mask { animation: journey-route-draw 1.5s ease-in-out 1.95s both; }
-    #journey.journey-ready.journey-is-told .journey-arrowhead { animation: journey-name-arrive .25s ease-out 3.35s both; }
-    #journey.journey-ready.journey-is-told .journey-destination { animation: journey-art-arrive .9s ease-out 3.65s both; }
+    #journey.journey-ready.journey-is-told .journey-place { animation: journey-art-arrive .5s ease-out both; }
+    #journey.journey-ready.journey-is-told .journey-place--hyderabad { animation-delay: .1s; }
+    #journey.journey-ready.journey-is-told .journey-name { animation: journey-name-arrive .35s ease-out .5s both; }
+    #journey.journey-ready.journey-is-told .journey-name--him { animation-delay: .6s; }
+    #journey.journey-ready.journey-is-told .journey-route-mask { animation: journey-route-draw .7s ease-in-out .9s both; }
+    #journey.journey-ready.journey-is-told .journey-arrowhead { animation: journey-name-arrive .15s ease-out 1.55s both; }
+    #journey.journey-ready.journey-is-told .journey-destination { animation: journey-art-arrive .5s ease-out 1.65s both; }
     @keyframes journey-art-arrive { from { opacity: 0; transform: translateY(16px); clip-path: inset(0 0 100% 0); } to { opacity: 1; transform: none; clip-path: inset(0); } }
     @keyframes journey-name-arrive { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: none; } }
     @keyframes journey-route-draw { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
@@ -1721,11 +1681,11 @@
     }
 
     .step:nth-child(2)::before {
-      content: "Days";
+      content: "Side";
     }
 
     .step:nth-child(3)::before {
-      content: "Guests";
+      content: "Days";
     }
 
     .step:nth-child(4)::before {
@@ -1772,9 +1732,11 @@
       margin: 0 auto;
     }
 
-    /* Same story for the two-day picker (only Day 1 and Day 2 are offered —
-       the wedding morning itself isn't optional). */
-    #day-options {
+    /* Same story for the bride/groom side picker — a two-choice question in
+       the same three-column grid used elsewhere. The day picker has three
+       choices (Day 1, Day 2, All days) so it already fills the default grid
+       evenly and needs no override. */
+    #side-options {
       grid-template-columns: repeat(2, 1fr);
       max-width: 480px;
       margin: 0 auto;
@@ -1892,8 +1854,18 @@
       text-align: center;
     }
 
-    #day-options .attendance-option {
-      grid-template-columns: 1fr;
+    .guest-field {
+      margin-bottom: 2.2rem;
+    }
+
+    .guest-field:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .guest-field-label {
+      margin: 0 0 1rem;
+      color: var(--ink);
+      font: 1.25rem var(--display);
       text-align: center;
     }
 
@@ -1962,6 +1934,44 @@
       margin: 1.2rem 0 0;
       color: var(--coral);
       font-size: .82rem;
+    }
+
+    /* Replaces the whole form once submitted — no lingering step dots, no
+       Yes/No sitting behind it, just a clean thank-you. */
+    .rsvp-success {
+      text-align: center;
+      animation: rsvp-success-in .6s cubic-bezier(.22, 1, .36, 1) both;
+    }
+
+    .rsvp-success-mark {
+      display: grid;
+      place-items: center;
+      width: 3.2rem;
+      aspect-ratio: 1;
+      margin: 0 auto 1.2rem;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--coral);
+      font-size: 1.3rem;
+    }
+
+    .rsvp-success #rsvp-response {
+      max-width: 460px;
+      margin: .8rem auto 1.8rem;
+      color: var(--ink-soft);
+      font: 1rem/1.6 var(--body);
+    }
+
+    @keyframes rsvp-success-in {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
     }
 
     .confetti-piece {
@@ -2381,7 +2391,7 @@
       }
 
       #response-options,
-      #day-options {
+      #side-options {
         grid-template-columns: 1fr;
         max-width: none;
       }
@@ -2668,16 +2678,10 @@
     }
 
     /* Optional, guest-controlled music from the artist's official player. */
-    .wedding-music { position: fixed; right: max(18px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); z-index: 80; font-family: var(--body); }
-    .music-toggle { display: flex; align-items: center; gap: 8px; min-height: 44px; margin-left: auto; padding: 10px 16px; border: 1px solid #b48c4e; border-radius: 24px; background: #fff8ec; color: #702d32; box-shadow: 0 4px 18px #14110f26; font: 600 12px var(--body); cursor: pointer; }
-    .music-toggle svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; }
-    .music-toggle:focus-visible, .music-panel a:focus-visible { outline: 2px solid #1b6a72; outline-offset: 4px; }
-    .music-panel { width: min(320px, calc(100vw - 36px)); margin-bottom: 12px; padding: 18px; background: #fff8ec; color: #39565a; border: 1px solid #b48c4e; border-radius: 12px; box-shadow: 0 8px 32px #14110f30; }
-    .music-panel[hidden] { display: none; }
-    .music-panel h3 { color: #702d32; font: 400 24px/1.2 var(--heading); margin: 0 0 6px; }
-    .music-panel p { font-size: 12px; line-height: 1.5; margin: 0 0 12px; }
-    .music-panel iframe { display: block; width: 100%; height: 120px; border: 0; }
-    .music-panel a { display: inline-block; margin-top: 12px; color: #536f6c; font-size: 11px; text-underline-offset: 3px; }
+    .wedding-music { position: fixed; left: max(18px, env(safe-area-inset-left)); bottom: max(18px, env(safe-area-inset-bottom)); z-index: 80; font-family: var(--body); }
+    .music-toggle { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; border: 1px solid #b48c4e; border-radius: 50%; background: #fff8ec; color: #702d32; box-shadow: 0 4px 18px #14110f26; cursor: pointer; }
+    .music-toggle svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+    .music-toggle:focus-visible { outline: 2px solid #1b6a72; outline-offset: 4px; }
 
     /* Pair each name with its landmark and reserve the full coastline height. */
     #journey .journey-map { height: auto; }
@@ -2705,7 +2709,30 @@
   </style>
 </head>
 
-<body>
+<body class="locked">
+
+  <!-- ══ Cover / gate ══════════════════════════════════════════════════════ -->
+  <section class="cover" id="cover" aria-label="Invitation cover">
+    <span class="cover-plate" id="cover-plate" aria-hidden="true">
+      <span class="cover-sun"></span>
+      <span class="cover-glint"></span>
+      <span class="cover-foam"></span>
+    </span>
+    <span class="cover-seam" id="cover-seam" aria-hidden="true"></span>
+    <span class="cover-panel cover-left" id="cover-left" aria-hidden="true"></span>
+    <span class="cover-panel cover-right" id="cover-right" aria-hidden="true"></span>
+    <span class="cover-toran" aria-hidden="true"></span>
+    <span class="cover-shore" aria-hidden="true"></span>
+    <span class="cover-palm cover-palm-l" aria-hidden="true"></span>
+    <span class="cover-palm cover-palm-r" aria-hidden="true"></span>
+    <div class="cover-card" id="cover-card">
+      <span class="seal" aria-hidden="true"><img src="assets/sr-monogram-ivory.png" alt=""></span>
+      <p class="kicker">With the blessings of our families</p>
+      <h1>Rishi <span class="amp">&amp;</span> Sirisha</h1>
+      <div class="mini-rule"></div>
+      <button class="open-button" id="open-invitation" type="button">Tap to open <b>↔</b></button>
+    </div>
+  </section>
 
   <!-- ══ The plate: one fixed backdrop the whole page shares ═══════════════ -->
   <div class="plate" aria-hidden="true">
@@ -2795,7 +2822,7 @@
         <p class="section-label">With the blessings of our families</p>
         <h2>You are warmly invited</h2>
         <div class="mini-rule"></div>
-        <p class="invocation-line">Srirastu Subhamastu Avignamastu</p>
+        <p class="invocation-line">Srirastu Subhamastu Avighnamastu</p>
         <blockquote>“Together with our families, we joyfully invite you to join us as we begin this new chapter — with
           the sea at our side and every person we love on the shore. Your presence, blessings, and love will make our
           celebration complete.”</blockquote>
@@ -2944,23 +2971,26 @@
         <p class="section-label">Moments we carry with us</p>
         <h2>Swipe to wander</h2>
         <div class="gallery-strip">
-          <figure><img src="assets/gallery-01-rings.webp" alt="The couple's wedding rings on a decorated tray with rose petals" loading="lazy">
-            <figcaption>The promise</figcaption>
-          </figure>
-          <figure><img src="assets/gallery-02-portrait.webp" alt="Rishi and Sirisha sharing a quiet look together" loading="lazy">
+          <figure><img src="assets/wander-01-quiet-moment.webp" alt="Rishi and Sirisha sharing a quiet look together" loading="lazy">
             <figcaption>A quiet moment</figcaption>
           </figure>
-          <figure><img src="assets/gallery-03-first-dance.webp" alt="Rishi and Sirisha dancing together on stage" loading="lazy">
-            <figcaption>First dance</figcaption>
+          <figure><img src="assets/wander-02-rings.webp" alt="The couple's wedding rings on a decorated tray with rose petals" loading="lazy">
+            <figcaption>The promise</figcaption>
           </figure>
-          <figure><img src="assets/gallery-04-blessing.webp" alt="Elders performing a blessing ritual for the couple" loading="lazy">
-            <figcaption>Blessed by our elders</figcaption>
+          <figure><img src="assets/wander-03-celebration.webp" alt="Family and friends cheering in celebration on stage" loading="lazy">
+            <figcaption>Celebrating with loved ones</figcaption>
           </figure>
-          <figure><img src="assets/gallery-05-family.webp" alt="The whole family gathered together on stage" loading="lazy">
+          <figure><img src="assets/wander-07-laughing-petals.webp" alt="Rishi and Sirisha laughing together as rose petals fall" loading="lazy">
+            <figcaption>Caught laughing</figcaption>
+          </figure>
+          <figure><img src="assets/wander-04-family.webp" alt="The whole family gathered together on stage" loading="lazy">
             <figcaption>Our family, together</figcaption>
           </figure>
-          <figure><img src="assets/gallery-06-celebration.webp" alt="Family and friends cheering in celebration" loading="lazy">
-            <figcaption>Celebrating with loved ones</figcaption>
+          <figure><img src="assets/wander-05-blessing.webp" alt="Elders performing a blessing ritual for the couple" loading="lazy">
+            <figcaption>Blessed by our elders</figcaption>
+          </figure>
+          <figure><img src="assets/wander-06-first-dance.webp" alt="Rishi and Sirisha dancing together on stage" loading="lazy">
+            <figcaption>The first dance</figcaption>
           </figure>
         </div>
         <p class="swipe-hint">Drag, swipe, or scroll sideways through the frames.</p>
@@ -3054,13 +3084,13 @@
       <div class="rsvp-box glass-card">
         <p class="section-label">A place is waiting for you</p>
         <h2>We request your presence</h2>
-        <p class="rsvp-kicker">Kindly confirm your attendance so the families can prepare every detail with care.</p>
+        <p class="rsvp-kicker" id="rsvp-kicker">Kindly confirm your attendance so the families can prepare every detail
+          with care.</p>
         <div class="steps" aria-label="RSVP progress">
           <span class="step active" id="step-response">1</span>
-          <span class="step" id="step-days">2</span>
-          <span class="step" id="step-guests">3</span>
+          <span class="step" id="step-side">2</span>
+          <span class="step" id="step-days">3</span>
           <span class="step" id="step-details">4</span>
-          <span class="step" id="step-blessing">5</span>
         </div>
         <form id="rsvp-form">
           <div class="rsvp-page active" data-page="response">
@@ -3074,7 +3104,6 @@
                   class="attendance-copy"><strong>Regretfully decline</strong><small>Sending
                     love</small></span></button>
             </div>
-            <button class="button" id="rsvp-continue" type="button" disabled>Continue</button>
           </div>
           <div class="rsvp-page" data-page="decline">
             <p class="rsvp-question">We'll miss you there</p>
@@ -3085,6 +3114,20 @@
               <a class="button" href="#blessings">Leave a blessing</a>
             </div>
           </div>
+          <div class="rsvp-page" data-page="side">
+            <p class="rsvp-question">Which side are you joining us from?</p>
+            <div class="attendance-options" id="side-options" role="radiogroup" aria-label="Guest side">
+              <button class="attendance-option" type="button" data-side="Bride's side" role="radio"
+                aria-checked="false"><span
+                  class="attendance-copy"><strong>Bride's side</strong><small>Akula's family &amp; friends</small></span></button>
+              <button class="attendance-option" type="button" data-side="Groom's side" role="radio"
+                aria-checked="false"><span
+                  class="attendance-copy"><strong>Groom's side</strong><small>Ganta's family &amp; friends</small></span></button>
+            </div>
+            <div class="rsvp-nav">
+              <button class="button ghost" type="button" data-back>Back</button>
+            </div>
+          </div>
           <div class="rsvp-page" data-page="days">
             <p class="rsvp-question">Which days will you join?</p>
             <div class="attendance-options" id="day-options" role="group" aria-label="Days attending">
@@ -3092,23 +3135,12 @@
                   class="attendance-copy"><strong>Day 1</strong><small>3 December</small></span></button>
               <button class="attendance-option" type="button" data-day="Day 2 · 4 December" aria-pressed="false"><span
                   class="attendance-copy"><strong>Day 2</strong><small>4 December</small></span></button>
+              <button class="attendance-option" type="button" id="all-days-option" data-all-days aria-pressed="false"><span
+                  class="attendance-copy"><strong>All days</strong><small>3 &amp; 4 December</small></span></button>
             </div>
             <div class="rsvp-nav">
               <button class="button ghost" type="button" data-back>Back</button>
-              <button class="button" type="button" data-next="guests">Continue</button>
-            </div>
-          </div>
-          <div class="rsvp-page" data-page="guests">
-            <p class="rsvp-question">How many guests?</p>
-            <div class="guest-stepper">
-              <button class="stepper-btn" type="button" data-step="-1" aria-label="Decrease guests">−</button>
-              <span class="stepper-value" id="guest-count" aria-live="polite">1</span>
-              <button class="stepper-btn" type="button" data-step="1" aria-label="Increase guests">+</button>
-            </div>
-            <p class="stepper-note">Including yourself</p>
-            <div class="rsvp-nav">
-              <button class="button ghost" type="button" data-back>Back</button>
-              <button class="button" type="button" data-next="details">Continue</button>
+              <button class="button" id="days-continue" type="button" disabled>Continue</button>
             </div>
           </div>
           <div class="rsvp-page" data-page="details">
@@ -3118,13 +3150,27 @@
             <label for="guest-phone">Phone (WhatsApp)</label>
             <div class="phone-field"><span class="phone-code">+91</span><input id="guest-phone" type="tel"
                 inputmode="numeric" autocomplete="tel" placeholder="98765 43210"></div>
+            <div class="guest-field">
+              <p class="guest-field-label">How many guests?</p>
+              <div class="guest-stepper">
+                <button class="stepper-btn" type="button" data-step="-1" aria-label="Decrease guests">−</button>
+                <span class="stepper-value" id="guest-count" aria-live="polite">1</span>
+                <button class="stepper-btn" type="button" data-step="1" aria-label="Increase guests">+</button>
+              </div>
+              <p class="stepper-note">Including yourself</p>
+            </div>
             <div class="rsvp-nav">
               <button class="button ghost" type="button" data-back>Back</button>
               <button class="button" type="submit">Send RSVP</button>
             </div>
           </div>
         </form>
-        <p class="response" id="rsvp-response" aria-live="polite"></p>
+        <div class="rsvp-success" id="rsvp-success" hidden aria-live="polite">
+          <span class="rsvp-success-mark" aria-hidden="true">&#10084;</span>
+          <h3>Thank you</h3>
+          <p id="rsvp-response"></p>
+          <button class="button ghost" id="rsvp-again" type="button">Submit another response</button>
+        </div>
       </div>
     </section>
 
@@ -3175,7 +3221,7 @@
             <p class="live-title">Live blessings</p>
             <div class="blessing-list" id="blessing-list" aria-label="Live guest blessings">
               <article class="blessing-card"><span class="blessing-avatar">S</span>
-                <div><strong>Siri</strong>
+                <div><strong>Mom</strong>
                   <p>Bless you</p>
                 </div>
               </article>
@@ -3212,7 +3258,7 @@
         story and for blessing us as we begin forever.</p>
       <p class="closing-names">Sirisha <span class="amp">&amp;</span> Rishi</p>
       <p class="closing-note">With love, gratitude, and blessings.</p>
-      <p class="closing-date">5 December 2026 · Sai Priya Resorts, Visakhapatnam</p>
+      <p class="closing-date">With best wishes from the Akula and Ganta families</p>
       <div class="closing-rule"></div>
     </div>
   </footer>
@@ -3221,6 +3267,18 @@
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const nav = document.getElementById('nav');
+
+    /* ── The gate ──────────────────────────────────────────────────────── */
+    /* Pure CSS, so it never depends on the motion library loading. */
+    const cover = document.getElementById('cover');
+    const openButton = document.getElementById('open-invitation');
+    openButton.addEventListener('click', () => {
+      document.body.classList.remove('locked');
+      openButton.disabled = true;
+      cover.classList.add('opening');
+      // The whole gate dissolves straight into the page — no door-slide or sea reveal.
+      setTimeout(() => cover.remove(), 600);
+    }, { once: true });
 
     /* ── Nav reveal past the hero ──────────────────────────────────────── */
     const hero = document.getElementById('home');
@@ -3273,7 +3331,7 @@
        Apps Script web apps don't answer CORS preflights, so this fires the
        request in no-cors mode — we can't read the response, but the row
        still lands in the Sheet. */
-    const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxXv_95FeJ7zI7bzt1PrQ_A2wivihuSbQoniJLBVjOzuukXNv9vQNkrn0o45iuaWHjrYw/exec';
+    const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwwfeglT4ONEvrHGAf6j_aP-XOWY-3bzA-dzJFBKhsla5jLDGlyFxyV9nMcuaSHSlat7w/exec';
     function logToSheet(payload) {
       fetch(SHEET_URL, {
         method: 'POST',
@@ -3286,16 +3344,28 @@
     /* ── RSVP ──────────────────────────────────────────────────────────── */
     let selectedResponse = '';
     let isAttending = true;
+    let selectedSide = '';
     let selectedDays = [];
     let guestCount = 1;
     const responseOptions = [...document.querySelectorAll('#response-options .attendance-option')];
+    const sideOptions = [...document.querySelectorAll('#side-options .attendance-option')];
     const dayOptions = [...document.querySelectorAll('#day-options .attendance-option')];
-    const continueButton = document.getElementById('rsvp-continue');
+    const individualDayOptions = dayOptions.filter((option) => option.dataset.day);
+    const allDaysToggle = document.getElementById('all-days-option');
+    const daysContinueButton = document.getElementById('days-continue');
     const rsvpPages = [...document.querySelectorAll('.rsvp-page')];
     const guestCountEl = document.getElementById('guest-count');
-    const pageOrder = ['response', 'days', 'guests', 'details'];
-    const stepOrder = ['response', 'days', 'guests', 'details', 'blessing'];
+    const rsvpStepsEl = document.querySelector('#rsvp .steps');
+    const rsvpFormEl = document.getElementById('rsvp-form');
+    const rsvpSuccessEl = document.getElementById('rsvp-success');
+    const rsvpAgainButton = document.getElementById('rsvp-again');
+    const pageOrder = ['response', 'side', 'days', 'details'];
+    const stepOrder = ['response', 'side', 'days', 'details'];
     const stepEls = Object.fromEntries(stepOrder.map((key) => [key, document.getElementById(`step-${key}`)]));
+    // Single-choice steps (response, side) advance on their own once tapped —
+    // this brief pause just lets the guest see their choice highlight before
+    // the page changes, so it doesn't feel like the screen jumped on them.
+    const AUTO_ADVANCE_DELAY = 380;
 
     function setActiveSteps(upToKey) {
       const idx = stepOrder.indexOf(upToKey);
@@ -3327,6 +3397,10 @@
       }
     }
 
+    // Single-choice — clicking an option is the answer, so it advances on
+    // its own rather than waiting for a separate Continue tap. Declining
+    // skips the side/guests/details steps entirely, since those only make
+    // sense for someone who is actually coming.
     responseOptions.forEach((option) => option.addEventListener('click', () => {
       selectedResponse = option.dataset.response;
       isAttending = option.dataset.attending === 'yes';
@@ -3334,29 +3408,54 @@
         item.classList.toggle('selected', item === option);
         item.setAttribute('aria-checked', String(item === option));
       });
-      continueButton.disabled = false;
+      setTimeout(() => {
+        if (isAttending) {
+          showPage('side');
+        } else {
+          showPage('decline', 'response');
+        }
+      }, AUTO_ADVANCE_DELAY);
     }));
 
-    // Declining skips the days/guests/details steps entirely — those only
-    // make sense for someone who is actually coming.
-    continueButton.addEventListener('click', () => {
-      if (isAttending) {
-        showPage('days');
-      } else {
-        showPage('decline', 'response');
-      }
+    sideOptions.forEach((option) => option.addEventListener('click', () => {
+      selectedSide = option.dataset.side;
+      sideOptions.forEach((item) => {
+        item.classList.toggle('selected', item === option);
+        item.setAttribute('aria-checked', String(item === option));
+      });
+      setTimeout(() => showPage('days'), AUTO_ADVANCE_DELAY);
+    }));
+
+    function setDayPressed(option, pressed) {
+      option.classList.toggle('selected', pressed);
+      option.setAttribute('aria-pressed', String(pressed));
+    }
+
+    individualDayOptions.forEach((option) => option.addEventListener('click', () => {
+      setDayPressed(option, !option.classList.contains('selected'));
+      selectedDays = individualDayOptions
+        .filter((item) => item.classList.contains('selected'))
+        .map((item) => item.dataset.day);
+      // Keep "All days" in sync — checked only when every individual day is.
+      setDayPressed(allDaysToggle, individualDayOptions.every((item) => item.classList.contains('selected')));
+      daysContinueButton.disabled = selectedDays.length === 0;
+    }));
+
+    // A convenience shortcut: toggling it selects (or clears) every day at once.
+    allDaysToggle.addEventListener('click', () => {
+      const selectAll = !allDaysToggle.classList.contains('selected');
+      setDayPressed(allDaysToggle, selectAll);
+      individualDayOptions.forEach((item) => setDayPressed(item, selectAll));
+      selectedDays = selectAll ? individualDayOptions.map((item) => item.dataset.day) : [];
+      daysContinueButton.disabled = selectedDays.length === 0;
     });
 
-    dayOptions.forEach((option) => option.addEventListener('click', () => {
-      option.classList.toggle('selected');
-      const pressed = option.classList.contains('selected');
-      option.setAttribute('aria-pressed', String(pressed));
-      selectedDays = pressed
-        ? [...selectedDays, option.dataset.day]
-        : selectedDays.filter((day) => day !== option.dataset.day);
-    }));
+    // At least one day must be picked before moving on to guest/contact details.
+    daysContinueButton.addEventListener('click', () => {
+      showPage('details');
+    });
 
-    document.querySelectorAll('.stepper-btn').forEach((btn) => btn.addEventListener('click', () => {
+    document.querySelectorAll('.stepper-btn[data-step]').forEach((btn) => btn.addEventListener('click', () => {
       guestCount = Math.min(12, Math.max(1, guestCount + Number(btn.dataset.step)));
       guestCountEl.textContent = guestCount;
     }));
@@ -3370,6 +3469,9 @@
       showPage(pageOrder[pageOrder.indexOf(page) - 1]);
     }));
 
+    // On submit, the whole form (and its step dots) is replaced by a plain
+    // thank-you panel — reaching the end used to fall back to the Yes/No
+    // response page again, which read as if nothing had been confirmed.
     document.getElementById('rsvp-form').addEventListener('submit', (event) => {
       event.preventDefault();
       const name = document.getElementById('guest-name').value.trim();
@@ -3377,15 +3479,25 @@
       const daysNote = selectedDays.length
         ? ` for ${selectedDays.map((day) => day.split(' · ')[0]).join(', ')}`
         : '';
-      setActiveSteps('blessing');
+      const sideNote = selectedSide ? ` from ${selectedSide}` : '';
       document.getElementById('rsvp-response').textContent =
-        `Thank you${name ? `, ${name}` : ''}. ${selectedResponse}. We have noted ${guestCount} guest${guestCount === 1 ? '' : 's'}${daysNote}${phone ? `, reachable on +91 ${phone}` : ''}.`;
-      logToSheet({ form: 'rsvp', response: selectedResponse, days: selectedDays.join(', '), guests: guestCount, name, phone });
+        `We've noted your RSVP${name ? `, ${name}` : ''}: ${selectedResponse}${sideNote}, ${guestCount} guest${guestCount === 1 ? '' : 's'}${daysNote}${phone ? `, reachable on +91 ${phone}` : ''}.`;
+      logToSheet({ form: 'rsvp', response: selectedResponse, side: selectedSide, days: selectedDays.join(', '), guests: guestCount, name, phone });
       launchConfetti();
-      event.currentTarget.reset();
+      rsvpStepsEl.hidden = true;
+      rsvpFormEl.hidden = true;
+      rsvpSuccessEl.hidden = false;
+    });
+
+    // Lets a second guest sharing the same device/link start a fresh RSVP.
+    rsvpAgainButton.addEventListener('click', () => {
+      rsvpFormEl.reset();
       rsvpPages.forEach((page) => page.classList.toggle('active', page.dataset.page === 'response'));
-      continueButton.disabled = true;
       responseOptions.forEach((item) => {
+        item.classList.remove('selected');
+        item.setAttribute('aria-checked', 'false');
+      });
+      sideOptions.forEach((item) => {
         item.classList.remove('selected');
         item.setAttribute('aria-checked', 'false');
       });
@@ -3393,11 +3505,17 @@
         item.classList.remove('selected');
         item.setAttribute('aria-pressed', 'false');
       });
+      daysContinueButton.disabled = true;
       selectedResponse = '';
       isAttending = true;
+      selectedSide = '';
       selectedDays = [];
       guestCount = 1;
       guestCountEl.textContent = '1';
+      setActiveSteps('response');
+      rsvpSuccessEl.hidden = true;
+      rsvpStepsEl.hidden = false;
+      rsvpFormEl.hidden = false;
     });
 
     /* ── Blessings ─────────────────────────────────────────────────────── */
@@ -3646,41 +3764,39 @@
   </script>
 
   <aside class="wedding-music" id="wedding-music" aria-label="Wedding music">
-    <div class="music-panel" id="music-panel" hidden>
-      <h3>A little music</h3>
-      <p>Wedding Bells · Veena Artist N. Karthik<br>Tap play for a little veena as you explore.</p>
-      <div id="music-player"></div>
-      <a href="https://guinnesskarthik.bandcamp.com/track/wedding-bells-veena-fusion-veena-instrumental" target="_blank" rel="noopener noreferrer">Listen on Bandcamp ↗</a>
-    </div>
-    <button class="music-toggle" id="music-toggle" type="button" aria-expanded="false" aria-controls="music-panel">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l11-2v13M9 9l11-2"/><ellipse cx="6" cy="18" rx="3" ry="2"/><ellipse cx="17" cy="16" rx="3" ry="2"/></svg>
-      <span>Music</span>
+    <audio id="music-player" src="assets/wedding-music.mp3" loop autoplay preload="auto"></audio>
+    <button class="music-toggle" id="music-toggle" type="button" aria-pressed="false" aria-label="Mute music">
+      <svg class="icon-sound" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M17.5 8.5a5 5 0 0 1 0 7M20 6a8.5 8.5 0 0 1 0 12"/></svg>
+      <svg class="icon-muted" viewBox="0 0 24 24" aria-hidden="true" hidden><path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M16 9l5 5M21 9l-5 5"/></svg>
     </button>
   </aside>
   <script>
     (() => {
       const toggle = document.getElementById('music-toggle');
-      const panel = document.getElementById('music-panel');
-      const host = document.getElementById('music-player');
-      function setMusicOpen(open) {
-        panel.hidden = !open;
-        toggle.setAttribute('aria-expanded', String(open));
-        toggle.querySelector('span').textContent = open ? 'Close music' : 'Music';
-        if (open) {
-          const player = document.createElement('iframe');
-          player.title = 'Wedding Bells by Veena Artist N. Karthik — Bandcamp music player';
-          player.src = 'https://bandcamp.com/EmbeddedPlayer/track=857443220/size=large/bgcol=fff8ec/linkcol=702d32/tracklist=false/artwork=small/transparent=true/';
-          host.replaceChildren(player);
-        } else {
-          host.replaceChildren(); // Unload the player to stop sound when closed.
+      const player = document.getElementById('music-player');
+      const iconSound = toggle.querySelector('.icon-sound');
+      const iconMuted = toggle.querySelector('.icon-muted');
+      function updateIcon() {
+        iconSound.toggleAttribute('hidden', player.muted);
+        iconMuted.toggleAttribute('hidden', !player.muted);
+        toggle.setAttribute('aria-pressed', String(player.muted));
+        toggle.setAttribute('aria-label', player.muted ? 'Unmute music' : 'Mute music');
+      }
+      function tryPlay() {
+        const attempt = player.play();
+        if (attempt && attempt.catch) {
+          attempt.catch(() => {
+            const resume = () => { player.play(); };
+            document.addEventListener('pointerdown', resume, { once: true });
+            document.addEventListener('keydown', resume, { once: true });
+          });
         }
       }
-      toggle.addEventListener('click', () => setMusicOpen(panel.hidden));
-      document.addEventListener('keydown', event => {
-        if (event.key === 'Escape' && !panel.hidden) {
-          setMusicOpen(false);
-          toggle.focus();
-        }
+      tryPlay();
+      updateIcon();
+      toggle.addEventListener('click', () => {
+        player.muted = !player.muted;
+        updateIcon();
       });
     })();
   </script>
