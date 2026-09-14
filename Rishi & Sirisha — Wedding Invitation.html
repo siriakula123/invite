@@ -3359,7 +3359,7 @@
        Apps Script web apps don't answer CORS preflights, so this fires the
        request in no-cors mode — we can't read the response, but the row
        still lands in the Sheet. */
-    const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwwfeglT4ONEvrHGAf6j_aP-XOWY-3bzA-dzJFBKhsla5jLDGlyFxyV9nMcuaSHSlat7w/exec';
+    const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxjXeiYVdchv9qwONDL9dvA0T20nNwZeSwpIDd3-cm1PihPGYkE8c2T1GmHfINYJBEb_g/exec';
     function logToSheet(payload) {
       fetch(SHEET_URL, {
         method: 'POST',
@@ -3547,16 +3547,12 @@
     });
 
     /* ── Blessings ─────────────────────────────────────────────────────── */
-    document.getElementById('wish-form').addEventListener('submit', (event) => {
-      event.preventDefault();
-      const name = document.getElementById('wish-name').value.trim() || 'Guest';
-      const wish = document.getElementById('wish').value.trim();
-
+    function renderBlessingCard(name, wish) {
       const card = document.createElement('article');
       card.className = 'blessing-card';
       const avatar = document.createElement('span');
       avatar.className = 'blessing-avatar';
-      avatar.textContent = name.charAt(0).toUpperCase();
+      avatar.textContent = (name || 'G').charAt(0).toUpperCase();
       const content = document.createElement('div');
       const guest = document.createElement('strong');
       const message = document.createElement('p');
@@ -3564,14 +3560,32 @@
       message.textContent = wish;
       content.append(guest, message);
       card.append(avatar, content);
+      return card;
+    }
+
+    document.getElementById('wish-form').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const name = document.getElementById('wish-name').value.trim() || 'Guest';
+      const wish = document.getElementById('wish').value.trim();
 
       const list = document.getElementById('blessing-list');
-      list.prepend(card);
+      list.prepend(renderBlessingCard(name, wish));
       list.scrollTo({ top: 0, behavior: 'smooth' });
       document.getElementById('wish-output').textContent = `“${wish}” — thank you for your beautiful blessing.`;
       logToSheet({ form: 'blessing', name, wish });
       event.currentTarget.reset();
     });
+
+    /* ── Live blessings wall: pull the latest entries from the Sheet ─────── */
+    fetch(SHEET_URL)
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.blessings || !data.blessings.length) return;
+        const list = document.getElementById('blessing-list');
+        list.innerHTML = '';
+        data.blessings.forEach((b) => list.append(renderBlessingCard(b.name, b.wish)));
+      })
+      .catch(() => {});
 
     /* ── Performances ──────────────────────────────────────────────────── */
     document.getElementById('performance-form').addEventListener('submit', (event) => {
